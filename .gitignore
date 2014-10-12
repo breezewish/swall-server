@@ -30,3 +30,7 @@ node_modules
 #OS X
 .DS_Store
 
+#Mongodb
+mongodb/*
+mongodb/*/*
+
