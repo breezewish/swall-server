@@ -1,28 +1,28 @@
-express = require('express')
-path = require('path')
-favicon = require('serve-favicon')
-logger = require('morgan')
+express      = require('express')
+path         = require('path')
+favicon      = require('serve-favicon')
+logger       = require('morgan')
 cookieParser = require('cookie-parser')
-bodyParser = require('body-parser')
-mongoose = require('mongoose')
-urlparser = require('url')
+bodyParser   = require('body-parser')
+mongoose     = require('mongoose')
+urlparser    = require('url')
 
 
-app = require('express')()
+app    = require('express')()
 server = require('http').Server(app)
-io = require('socket.io')(server)
+io     = require('socket.io')(server)
 
 
 server.listen 3000
 
 
 routes = require('../build/routes/index')
-users = require('../build/routes/users')
+users  = require('../build/routes/users')
 
 
-db = mongoose.createConnection 'mongodb://localhost/test'
+db          = mongoose.createConnection 'mongodb://localhost/test'
 information = mongoose.Schema {time: Number, ip: String, us: String, msg: String}
-Comment = db.model 'Comment', information
+Comment     = db.model 'Comment', information
 
 
 io.on 'connect', (socket)->
@@ -36,7 +36,7 @@ io.on 'connect', (socket)->
     
     # Accept comment from user
     socket.on 'comment', (data)->
-        info = {time: Date.now(), ip: socket.handshake.address, us: socket.handshake.headers['user-agent'], msg: data}
+        info    = {time: Date.now(), ip: socket.handshake.address, us: socket.handshake.headers['user-agent'], msg: data}
         comment = Comment info
 
         comment.save (err, comment)->
@@ -92,7 +92,7 @@ app.use('/users', users)
 
 # catch 404 and forward to error handler
 app.use((req, res, next)->
-    err = new Error('Not Found')
+    err        = new Error('Not Found')
     err.status = 404
     next(err)
 )
