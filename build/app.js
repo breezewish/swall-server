@@ -44,7 +44,6 @@
     var socketId;
     console.log('connected.');
     socketId = urlparser.parse(socket.handshake.headers.referer).pathname.split('/')[1];
-    console.log(socketId);
     if (socket.handshake.headers['user-agent'] === null || socket.handshake.headers['user-agent'] === void 0) {
       socket.handshake.headers['user-agent'] = 'null';
     }
@@ -61,13 +60,10 @@
         if (err) {
           return console.log(err);
         }
-        return console.log(comment);
       });
-      console.log(io.sockets.adapter.rooms);
       return io.to(socketId).emit('commentToScreen', info);
     });
     socket.on('/subscribe', function(data) {
-      console.log('subscribed.');
       return socket.join(socketId);
     });
     socket.on('/unsubscribe', function(data) {

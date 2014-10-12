@@ -1,4 +1,4 @@
-express = require('express')
+express = require 'express'
 router  = express.Router()
 
 
@@ -8,7 +8,6 @@ router.get '/1', (req,res)->
 
 router.get '/', (req, res)->
 	res.redirect('/1')
-#	res.render 'index', { title: 'Express' }
 
 router.get '/1/test', (req, res)->
 	res.render 'test'
@@ -22,3 +21,4 @@ router.get '/1/info', (req, res)->
     }
 
 module.exports = router
+

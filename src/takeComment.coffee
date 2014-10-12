@@ -24,3 +24,4 @@ theWindow.keydown (event)->
 		sendMessage()
 		socket.emit('stop typing')
 		typing = false
+

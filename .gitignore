@@ -37,3 +37,7 @@ mongodb/*/*
 *.ns
 *.lock
 
+#Vim
+*.swp
+*.swo
+

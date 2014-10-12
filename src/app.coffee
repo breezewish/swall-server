@@ -26,10 +26,8 @@ Comment     = db.model 'Comment', information
 
 
 io.on 'connect', (socket)->
-#   socket.emit 'news', { hello: 'world' }
     console.log 'connected.'
     socketId = urlparser.parse(socket.handshake.headers.referer).pathname.split('/')[1]
-    console.log socketId
 
     if socket.handshake.headers['user-agent'] == null or socket.handshake.headers['user-agent'] == undefined
         socket.handshake.headers['user-agent'] = 'null'
@@ -42,15 +40,12 @@ io.on 'connect', (socket)->
         comment.save (err, comment)->
             if err
                 return console.log err
-            console.log comment
 
-        console.log io.sockets.adapter.rooms
-        io.to(socketId).emit('commentToScreen', info)
+        io.to(socketId).emit 'commentToScreen', info
 
     # Client ask for message
     socket.on '/subscribe', (data)->
         # add to subscribe pool
-        console.log 'subscribed.'
         socket.join socketId
 
     socket.on '/unsubscribe', (data)->
@@ -81,7 +76,7 @@ app.set('view engine', 'ejs')
 #app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(cookieParser())
 app.use(require('stylus').middleware(path.join(__dirname, path.join('..', 'public'))))
 app.use(express.static(path.join(__dirname, path.join('..', 'public'))))
