@@ -33,4 +33,7 @@ node_modules
 #Mongodb
 mongodb/*
 mongodb/*/*
+*.0
+*.ns
+*.lock
 

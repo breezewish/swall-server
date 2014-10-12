@@ -1,11 +1,11 @@
-express      = require('express')
-path         = require('path')
-favicon      = require('serve-favicon')
-logger       = require('morgan')
-cookieParser = require('cookie-parser')
-bodyParser   = require('body-parser')
-mongoose     = require('mongoose')
-urlparser    = require('url')
+express      = require 'express'
+path         = require 'path'
+favicon      = require 'serve-favicon'
+logger       = require 'morgan'
+cookieParser = require 'cookie-parser'
+bodyParser   = require 'body-parser'
+mongoose     = require 'mongoose'
+urlparser    = require 'url'
 
 
 app    = require('express')()
@@ -16,8 +16,8 @@ io     = require('socket.io')(server)
 server.listen 3000
 
 
-routes = require('../build/routes/index')
-users  = require('../build/routes/users')
+routes = require '../build/routes/index'
+users  = require '../build/routes/users'
 
 
 db          = mongoose.createConnection 'mongodb://localhost/test'
@@ -44,17 +44,19 @@ io.on 'connect', (socket)->
                 return console.log err
             console.log comment
 
-        io.to(socketId).emit('commentToScrren', info)
+        console.log io.sockets.adapter.rooms
+        io.to(socketId).emit('commentToScreen', info)
 
     # Client ask for message
     socket.on '/subscribe', (data)->
         # add to subscribe pool
+        console.log 'subscribed.'
         socket.join socketId
 
     socket.on '/unsubscribe', (data)->
         if data == 'all'
             # unsubscribeAll socket
-            for room in io.sockets.manager.rooms
+            for room in io.sockets.adapter.rooms
                 socket.leave room
         else
             # unsubscribe socket, data.id
@@ -86,16 +88,15 @@ app.use(express.static(path.join(__dirname, path.join('..', 'public'))))
 app.use(express.static(path.join(__dirname, path.join('..', 'build'))))
 
 
-app.use('/', routes)
-app.use('/users', users)
+app.use '/', routes
+app.use '/users', users
 
 
 # catch 404 and forward to error handler
-app.use((req, res, next)->
+app.use (req, res, next)->
     err        = new Error('Not Found')
     err.status = 404
     next(err)
-)
 
 
 # error handlers
@@ -103,24 +104,22 @@ app.use((req, res, next)->
 # development error handler
 # will print stacktrace
 if (app.get('env') == 'development')
-    app.use((err, req, res, next)->
+    app.use (err, req, res, next)->
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
             error: err
         })
-    )
 
 
 # production error handler
 # no stacktraces leaked to user
-app.use((err, req, res, next)->
+app.use (err, req, res, next)->
     res.status(err.status || 500)
     res.render('error', {
         message: err.message,
         error: {}
     })
-)
 
 
 module.exports = app

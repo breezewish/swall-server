@@ -6,16 +6,15 @@
   router = express.Router();
 
   router.get('/1', function(req, res) {
-    console.log('a');
     return res.render('takeComment');
   });
 
   router.get('/', function(req, res) {
-    console.log('a');
-    res.redirect('/1');
-    return res.render('index', {
-      title: 'Express'
-    });
+    return res.redirect('/1');
+  });
+
+  router.get('/1/test', function(req, res) {
+    return res.render('test');
   });
 
   router.get('/1/info', function(req, res) {

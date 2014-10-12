@@ -63,15 +63,17 @@
         }
         return console.log(comment);
       });
-      return io.to(socketId).emit('commentToScrren', info);
+      console.log(io.sockets.adapter.rooms);
+      return io.to(socketId).emit('commentToScreen', info);
     });
     socket.on('/subscribe', function(data) {
+      console.log('subscribed.');
       return socket.join(socketId);
     });
     socket.on('/unsubscribe', function(data) {
       var room, _i, _len, _ref, _results;
       if (data === 'all') {
-        _ref = io.sockets.manager.rooms;
+        _ref = io.sockets.adapter.rooms;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           room = _ref[_i];

@@ -4,13 +4,14 @@ router  = express.Router()
 
 # GET home page.
 router.get '/1', (req,res)->
-	console.log 'a'
 	res.render 'takeComment'
 
 router.get '/', (req, res)->
-	console.log 'a'
 	res.redirect('/1')
-	res.render 'index', { title: 'Express' }
+#	res.render 'index', { title: 'Express' }
+
+router.get '/1/test', (req, res)->
+	res.render 'test'
 
 router.get '/1/info', (req, res)->
     res.json {
