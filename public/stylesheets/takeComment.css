@@ -1,6 +1,8 @@
 body {
     background-color: rgb(29, 30, 31);
     margin: 0px;
+	-webkit-text-size-adjust:none;
+	min-width:320px;
 }
 
 .container {
