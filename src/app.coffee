@@ -15,7 +15,10 @@ httpsOptions =
 
 app    = require('express')()
 server = https.createServer(httpsOptions, app)
+#server = require('http').Server(app)
 io     = require('socket.io')(server)
+
+GLOBAL.io = io
 
 server.listen 443
 
@@ -23,34 +26,19 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
-db          = mongoose.createConnection 'mongodb://localhost/swall'
+db          = mongoose.createConnection 'mongodb://localhost/test'
 information = mongoose.Schema {time: Number, ip: String, us: String, msg: String}
 Comment     = db.model 'Comment', information
 
+GLOBAL.Comment = Comment
 
 io.on 'connect', (socket)->
     console.log 'connected.'
-    socketId = urlparser.parse(socket.handshake.headers.referer).pathname.split('/')[1]
-
-    if socket.handshake.headers['user-agent'] == null or socket.handshake.headers['user-agent'] == undefined
-        socket.handshake.headers['user-agent'] = 'null'
-    
-    # Accept comment from user
-    socket.on 'comment', (data)->
-        info    = {time: Date.now(), ip: socket.handshake.address, us: socket.handshake.headers['user-agent'], msg: data}
-        comment = Comment info
-
-        comment.save (err, comment)->
-            if err
-                return console.log err
-
-        io.to(socketId).emit 'comment', info
-
     # Client ask for message
     socket.on '/subscribe', (data)->
         # add to subscribe pool
         socket.join data.id
-        socket.emit 'sucscribeOk', socketId
+        socket.emit 'sucscribeOk', data.id
 
     socket.on '/unsubscribe', (data)->
         if data == 'all'

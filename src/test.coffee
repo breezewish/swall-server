@@ -1,7 +1,7 @@
 socket = io.connect( 'http://127.0.0.1:3000/')
 
 $('#test1').click ()->
-	socket.emit '/subscribe', 5
+	socket.emit '/subscribe', {id: '1'}
 
 $('#test2').click ()->
  	socket.emit '/unsubscribe', {id: '1'}

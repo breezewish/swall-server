@@ -9,6 +9,25 @@
     return res.render('takeComment');
   });
 
+  router.post('/:id', function(req, res) {
+    var comment, info;
+    info = {
+      id: parseInt(req.params.id),
+      time: Date.now(),
+      ip: req.remoteAddr,
+      ua: req.headers['user-agent'] || '',
+      msg: req.body.msg
+    };
+    comment = Comment(info);
+    comment.save(function(err, comment) {
+      if (err) {
+        return console.log(err);
+      }
+    });
+    io.to(req.params.id).emit('comment', info);
+    return res.render('takeComment');
+  });
+
   router.get('/', function(req, res) {
     return res.redirect('/1');
   });

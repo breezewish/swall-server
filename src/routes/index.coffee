@@ -6,6 +6,18 @@ router  = express.Router()
 router.get '/1', (req,res)->
 	res.render 'takeComment'
 
+router.post '/:id', (req, res)->
+    # Accept comment from user
+    info    = {id: parseInt(req.params.id), time: Date.now(), ip: req.remoteAddr, ua: req.headers['user-agent'] or '', msg: req.body.msg}
+    comment = Comment info
+
+    comment.save (err, comment)->
+        if err
+            return console.log err
+
+    io.to(req.params.id).emit 'comment', info
+    res.render 'takeComment'
+
 router.get '/', (req, res)->
 	res.redirect('/1')
 

@@ -4,7 +4,9 @@
   socket = io.connect('http://127.0.0.1:3000/');
 
   $('#test1').click(function() {
-    return socket.emit('/subscribe', 5);
+    return socket.emit('/subscribe', {
+      id: '1'
+    });
   });
 
   $('#test2').click(function() {

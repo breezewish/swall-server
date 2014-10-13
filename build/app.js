@@ -32,13 +32,15 @@
 
   io = require('socket.io')(server);
 
+  GLOBAL.io = io;
+
   server.listen(443);
 
   routes = require('../build/routes/index');
 
   users = require('../build/routes/users');
 
-  db = mongoose.createConnection('mongodb://localhost/swall');
+  db = mongoose.createConnection('mongodb://localhost/test');
 
   information = mongoose.Schema({
     time: Number,
@@ -49,32 +51,13 @@
 
   Comment = db.model('Comment', information);
 
+  GLOBAL.Comment = Comment;
+
   io.on('connect', function(socket) {
-    var socketId;
     console.log('connected.');
-    socketId = urlparser.parse(socket.handshake.headers.referer).pathname.split('/')[1];
-    if (socket.handshake.headers['user-agent'] === null || socket.handshake.headers['user-agent'] === void 0) {
-      socket.handshake.headers['user-agent'] = 'null';
-    }
-    socket.on('comment', function(data) {
-      var comment, info;
-      info = {
-        time: Date.now(),
-        ip: socket.handshake.address,
-        us: socket.handshake.headers['user-agent'],
-        msg: data
-      };
-      comment = Comment(info);
-      comment.save(function(err, comment) {
-        if (err) {
-          return console.log(err);
-        }
-      });
-      return io.to(socketId).emit('comment', info);
-    });
     socket.on('/subscribe', function(data) {
       socket.join(data.id);
-      return socket.emit('sucscribeOk', socketId);
+      return socket.emit('sucscribeOk', data.id);
     });
     socket.on('/unsubscribe', function(data) {
       var room, _i, _len, _ref, _results;
