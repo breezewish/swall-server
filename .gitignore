@@ -41,3 +41,5 @@ mongodb/*/*
 *.swp
 *.swo
 
+www_swall_me.key
+www_swall_me_bundle.crt

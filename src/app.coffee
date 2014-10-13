@@ -20,7 +20,7 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
-db          = mongoose.createConnection 'mongodb://localhost/test'
+db          = mongoose.createConnection 'mongodb://localhost/swall'
 information = mongoose.Schema {time: Number, ip: String, us: String, msg: String}
 Comment     = db.model 'Comment', information
 
