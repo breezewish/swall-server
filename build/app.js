@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, bodyParser, cookieParser, db, express, favicon, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, bodyParser, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -17,9 +17,18 @@
 
   urlparser = require('url');
 
+  https = require('https');
+
+  fs = require('fs');
+
+  httpsOptions = {
+    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+  };
+
   app = require('express')();
 
-  server = require('http').Server(app);
+  server = https.createServer(httpsOptions, app);
 
   io = require('socket.io')(server);
 
@@ -29,7 +38,7 @@
 
   users = require('../build/routes/users');
 
-  db = mongoose.createConnection('mongodb://localhost/test');
+  db = mongoose.createConnection('mongodb://localhost/swall');
 
   information = mongoose.Schema({
     time: Number,

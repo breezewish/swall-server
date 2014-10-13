@@ -6,15 +6,18 @@ cookieParser = require 'cookie-parser'
 bodyParser   = require 'body-parser'
 mongoose     = require 'mongoose'
 urlparser    = require 'url'
+https        = require 'https'
+fs           = require 'fs'
 
+httpsOptions =
+    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
+    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
 
 app    = require('express')()
-server = require('http').Server(app)
+server = https.createServer(httpsOptions, app)
 io     = require('socket.io')(server)
 
-
 server.listen 443
-
 
 routes = require '../build/routes/index'
 users  = require '../build/routes/users'
