@@ -1,8 +1,10 @@
 body {
     background-color: rgb(29, 30, 31);
     margin: 0px;
-	-webkit-text-size-adjust:none;
-	min-width:320px;
+}
+
+input {
+    margin: 10px;
 }
 
 .container {
@@ -11,15 +13,24 @@ body {
     margin: 50px;
 }
 
+.flapper {
+    display: inline-block;
+}
+
 #banner {
     background-image: url(/static/Flapper-master/img/brushed.png);
     padding: 20px;
     text-align: center;
 }
 
+#form {
+    display: table;
+    width: 100%;
+}
+
 #testbox {
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 60%;
 }
 

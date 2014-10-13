@@ -1,20 +1,9 @@
 (function() {
-  var inputArea, sendMessage, socket, theWindow;
-
-  socket = io.connect('http://127.0.0.1:3000/');
+  var inputArea, theWindow;
 
   theWindow = $(window);
 
   inputArea = $('.inputMessage');
-
-  sendMessage = function() {
-    var comment;
-    comment = inputArea.val();
-    if (comment) {
-      inputArea.val('');
-      return socket.emit('comment', comment);
-    }
-  };
 
   $(function() {
     var all_word, options, stationBar;
@@ -31,18 +20,15 @@
       4: '来玩Ingress=o= ',
       5: '请选绿军。     '
     };
-    setTimeout(function() {
+    return setTimeout(function() {
       var toggle;
       toggle = 0;
       return setInterval(function() {
         stationBar.val(all_word[toggle]).change();
         ++toggle;
-        return toggle %= 5;
+        return toggle %= 6;
       }, 10000);
     }, 500);
-    return $('#send').click(function() {
-      return sendMessage();
-    });
   });
 
 }).call(this);

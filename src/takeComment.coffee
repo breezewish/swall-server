@@ -1,17 +1,5 @@
-socket = io.connect( 'http://127.0.0.1:3000/')
-
-
 theWindow = $(window)
 inputArea = $('.inputMessage')
-
-
-#Omit connection check temporarily.
-sendMessage = ()->
-	comment = inputArea.val()
-
-	if comment
-		inputArea.val('')
-		socket.emit 'comment', comment
 
 
 $(() ->
@@ -38,16 +26,12 @@ $(() ->
                         stationBar.val(all_word[toggle]).change()
                         ++toggle
 
-                        toggle %= 5
+                        toggle %= 6
                     ,
                     10000
                     )
         ,
         500
-    )
-
-    $('#send').click(()->
-        sendMessage()
     )
 )
 

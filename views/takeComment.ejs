@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, height=device-width, minimum-scale=1.0, maximum-scale=0 user-scalable=yes"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>弹幕入口</title>
 	<link rel="stylesheet" href="/static/Flapper-master/css/flapper.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="/stylesheets/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -10,18 +10,17 @@
 <body>
 	<div id="banner">
 		<div class="display">
-			<input id="station" class="header dark">
+			<input id="station" class="header dark XS">
 		</div>
 	</div>
 	<div class="container">
 		<div id="testbox">
-			<form action="/1" method="post" accept-charset="utf-8">
-				<input type="text" value="" name="msg" id=""/>
-				<input type="submit" value="Submit" />
+			<form id="form" action="/1" method="post" accept-charset="utf-8">
+				<input class="cell" type="text" value="" name="msg" id="msg"/>
+				<input class="cell" type="submit" value="Submit" id="submit"/>
 			</form>
 		</div>
 	</div>
-	<script src="/socket.io/socket.io.js"></script>
 	<script src="/static/jquery-2.1.1.min.js"></script>
 	<script src="/takeComment.js"></script>
 	<script src="/static/transform-master/dist/jquery.transform-0.9.3.min.js" type="text/javascript" charset="utf-8"></script>
