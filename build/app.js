@@ -23,7 +23,7 @@
 
   io = require('socket.io')(server);
 
-  server.listen(3000);
+  server.listen(443);
 
   routes = require('../build/routes/index');
 
@@ -61,10 +61,11 @@
           return console.log(err);
         }
       });
-      return io.to(socketId).emit('commentToScreen', info);
+      return io.to(socketId).emit('comment', info);
     });
     socket.on('/subscribe', function(data) {
-      return socket.join(socketId);
+      socket.join(data.id);
+      return socket.emit('sucscribeOk', socketId);
     });
     socket.on('/unsubscribe', function(data) {
       var room, _i, _len, _ref, _results;

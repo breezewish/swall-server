@@ -3,13 +3,26 @@
 <head>
 	<meta charset="UTF-8">
 	<title>弹幕入口</title>
+	<link rel="stylesheet" href="/static/Flapper-master/css/flapper.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="/stylesheet/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<form action="">
-		<input type="text" name="comment" />
-		<input type="submit" value="submit" />
-	</form>
-	<script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
-	<script src="/javascripts/takeComment.js"></script>
+	<div id="banner">
+		<div class="display">
+			<input id="station" class="header dark XLL">
+		</div>
+	</div>
+	<div id="testbox">
+		<input class="inputMessage" placeholder="Type">
+		<button id="send">发送</button>
+	</div>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/static/jquery-2.1.1.min.js"></script>
+	<script src="/static/takeComment.js"></script>
+	<script src="/static/transform-master/dist/jquery.transform-0.9.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/Flapper-master/jshashtable-2.1/jshashtable.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/jquery.numberformatter-1.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/Flapper-master/src/jquery.flapper.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
+

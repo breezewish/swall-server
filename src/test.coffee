@@ -6,5 +6,5 @@ $('#test1').click ()->
 $('#test2').click ()->
  	socket.emit '/unsubscribe', {id: '1'}
 
-socket.on 'commentToScreen', (data)->
+socket.on 'comment', (data)->
 	console.log data, data['time'], data['ip'], data['us'], data['msg']	

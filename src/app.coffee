@@ -13,7 +13,7 @@ server = require('http').Server(app)
 io     = require('socket.io')(server)
 
 
-server.listen 3000
+server.listen 443
 
 
 routes = require '../build/routes/index'
@@ -41,12 +41,13 @@ io.on 'connect', (socket)->
             if err
                 return console.log err
 
-        io.to(socketId).emit 'commentToScreen', info
+        io.to(socketId).emit 'comment', info
 
     # Client ask for message
     socket.on '/subscribe', (data)->
         # add to subscribe pool
-        socket.join socketId
+        socket.join data.id
+        socket.emit 'sucscribeOk', socketId
 
     socket.on '/unsubscribe', (data)->
         if data == 'all'

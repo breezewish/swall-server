@@ -13,7 +13,7 @@
     });
   });
 
-  socket.on('commentToScreen', function(data) {
+  socket.on('comment', function(data) {
     return console.log(data, data['time'], data['ip'], data['us'], data['msg']);
   });
 

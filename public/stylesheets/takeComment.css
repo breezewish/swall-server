@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(29, 30, 31);
+    margin: 0px;
+}
+
+.container {
+    background-color: rgb(14, 14, 15);
+    padding: 50px;
+    margin: 50px;
+}
+
+#banner {
+    background-image: url(/static/Flapper-master/img/brushed.png);
+    padding: 20px;
+    text-align: center;
+}
+
+#testbox {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+

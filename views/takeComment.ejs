@@ -3,12 +3,37 @@
 <head>
 	<meta charset="UTF-8">
 	<title>弹幕入口</title>
+	<link rel="stylesheet" href="/static/Flapper-master/css/flapper.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="/static/beauForm/css/living-form.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="/static/beauForm/css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="/stylesheets/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<input class="inputMessage" placeholder="Type">
+	<div id="banner">
+		<div class="display">
+			<input id="station" class="header dark XL">
+		</div>
+	</div>
+	<div class="container">
+		<div id="testbox">
+			<div id="textarea-effect" class="textarea-wrapper" style="position: relative;">
+				<div id="textarea-effect" class="" style="position: absolute; width: 534px; height: 206px; opacity: 0.994; background: url(http://www.jqueryscript.net/demo/Beautify-Your-Form-with-Amazing-Effects-Living-Form/images/textarea-gradient.jpg) -200px 0px no-repeat;"></div>
+				<div id="textarea-effect" class="" style="position: absolute; width: 534px; height: 206px; background: url(http://www.jqueryscript.net/demo/Beautify-Your-Form-with-Amazing-Effects-Living-Form/images/textarea-mask.png);"></div>
+				<textarea class="inputMessage living-textarea" name="" cols="" rows="" onfocus="this.innerHTML=''" style="position: absolute;" placeholder="写写写。"></textarea>
+			</div>
+			<button id="send" class="button">发送</button>
+		</div>
+	</div>
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="/jquery-2.1.1.min.js"></script>
+	<script src="/static/jquery-2.1.1.min.js"></script>
 	<script src="/takeComment.js"></script>
+	<script src="/static/transform-master/dist/jquery.transform-0.9.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/Flapper-master/jshashtable-2.1/jshashtable.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/jquery.numberformatter-1.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/Flapper-master/src/jquery.flapper.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/beauForm/js/effect-ini.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/beauForm/js/jquery.backgroundPosition-1.21.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/static/beauForm/js/jquery.livingElements-0.2.packed.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
 
