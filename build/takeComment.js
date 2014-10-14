@@ -37,7 +37,6 @@
       return $(this).addClass('msgbink');
     });
     $('#submit').click(function() {
-      console.log(theInput.value);
       if (theInput.value.length > 0) {
         sendComment();
         return $('#submit').html('Send...');
