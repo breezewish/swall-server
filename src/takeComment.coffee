@@ -13,10 +13,10 @@ encodeForm = ()->
 
 sendComment  = ()->
     request  = new XMLHttpRequest()
+    request.timeout = 3000
 
     request.onreadystatechange = ()->
             if (request.readyState == 4 && request.status == 200)
-                theInput.value = ''
                 $('#submit').html('Submit')
 
     request.open("POST", "/1", true)
@@ -34,8 +34,12 @@ $(() ->
         $(this).addClass('msgbink')
     )
 
+    $('.msg').keypress (e)->
+        $('#submit').click() if e.which is 13
+
     $('#submit').click(()->
         if theInput.value.length > 0
+            theInput.value = ''
             sendComment()
             $('#submit').html('Send...')
     )

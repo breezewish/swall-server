@@ -16,9 +16,9 @@
   sendComment = function() {
     var request;
     request = new XMLHttpRequest();
+    request.timeout = 3000;
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
-        theInput.value = '';
         return $('#submit').html('Submit');
       }
     };
@@ -36,8 +36,14 @@
     $('.msg').focus(function() {
       return $(this).addClass('msgbink');
     });
+    $('.msg').keypress(function(e) {
+      if (e.which === 13) {
+        return $('#submit').click();
+      }
+    });
     $('#submit').click(function() {
       if (theInput.value.length > 0) {
+        theInput.value = '';
         sendComment();
         return $('#submit').html('Send...');
       }
