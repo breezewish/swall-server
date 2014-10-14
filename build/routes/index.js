@@ -25,7 +25,6 @@
       }
     });
     io.to(req.params.id).emit('comment', info);
-    console.log(info);
     return res.sendStatus(200);
   });
 

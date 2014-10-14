@@ -18,8 +18,6 @@ router.post '/:id', (req, res)->
 
     io.to(req.params.id).emit 'comment', info
 
-    console.log info
-
     res.sendStatus(200)
 
 
