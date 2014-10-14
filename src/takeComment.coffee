@@ -39,8 +39,8 @@ $(() ->
 
     $('#submit').click(()->
         if theInput.value.length > 0
-            theInput.value = ''
             sendComment()
+            theInput.value = ''
             $('#submit').html('Send...')
     )
 

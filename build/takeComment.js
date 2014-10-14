@@ -43,8 +43,8 @@
     });
     $('#submit').click(function() {
       if (theInput.value.length > 0) {
-        theInput.value = '';
         sendComment();
+        theInput.value = '';
         return $('#submit').html('Send...');
       }
     });
