@@ -45,8 +45,14 @@ $(() ->
             newText.text(theInput.value)
             newText.addClass('moveit')
 
+            window.setTimeout ()->
+                newText.remove()
+            ,
+            2000
+
             sendComment()
             theInput.value = ''
+
             $('#submit').html('Send...')
     )
 

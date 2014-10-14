@@ -54,6 +54,9 @@
         });
         newText.text(theInput.value);
         newText.addClass('moveit');
+        window.setTimeout(function() {
+          return newText.remove();
+        }, 2000);
         sendComment();
         theInput.value = '';
         return $('#submit').html('Send...');
