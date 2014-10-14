@@ -36,7 +36,7 @@
       return $(this).addClass('msgbink');
     });
     $('#submit').click(function() {
-      $('#submit').html('发送中...');
+      $('#submit').html('Send...');
       return sendComment();
     });
     stationBar = $('#station').flapper(options);

@@ -35,7 +35,7 @@ $(() ->
     )
 
     $('#submit').click(()->
-        $('#submit').html('发送中...')
+        $('#submit').html('Send...')
         sendComment()
     )
 
