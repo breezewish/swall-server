@@ -1,9 +1,11 @@
 (function() {
-  var encodeForm, sendComment, theInput, theWindow;
+  var classmsg, encodeForm, sendComment, theInput, theWindow;
 
   theWindow = $(window);
 
   theInput = document.getElementById('msg');
+
+  classmsg = $('.msg');
 
   encodeForm = function() {
     var allInformation;
@@ -33,16 +35,25 @@
       width: 14,
       chars_preset: 'alpha'
     };
-    $('.msg').focus(function() {
+    classmsg.focus(function() {
       return $(this).addClass('msgbink');
     });
-    $('.msg').keypress(function(e) {
+    classmsg.keypress(function(e) {
       if (e.which === 13) {
         return $('#submit').click();
       }
     });
     $('#submit').click(function() {
+      var newText;
       if (theInput.value.length > 0) {
+        newText = $('<div>').appendTo($('#textbox'));
+        newText.css({
+          top: classmsg.position().top + classmsg.height() / 2,
+          left: classmsg.position().left,
+          position: 'absolute'
+        });
+        newText.text(theInput.value);
+        newText.addClass('moveit');
         sendComment();
         theInput.value = '';
         return $('#submit').html('Send...');

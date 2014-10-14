@@ -1,5 +1,6 @@
 theWindow = $(window)
 theInput = document.getElementById('msg')
+classmsg = $('.msg')
 
 
 encodeForm = ()->
@@ -30,15 +31,20 @@ $(() ->
             chars_preset: 'alpha',
     }
 
-    $('.msg').focus(()->
+    classmsg.focus(()->
         $(this).addClass('msgbink')
     )
 
-    $('.msg').keypress (e)->
+    classmsg.keypress (e)->
         $('#submit').click() if e.which is 13
 
     $('#submit').click(()->
         if theInput.value.length > 0
+            newText = $('<div>').appendTo($('#textbox'))
+            newText.css({top: classmsg.position().top + classmsg.height() / 2, left: classmsg.position().left, position:'absolute'});
+            newText.text(theInput.value)
+            newText.addClass('moveit')
+
             sendComment()
             theInput.value = ''
             $('#submit').html('Send...')

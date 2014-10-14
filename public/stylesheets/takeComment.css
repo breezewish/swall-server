@@ -24,7 +24,6 @@ input {
     margin: 0;
     padding: 0;
     line-height: 50px;
-    margin-bottom: 20px;
     vertical-align: middle;
     border: 0
 }
@@ -56,6 +55,13 @@ input {
     border-radius: 5px;
 }
 
+.moveit {
+    -webkit-transition:width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    transition:width 2s, height 2s, background-color 2s, transform 2s;
+    -webkit-transform:rotate(180deg);
+    transform:rotate(180deg);
+}
+
 #banner {
     background-image: url(/static/Flapper-master/img/brushed.png);
     padding: 20px;
@@ -64,17 +70,18 @@ input {
 
 #submit {
     height: 40%;
+    margin-bottom: 20px;
     width: 100%;
 }
 
-#testbox {
+#textbox {
     height: 100%;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
 }
 
-#testbox > * {
+#textbox > * {
     height: 40%;
     width: 100%;
 }
