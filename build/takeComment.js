@@ -11,14 +11,17 @@
       width: 14,
       chars_preset: 'alpha'
     };
+    $('.msg').focus(function() {
+      return $(this).addClass('msgbink');
+    });
     stationBar = $('#station').flapper(options);
     all_word = {
-      0: '我要上弹幕>.<   ',
-      1: '欢迎甩节操。    ',
-      2: '不许说脏话-_-   ',
-      3: '不许聊天。。    ',
-      4: '来玩Ingress=o= ',
-      5: '请选绿军。     '
+      0: '我要上弹幕>.<      ',
+      1: '欢迎甩节操。        ',
+      2: '不许说脏话-_-      ',
+      3: '不许聊天。。        ',
+      4: '来玩Ingress=o=  ',
+      5: '请选绿军。         '
     };
     return setTimeout(function() {
       var toggle;
