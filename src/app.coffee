@@ -6,22 +6,22 @@ cookieParser = require 'cookie-parser'
 bodyParser   = require 'body-parser'
 mongoose     = require 'mongoose'
 urlparser    = require 'url'
-#https        = require 'https'
+https        = require 'https'
 fs           = require 'fs'
 
-#httpsOptions =
-#    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
-#    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+httpsOptions =
+    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
+    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
 
 app    = require('express')()
-#server = https.createServer(httpsOptions, app)
-server = require('http').Server(app)
+server = https.createServer(httpsOptions, app)
+#server = require('http').Server(app)
 io     = require('socket.io')(server)
 
 GLOBAL.io = io
 
-#server.listen 443
-server.listen 3000
+server.listen 443
+#server.listen 3000
 
 routes = require '../build/routes/index'
 users  = require '../build/routes/users'
