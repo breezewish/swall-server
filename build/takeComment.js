@@ -1,9 +1,30 @@
 (function() {
-  var inputArea, theWindow;
+  var encodeForm, sendComment, theWindow;
 
   theWindow = $(window);
 
-  inputArea = $('.inputMessage');
+  encodeForm = function() {
+    var allInformation, theInput;
+    allInformation = [];
+    theInput = document.getElementById('msg');
+    allInformation.push("msg" + "=" + theInput.value);
+    return allInformation.join("&");
+  };
+
+  sendComment = function() {
+    var request, theInput;
+    theInput = document.getElementById('msg');
+    request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if (request.readyState === 4 && request.status === 200) {
+        theInput.value = '';
+        return $('#submit').html('Submit');
+      }
+    };
+    request.open("POST", "/1", true);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    return request.send(encodeForm());
+  };
 
   $(function() {
     var all_word, options, stationBar;
@@ -13,6 +34,10 @@
     };
     $('.msg').focus(function() {
       return $(this).addClass('msgbink');
+    });
+    $('#submit').click(function() {
+      $('#submit').html('发送中...');
+      return sendComment();
     });
     stationBar = $('#station').flapper(options);
     all_word = {

@@ -1,5 +1,27 @@
 theWindow = $(window)
-inputArea = $('.inputMessage')
+
+
+encodeForm = ()->
+    allInformation = []
+    theInput = document.getElementById('msg')
+
+    allInformation.push("msg" + "=" + theInput.value)
+
+    return allInformation.join("&")
+
+
+sendComment  = ()->
+    theInput = document.getElementById('msg')
+    request  = new XMLHttpRequest()
+
+    request.onreadystatechange = ()->
+            if (request.readyState == 4 && request.status == 200)
+                theInput.value = ''
+                $('#submit').html('Submit')
+
+    request.open("POST", "/1", true)
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    request.send(encodeForm())
 
 
 $(() ->
@@ -10,6 +32,11 @@ $(() ->
 
     $('.msg').focus(()->
         $(this).addClass('msgbink')
+    )
+
+    $('#submit').click(()->
+        $('#submit').html('发送中...')
+        sendComment()
     )
 
     stationBar = $('#station').flapper(options);

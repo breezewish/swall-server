@@ -25,7 +25,7 @@
       }
     });
     io.to(req.params.id).emit('comment', info);
-    return res.render('takeComment');
+    return res.sendStatus(200);
   });
 
   router.get('/', function(req, res) {
