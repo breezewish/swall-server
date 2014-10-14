@@ -1,4 +1,5 @@
 theWindow = $(window)
+theInput = document.getElementById('msg')
 
 
 encodeForm = ()->
@@ -11,7 +12,6 @@ encodeForm = ()->
 
 
 sendComment  = ()->
-    theInput = document.getElementById('msg')
     request  = new XMLHttpRequest()
 
     request.onreadystatechange = ()->
@@ -35,8 +35,9 @@ $(() ->
     )
 
     $('#submit').click(()->
-        $('#submit').html('Send...')
-        sendComment()
+        if theInput.value.length > 0
+            sendComment()
+            $('#submit').html('Send...')
     )
 
     stationBar = $('#station').flapper(options);

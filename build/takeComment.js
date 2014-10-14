@@ -1,10 +1,12 @@
 (function() {
-  var encodeForm, sendComment, theWindow;
+  var encodeForm, sendComment, theInput, theWindow;
 
   theWindow = $(window);
 
+  theInput = document.getElementById('msg');
+
   encodeForm = function() {
-    var allInformation, theInput;
+    var allInformation;
     allInformation = [];
     theInput = document.getElementById('msg');
     allInformation.push("msg" + "=" + theInput.value);
@@ -12,8 +14,7 @@
   };
 
   sendComment = function() {
-    var request, theInput;
-    theInput = document.getElementById('msg');
+    var request;
     request = new XMLHttpRequest();
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
@@ -36,8 +37,11 @@
       return $(this).addClass('msgbink');
     });
     $('#submit').click(function() {
-      $('#submit').html('Send...');
-      return sendComment();
+      console.log(theInput.value);
+      if (theInput.value.length > 0) {
+        sendComment();
+        return $('#submit').html('Send...');
+      }
     });
     stationBar = $('#station').flapper(options);
     all_word = {

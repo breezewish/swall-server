@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, bodyParser, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, bodyParser, cookieParser, db, express, favicon, fs, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -17,24 +17,17 @@
 
   urlparser = require('url');
 
-  https = require('https');
-
   fs = require('fs');
-
-  httpsOptions = {
-    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
-  };
 
   app = require('express')();
 
-  server = https.createServer(httpsOptions, app);
+  server = require('http').Server(app);
 
   io = require('socket.io')(server);
 
   GLOBAL.io = io;
 
-  server.listen(443);
+  server.listen(3000);
 
   routes = require('../build/routes/index');
 
