@@ -1,0 +1,171 @@
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: "Open Sans", arial, sans-serif;
+}
+
+h1 {
+    color: white;
+    padding: 0 10px;
+}
+
+body {
+    background-color: rgb(29, 30, 31);
+    height: 100%;
+    margin: 0px;
+}
+
+input {
+    display: block;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 50px;
+    vertical-align: middle;
+    border: 0;
+}
+
+@keyframes fog {
+    0% {
+	opacity: 80%;
+    }
+    100% {
+	opacity: 0%;
+    }
+}
+
+.container {
+    background-color: rgb(14, 14, 15);
+    height: 50%;
+    margin: 10px 0;
+    padding: 10px 0;
+}
+
+.container {
+    height: 40%;
+    width: 100%;
+}
+
+.flapper {
+    display: inline-block;
+}
+
+.fogstart {
+    background-color: rgb(222, 222, 222);
+    opacity: 1;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.fogend {
+    background-color: rgb(222, 222, 222);
+    transform: scale(5);
+    opacity: 0;
+}
+
+.msg {
+    background-color: #ccc;
+}
+
+.msgblink {
+    border: 2px solid #88a;
+    background-color: #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+    border-radius: 5px;
+}
+
+.moveit {
+    -webkit-transition:width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    transition:width 2s, height 2s, background-color 2s, transform 2s;
+    -webkit-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+        transform:rotate(90deg);
+    -webkit-transform-origin: 100%;
+        -ms-transform-origin: 100%;
+            transform-origin: 100%;
+    z-index: 100;
+}
+
+#banner {
+    background-image: url(/static/Flapper-master/img/brushed.png);
+    padding: 20px;
+    text-align: center;
+}
+
+#submit {
+    height: 40%;
+    margin-bottom: 20px;
+    width: 100%;
+    z-index: 100;
+}
+
+#textbox {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#msg {
+    height: 40%;
+    width: 100%;
+}
+
+/* For Animation Button */
+.animate
+{
+/*	transition: all 0.2s;
+	-webkit-transition: all 0.2s; */
+}
+
+.action-button
+{
+	display: block;
+	position: relative;
+	border: 0;
+	font-size: 25px;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.action-button:focus
+{
+	outline:0;
+}
+
+.blue
+{
+	background-color: #3498DB;
+	border-bottom: 5px solid #2980B9;
+}
+
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
+.green
+{
+	background-color: #82BF56;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+
+.yellow
+{
+	background-color: #F2CF66;
+	border-bottom: 5px solid #D1B358;
+	text-shadow: 0px -2px #D1B358;
+}
+
+.action-button:active
+{
+	border-bottom: 0px solid #2980B9;
+	border-top: 5px solid rgb(14,14,15);
+}
+

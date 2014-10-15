@@ -44,13 +44,28 @@
       }
     });
     $('#submit').click(function() {
-      var newText;
+      var newText, newfog;
+      newfog = $('<div>').css({
+        top: $(this).position().top,
+        left: $(this).position().left,
+        position: 'absolute',
+        width: $(this).width(),
+        height: $(this).height(),
+        'z-index': 10
+      }).appendTo($('#textbox'));
+      newfog.offset($(this).offset());
+      newfog.addClass('fogstart');
+      newfog.addClass('fogend');
+      window.setTimeout(function() {
+        return newfog.remove();
+      }, 1000);
       if (theInput.value.length > 0) {
-        newText = $('<div>').appendTo($('#textbox'));
-        newText.css({
-          top: classmsg.position().top + classmsg.height() / 2,
+        newText = $('<div>').appendTo($('#textbox')).css({
+          top: classmsg.position().top,
           left: classmsg.position().left,
-          position: 'absolute'
+          position: 'absolute',
+          width: classmsg.width(),
+          height: classmsg.height()
         });
         newText.text(theInput.value);
         newText.addClass('moveit');
@@ -59,7 +74,8 @@
         }, 2000);
         sendComment();
         theInput.value = '';
-        return $('#submit').html('Send...');
+        $('#submit').html('Send...');
+        return classmsg.focus();
       }
     });
     stationBar = $('#station').flapper(options);

@@ -14,7 +14,7 @@ module.exports = (grunt)->
 				}]
 		,
 		coffee:
-			project: {
+			project:
 				files: [{
 					expand: true,
 					cwd: 'src/',
@@ -23,17 +23,26 @@ module.exports = (grunt)->
 					ext: '.js',
 					extDot: 'last'
 				}]
-			}
 		,
 		watch:
-			project: {
+			project:
 				files: ['src/**/*', 'config.cson'],
-				tasks: ['copy', 'coffee']
-			}
+				tasks: ['copy', 'coffee', 'autoprefixer']
+		autoprefixer:
+			project:
+				files: [{
+					expand: true,
+					cwd: 'src/',
+					src: ['**/*.css', '*.css'],
+					dest: 'build/',
+					ext: '.css',
+					extDot: 'last'
+				}]
 	)
 
 	grunt.loadNpmTasks 'grunt-contrib-copy'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-watch'
-	grunt.loadNpmTasks 'grunt-cson'
-	grunt.registerTask 'default', ['copy', 'coffee', 'watch']
+	grunt.loadNpmTasks 'grunt-autoprefixer'
+	grunt.registerTask 'default', ['copy', 'coffee', 'autoprefixer', 'watch']
+

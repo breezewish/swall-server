@@ -31,17 +31,26 @@ $(() ->
             chars_preset: 'alpha',
     }
 
-    classmsg.focus(()->
+    classmsg.focus ()->
         $(this).addClass('msgbink')
-    )
 
     classmsg.keypress (e)->
         $('#submit').click() if e.which is 13
 
-    $('#submit').click(()->
+    $('#submit').click ()->
+        newfog = $('<div>').css({top: $(this).position().top, left: $(this).position().left, position:'absolute', width: $(this).width(), height: $(this).height(), 'z-index': 10}).appendTo($('#textbox'))
+        newfog.offset($(this).offset())
+        newfog.addClass('fogstart')
+
+        newfog.addClass('fogend')
+
+        window.setTimeout ()->
+            newfog.remove()
+        ,
+        1000
+
         if theInput.value.length > 0
-            newText = $('<div>').appendTo($('#textbox'))
-            newText.css({top: classmsg.position().top + classmsg.height() / 2, left: classmsg.position().left, position:'absolute'});
+            newText = $('<div>').appendTo($('#textbox')).css({top: classmsg.position().top, left: classmsg.position().left, position:'absolute', width: classmsg.width(), height: classmsg.height()})
             newText.text(theInput.value)
             newText.addClass('moveit')
 
@@ -54,7 +63,7 @@ $(() ->
             theInput.value = ''
 
             $('#submit').html('Send...')
-    )
+            classmsg.focus()
 
     stationBar = $('#station').flapper(options);
 
