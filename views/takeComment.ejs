@@ -8,6 +8,16 @@
 	<% } %>
 	<link rel="stylesheet" href="/static/Flapper-master/css/flapper.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="/stylesheets/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<style type="text/css" media="screen">
+		#submit2 {
+			background-color: <%= buttom2 %>;
+			border-bottom: 5px solid <%= buttomborder2 %>;
+		}
+		#submit3 {
+			background-color: <%= buttom3 %>;
+			border-bottom: 5px solid <%= buttomborder3 %>;
+		}
+	</style>
 </head>
 <body>
 	<div id="banner">
@@ -20,7 +30,13 @@
 	<% } %>
 	<div class="container">
 		<div id="textbox">
-			<button id="submit" class="action-button shadow animate blue">Submit</button>
+			<div id="buttonbox">
+				<button id="submit1" class="submit action-button shadow animate blue">Submit</button>
+				<div class="paddiv"></div>
+				<button id="submit2" class="submit action-button shadow animate">Submit</button>
+				<div class="paddiv"></div>
+				<button id="submit3" class="submit action-button shadow animate">Submit</button>
+			</div>
 			<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 		</div>
 	</div>

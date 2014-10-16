@@ -23,7 +23,6 @@ input {
     font-size: 100%;
     margin: 0;
     padding: 0;
-    line-height: 50px;
     vertical-align: middle;
     border: 0;
 }
@@ -66,15 +65,26 @@ input {
     opacity: 0;
 }
 
-.msg {
-    background-color: #ccc;
+.submit {
+    float: left;
+    height: 100%;
+    width: 32.5%;
+    z-index: 100;
 }
 
-.msgblink {
-    border: 2px solid #88a;
-    background-color: #ccc;
-    box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-    border-radius: 5px;
+.msg {
+    background: transparent;
+    border: 1px solid #88a;
+    box-sizing: border-box;
+    color: white;
+    font-size: 1.5em;
+    padding: 0 20px;
+}
+
+.msg:focus {
+    border: 1px solid #FFDF00;
+    box-shadow: 0 0 10px #FFDF00;
+    outline:none;
 }
 
 .moveit {
@@ -89,20 +99,26 @@ input {
     z-index: 100;
 }
 
+.paddiv {
+    float: left;
+    height: 100%;
+    width: 1.25%;
+}
+
 #banner {
     background-image: url(/static/Flapper-master/img/brushed.png);
     padding: 20px;
     text-align: center;
 }
 
-#submit {
-    height: 40%;
+#buttonbox {
     margin-bottom: 20px;
+    height: 40%;
     width: 100%;
-    z-index: 100;
 }
 
 #textbox {
+    display: block;
     height: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -127,7 +143,7 @@ input {
 	position: relative;
 	border: 0;
 	font-size: 25px;
-	color: #FFF;
+	color: #000000;
 	text-decoration: none;
 }
 
@@ -142,30 +158,9 @@ input {
 	border-bottom: 5px solid #2980B9;
 }
 
-.red
-{
-	background-color: #E74C3C;
-	border-bottom: 5px solid #BD3E31;
-	text-shadow: 0px -2px #BD3E31;
-}
-
-.green
-{
-	background-color: #82BF56;
-	border-bottom: 5px solid #669644;
-	text-shadow: 0px -2px #669644;
-}
-
-.yellow
-{
-	background-color: #F2CF66;
-	border-bottom: 5px solid #D1B358;
-	text-shadow: 0px -2px #D1B358;
-}
-
 .action-button:active
 {
-	border-bottom: 0px solid #2980B9;
-	border-top: 5px solid rgb(14,14,15);
+	border-bottom: 0px solid #2980B9 !important;
+	border-top: 5px solid rgb(14,14,15) !important;
 }
 

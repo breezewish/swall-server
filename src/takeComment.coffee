@@ -18,7 +18,7 @@ sendComment  = ()->
 
     request.onreadystatechange = ()->
             if (request.readyState == 4 && request.status == 200)
-                $('#submit').html('Submit')
+                $('.submit').html('Submit')
 
     request.open("POST", "/1", true)
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -27,17 +27,17 @@ sendComment  = ()->
 
 $(() ->
     options = {
-            width: 14,
-            chars_preset: 'alpha',
+        width: 14,
+        chars_preset: 'alpha',
     }
 
     classmsg.focus ()->
         $(this).addClass('msgbink')
 
     classmsg.keypress (e)->
-        $('#submit').click() if e.which is 13
+        $('.submit').click() if e.which is 13
 
-    $('#submit').click ()->
+    $('.submit').click ()->
         classmsg.focus()
 
         newfog = $('<div>').css({top: $(this).position().top, left: $(this).position().left, position:'absolute', width: $(this).width(), height: $(this).height(), 'z-index': 10}).appendTo($('#textbox'))
@@ -64,7 +64,7 @@ $(() ->
             sendComment()
             theInput.value = ''
 
-            $('#submit').html('Send...')
+            $('.submit').html('Send...')
 
     stationBar = $('#station').flapper(options);
 

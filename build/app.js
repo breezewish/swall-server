@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, colorLuminance, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -49,6 +49,24 @@
 
   users = require('../build/routes/users');
 
+  colorLuminance = function(hex, lum) {
+    var c, i, rgb;
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    lum = lum || 0;
+    rgb = "#";
+    i = 0;
+    while (i < 3) {
+      c = parseInt(hex.substr(i * 2, 2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00" + c).substr(c.length);
+      ++i;
+    }
+    return rgb;
+  };
+
   db = mongoose.createConnection('mongodb://localhost/test');
 
   information = mongoose.Schema({
@@ -62,8 +80,22 @@
 
   GLOBAL.Comment = Comment;
 
+  GLOBAL.info = {
+    title: '2014同济大学软件学院迎新晚会',
+    buttom2: '#01FF70',
+    buttomborder2: colorLuminance('#01FF70', -0.2),
+    buttom3: '#F8F8FF',
+    buttomborder3: colorLuminance('#F8F8FF', -0.2)
+  };
+
   io.on('connect', function(socket) {
     console.log('connected.');
+    socket.on('chacol', function(data) {
+      info.buttom2 = data.buttom2;
+      info.buttomborder2 = colorLuminance(data.buttom2, -0.2);
+      info.buttom3 = data.buttom3;
+      return info.buttomborder3 = colorLuminance(data.buttom3, -0.2);
+    });
     socket.on('/subscribe', function(data) {
       socket.join(data.id);
       return socket.emit('sucscribeOk', data.id);

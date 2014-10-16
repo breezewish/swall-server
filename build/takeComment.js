@@ -21,7 +21,7 @@
     request.timeout = 3000;
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
-        return $('#submit').html('Submit');
+        return $('.submit').html('Submit');
       }
     };
     request.open("POST", "/1", true);
@@ -40,10 +40,10 @@
     });
     classmsg.keypress(function(e) {
       if (e.which === 13) {
-        return $('#submit').click();
+        return $('.submit').click();
       }
     });
-    $('#submit').click(function() {
+    $('.submit').click(function() {
       var newText, newfog;
       classmsg.focus();
       newfog = $('<div>').css({
@@ -75,7 +75,7 @@
         }, 2000);
         sendComment();
         theInput.value = '';
-        return $('#submit').html('Send...');
+        return $('.submit').html('Send...');
       }
     });
     stationBar = $('#station').flapper(options);

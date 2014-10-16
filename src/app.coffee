@@ -35,14 +35,47 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
+#Function used to darken.
+colorLuminance = (hex, lum)->
+    hex = String(hex).replace(/[^0-9a-f]/gi, '')
+    if (hex.length < 6)
+            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2]
+
+    lum = lum || 0
+    rgb = "#"
+    i = 0
+    while i<3
+        c = parseInt(hex.substr(i*2,2), 16)
+        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16)
+        rgb += ("00"+c).substr(c.length)
+        ++i
+
+    return rgb
+
+
 db          = mongoose.createConnection 'mongodb://localhost/test'
 information = mongoose.Schema {time: Number, ip: String, us: String, msg: String}
 Comment     = db.model 'Comment', information
 
 GLOBAL.Comment = Comment
+GLOBAL.info = 
+    title: '2014同济大学软件学院迎新晚会'
+    buttom2: '#01FF70'
+    buttomborder2: colorLuminance('#01FF70', -0.2)
+    buttom3: '#F8F8FF'
+    buttomborder3: colorLuminance('#F8F8FF', -0.2)
+
 
 io.on 'connect', (socket)->
     console.log 'connected.'
+
+    #Change the color of the buttom
+    socket.on 'chacol', (data)->
+        info.buttom2 = data.buttom2
+        info.buttomborder2 = colorLuminance(data.buttom2, -0.2)
+        info.buttom3 = data.buttom3
+        info.buttomborder3 = colorLuminance(data.buttom3, -0.2)
+
     # Client ask for message
     socket.on '/subscribe', (data)->
         # add to subscribe pool

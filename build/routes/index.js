@@ -6,10 +6,6 @@
   router = express.Router();
 
   router.get('/1', function(req, res) {
-    var info;
-    info = {
-      title: '2014同济大学软件学院迎新晚会'
-    };
     return res.render('takeComment', info);
   });
 
