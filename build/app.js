@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, bodyParser, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -34,7 +34,16 @@
 
   GLOBAL.io = io;
 
-  server.listen(80);
+  server.listen(443);
+
+  app_http = require('express')();
+
+  app_http.all('*', function(req, res) {
+    res.redirect('https://swall.me' + req.url);
+    return res.end();
+  });
+
+  app_http.listen(80);
 
   routes = require('../build/routes/index');
 

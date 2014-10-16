@@ -20,8 +20,16 @@ io     = require('socket.io')(server)
 
 GLOBAL.io = io
 
-server.listen 80
+server.listen 443
 #server.listen 3000
+
+app_http = require('express')()
+app_http.all '*', (req, res)->
+    res.redirect 'https://swall.me' + req.url
+    res.end()
+
+app_http.listen 80
+
 
 routes = require '../build/routes/index'
 users  = require '../build/routes/users'
