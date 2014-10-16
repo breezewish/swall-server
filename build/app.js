@@ -34,7 +34,7 @@
 
   GLOBAL.io = io;
 
-  server.listen(80);
+  server.listen(443);
 
   routes = require('../build/routes/index');
 
