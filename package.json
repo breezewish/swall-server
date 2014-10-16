@@ -16,7 +16,8 @@
     "stylus": "0.42.3",
     "socket.io": "*",
     "socket.io-client": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "keyword-filter": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

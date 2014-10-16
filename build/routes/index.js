@@ -6,7 +6,11 @@
   router = express.Router();
 
   router.get('/1', function(req, res) {
-    return res.render('takeComment');
+    var info;
+    info = {
+      title: '2014同济大学软件学院迎新晚会'
+    };
+    return res.render('takeComment', info);
   });
 
   router.post('/:id', function(req, res) {

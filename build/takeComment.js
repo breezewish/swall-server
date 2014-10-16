@@ -45,6 +45,7 @@
     });
     $('#submit').click(function() {
       var newText, newfog;
+      classmsg.focus();
       newfog = $('<div>').css({
         top: $(this).position().top,
         left: $(this).position().left,
@@ -74,8 +75,7 @@
         }, 2000);
         sendComment();
         theInput.value = '';
-        $('#submit').html('Send...');
-        return classmsg.focus();
+        return $('#submit').html('Send...');
       }
     });
     stationBar = $('#station').flapper(options);

@@ -4,7 +4,10 @@ router  = express.Router()
 
 # GET home page.
 router.get '/1', (req,res)->
-	res.render 'takeComment'
+    info = 
+        title: '2014同济大学软件学院迎新晚会'
+
+    res.render 'takeComment', info
 
 
 router.post '/:id', (req, res)->

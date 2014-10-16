@@ -3,7 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0 minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-	<title>弹幕入口</title>
+	<% if(title.length) { %>
+		<title><%= title %></title>
+	<% } %>
 	<link rel="stylesheet" href="/static/Flapper-master/css/flapper.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="/stylesheets/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
@@ -13,7 +15,9 @@
 			<input id="station" class="header dark XS">
 		</div>
 	</div>
-	<h1 align='center'>2014年同济大学软件学院迎新晚会</h1>
+	<% if(title.length) { %>
+		<h1 align='center'><%= title %></h1>
+	<% } %>
 	<div class="container">
 		<div id="textbox">
 			<button id="submit" class="action-button shadow animate blue">Submit</button>

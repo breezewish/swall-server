@@ -38,6 +38,8 @@ $(() ->
         $('#submit').click() if e.which is 13
 
     $('#submit').click ()->
+        classmsg.focus()
+
         newfog = $('<div>').css({top: $(this).position().top, left: $(this).position().left, position:'absolute', width: $(this).width(), height: $(this).height(), 'z-index': 10}).appendTo($('#textbox'))
         newfog.offset($(this).offset())
         newfog.addClass('fogstart')
@@ -63,7 +65,6 @@ $(() ->
             theInput.value = ''
 
             $('#submit').html('Send...')
-            classmsg.focus()
 
     stationBar = $('#station').flapper(options);
 
