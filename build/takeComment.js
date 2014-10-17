@@ -1,5 +1,5 @@
 (function() {
-  var classmsg, encodeForm, sendComment, theInput, theWindow;
+  var classmsg, color, encodeForm, sendComment, theInput, theWindow;
 
   theWindow = $(window);
 
@@ -7,11 +7,15 @@
 
   classmsg = $('.msg');
 
+  color = '';
+
   encodeForm = function() {
     var allInformation;
     allInformation = [];
     theInput = document.getElementById('msg');
     allInformation.push("msg" + "=" + theInput.value);
+    allInformation.push("color" + "=" + color);
+    console.log(color);
     return allInformation.join("&");
   };
 
@@ -35,9 +39,6 @@
       width: 14,
       chars_preset: 'alpha'
     };
-    classmsg.focus(function() {
-      return $(this).addClass('msgbink');
-    });
     classmsg.keypress(function(e) {
       if (e.which === 13) {
         return $('.submit').click();
@@ -46,6 +47,7 @@
     $('.submit').click(function() {
       var newText, newfog;
       classmsg.focus();
+      color = $(this).attr('datacolor');
       newfog = $('<div>').css({
         top: $(this).position().top,
         left: $(this).position().left,

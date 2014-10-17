@@ -10,21 +10,23 @@
   });
 
   router.post('/:id', function(req, res) {
-    var comment, info;
-    info = {
+    var comment, infos;
+    infos = {
+      color: req.body.color,
       id: parseInt(req.params.id),
       time: Date.now(),
-      ip: req.remoteAddr,
+      ip: req.connection.remoteAddress,
       ua: req.headers['user-agent'] || '',
       msg: req.body.msg
     };
-    comment = Comment(info);
+    comment = Comment(infos);
     comment.save(function(err, comment) {
       if (err) {
         return console.log(err);
       }
     });
-    io.to(req.params.id).emit('comment', info);
+    console.log(infos);
+    io.to(req.params.id).emit('comment', infos);
     return res.sendStatus(200);
   });
 

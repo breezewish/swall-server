@@ -27,15 +27,6 @@ input {
     border: 0;
 }
 
-@keyframes fog {
-    0% {
-	opacity: 80%;
-    }
-    100% {
-	opacity: 0%;
-    }
-}
-
 .container {
     background-color: rgb(14, 14, 15);
     height: 50%;
@@ -68,7 +59,6 @@ input {
 .submit {
     float: left;
     height: 100%;
-    width: 32.5%;
     z-index: 100;
 }
 
@@ -87,8 +77,20 @@ input {
     outline:none;
 }
 
+@keyframes fog {
+    from {
+	    color: white;
+	    opacity: 1;
+    }
+    to {
+	    color: white;
+	    opacity: 0;
+    }
+}
+
 .moveit {
-    -webkit-transition:width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    animation: fog 2s ease-in;
+    -webkit-transition:width 2s, height 2s, background-color 2s, opacity 2s,  -webkit-transform 2s ease-in;
     transition:width 2s, height 2s, background-color 2s, transform 2s;
     -webkit-transform:rotate(90deg);
     -ms-transform:rotate(90deg);

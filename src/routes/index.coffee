@@ -9,14 +9,16 @@ router.get '/1', (req,res)->
 
 router.post '/:id', (req, res)->
     # Accept comment from user
-    info    = {id: parseInt(req.params.id), time: Date.now(), ip: req.remoteAddr, ua: req.headers['user-agent'] or '', msg: req.body.msg}
-    comment = Comment info
+    infos    = {color: req.body.color, id: parseInt(req.params.id), time: Date.now(), ip: req.connection.remoteAddress, ua: req.headers['user-agent'] or '', msg: req.body.msg}
+    comment = Comment infos
 
     comment.save (err, comment)->
         if err
             return console.log err
 
-    io.to(req.params.id).emit 'comment', info
+    console.log infos
+
+    io.to(req.params.id).emit 'comment', infos
 
     res.sendStatus(200)
 

@@ -1,6 +1,7 @@
 theWindow = $(window)
 theInput = document.getElementById('msg')
 classmsg = $('.msg')
+color = ''
 
 
 encodeForm = ()->
@@ -8,6 +9,8 @@ encodeForm = ()->
     theInput = document.getElementById('msg')
 
     allInformation.push("msg" + "=" + theInput.value)
+    allInformation.push("color" + "=" + color)
+    console.log color
 
     return allInformation.join("&")
 
@@ -31,14 +34,12 @@ $(() ->
         chars_preset: 'alpha',
     }
 
-    classmsg.focus ()->
-        $(this).addClass('msgbink')
-
     classmsg.keypress (e)->
         $('.submit').click() if e.which is 13
 
     $('.submit').click ()->
         classmsg.focus()
+        color = $(this).attr('datacolor')
 
         newfog = $('<div>').css({top: $(this).position().top, left: $(this).position().left, position:'absolute', width: $(this).width(), height: $(this).height(), 'z-index': 10}).appendTo($('#textbox'))
         newfog.offset($(this).offset())

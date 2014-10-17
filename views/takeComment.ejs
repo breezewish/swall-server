@@ -8,16 +8,6 @@
 	<% } %>
 	<link rel="stylesheet" href="/static/Flapper-master/css/flapper.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="/stylesheets/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	<style type="text/css" media="screen">
-		#submit2 {
-			background-color: <%= buttom2 %>;
-			border-bottom: 5px solid <%= buttomborder2 %>;
-		}
-		#submit3 {
-			background-color: <%= buttom3 %>;
-			border-bottom: 5px solid <%= buttomborder3 %>;
-		}
-	</style>
 </head>
 <body>
 	<div id="banner">
@@ -31,11 +21,12 @@
 	<div class="container">
 		<div id="textbox">
 			<div id="buttonbox">
-				<button id="submit1" class="submit action-button shadow animate blue">Submit</button>
-				<div class="paddiv"></div>
-				<button id="submit2" class="submit action-button shadow animate">Submit</button>
-				<div class="paddiv"></div>
-				<button id="submit3" class="submit action-button shadow animate">Submit</button>
+				<% info.buttonbox.forEach(function(button, index) { %>
+					<button class="submit action-button shadow animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Submit</button>
+					<% if (index != info.buttonbox.length - 1) { %>
+						<div class="paddiv"></div>
+					<% } %>
+				<% }) %>
 			</div>
 			<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 		</div>

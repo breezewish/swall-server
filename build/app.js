@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, colorLuminance, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, fs, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -17,24 +17,17 @@
 
   urlparser = require('url');
 
-  https = require('https');
-
   fs = require('fs');
-
-  httpsOptions = {
-    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
-  };
 
   app = require('express')();
 
-  server = https.createServer(httpsOptions, app);
+  server = require('http').Server(app);
 
   io = require('socket.io')(server);
 
   GLOBAL.io = io;
 
-  server.listen(443);
+  server.listen(3000);
 
   app_http = require('express')();
 
@@ -42,8 +35,6 @@
     res.redirect('https://swall.me' + req.url);
     return res.end();
   });
-
-  app_http.listen(80);
 
   routes = require('../build/routes/index');
 
@@ -67,12 +58,18 @@
     return rgb;
   };
 
+  calButtonWidth = function() {
+    return ((100 - (info.buttonbox.length - 1) * 1.25) / info.buttonbox.length) + "%";
+  };
+
   db = mongoose.createConnection('mongodb://localhost/test');
 
   information = mongoose.Schema({
+    color: String,
+    id: Number,
     time: Number,
     ip: String,
-    us: String,
+    ua: String,
     msg: String
   });
 
@@ -82,19 +79,38 @@
 
   GLOBAL.info = {
     title: '2014同济大学软件学院迎新晚会',
-    buttom2: '#01FF70',
-    buttomborder2: colorLuminance('#01FF70', -0.2),
-    buttom3: '#F8F8FF',
-    buttomborder3: colorLuminance('#F8F8FF', -0.2)
+    buttonbox: [
+      {
+        bg: '#F8F8FF',
+        bb: colorLuminance('#F8F8FF', -0.2)
+      }, {
+        bg: '#01FF70',
+        bb: colorLuminance('#01FF70', -0.2)
+      }, {
+        bg: '#3498DB',
+        bb: colorLuminance('#3498DB', -0.2)
+      }
+    ]
   };
+
+  info.buttonwidth = calButtonWidth();
 
   io.on('connect', function(socket) {
     console.log('connected.');
     socket.on('chacol', function(data) {
-      info.buttom2 = data.buttom2;
-      info.buttomborder2 = colorLuminance(data.buttom2, -0.2);
-      info.buttom3 = data.buttom3;
-      return info.buttomborder3 = colorLuminance(data.buttom3, -0.2);
+      var color, _i, _len, _ref;
+      if (data.colors) {
+        info.buttonbox = [];
+        _ref = data.colors;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          color = _ref[_i];
+          info.buttonbox.append({
+            bg: color,
+            bb: colorLuminance(color, -0.2)
+          });
+        }
+        return info.buttonwidth = calButtonWidth();
+      }
     });
     socket.on('/subscribe', function(data) {
       socket.join(data.id);
