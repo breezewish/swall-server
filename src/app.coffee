@@ -65,7 +65,11 @@ Comment     = db.model 'Comment', information
 GLOBAL.Comment = Comment
 GLOBAL.info = 
     title: '2014同济大学软件学院迎新晚会'
-    buttonbox: [{bg: '#F8F8FF', bb: colorLuminance('#F8F8FF', -0.2)}, {bg: '#01FF70', bb: colorLuminance('#01FF70', -0.2)}, {bg: '#3498DB', bb: colorLuminance('#3498DB', -0.2)}]
+    buttonbox: [
+        {bg: '#F8F8FF', bb: colorLuminance('#F8F8FF', -0.2)}
+        {bg: '#01FF70', bb: colorLuminance('#01FF70', -0.2)}
+        {bg: '#3498DB', bb: colorLuminance('#3498DB', -0.2)}
+    ]
 
 info.buttonwidth = calButtonWidth()
 
