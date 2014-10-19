@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -71,6 +71,10 @@
     return ((100 - (info.buttonbox.length - 1) * 1.25) / info.buttonbox.length) + "%";
   };
 
+  calButtonHeight = function() {
+    return ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%";
+  };
+
   db = mongoose.createConnection('mongodb://localhost/test');
 
   information = mongoose.Schema({
@@ -104,6 +108,8 @@
 
   info.buttonwidth = calButtonWidth();
 
+  info.buttonheight = calButtonHeight();
+
   io.on('connect', function(socket) {
     console.log('connected.');
     socket.on('chacol', function(data) {
@@ -118,7 +124,8 @@
             bb: colorLuminance(color, -0.2)
           });
         }
-        return info.buttonwidth = calButtonWidth();
+        info.buttonwidth = calButtonWidth();
+        return info.buttonheight = calButtonHeight();
       }
     });
     socket.on('/subscribe', function(data) {

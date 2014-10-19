@@ -56,6 +56,8 @@ colorLuminance = (hex, lum)->
 calButtonWidth = ()->
     ((100 - (info.buttonbox.length - 1) * 1.25) / info.buttonbox.length) + "%"
 
+calButtonHeight = ()->
+    ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%"
 
 db          = mongoose.createConnection 'mongodb://localhost/test'
 information = mongoose.Schema {color: String, id: Number,  time: Number, ip: String, ua: String, msg: String}
@@ -72,6 +74,7 @@ GLOBAL.info =
     ]
 
 info.buttonwidth = calButtonWidth()
+info.buttonheight = calButtonHeight()
 
 io.on 'connect', (socket)->
     console.log 'connected.'
@@ -83,6 +86,7 @@ io.on 'connect', (socket)->
             for color in data.colors
                 info.buttonbox.append {bg: color, bb: colorLuminance(color, -0.2)}
             info.buttonwidth = calButtonWidth()
+            info.buttonheight = calButtonHeight()
 
     # Client ask for message
     socket.on '/subscribe', (data)->

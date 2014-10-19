@@ -29,10 +29,14 @@ input {
 
 .container {
     background-color: rgb(14, 14, 15);
-    height: 40%;
-    width: 100%;
+    height: 50%;
     margin: 10px 0;
     padding: 10px 0;
+}
+
+.container {
+    height: 40%;
+    width: 100%;
 }
 
 .flapper {
@@ -43,12 +47,15 @@ input {
     background-color: rgb(222, 222, 222);
     opacity: 1;
     position: relative;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
 }
 
 .fogend {
     background-color: rgb(222, 222, 222);
-    transform: scale(5);
+    -webkit-transform: scale(5);
+        -ms-transform: scale(5);
+            transform: scale(5);
     opacity: 0;
 }
 
@@ -61,7 +68,8 @@ input {
 .msg {
     background: transparent;
     border: 1px solid #88a;
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     color: white;
     font-size: 1.5em;
     padding: 0 20px;
@@ -71,6 +79,17 @@ input {
     border: 1px solid #FFDF00;
     box-shadow: 0 0 10px #FFDF00;
     outline:none;
+}
+
+@-webkit-keyframes fog {
+    from {
+	    color: white;
+	    opacity: 1;
+    }
+    to {
+	    color: white;
+	    opacity: 0;
+    }
 }
 
 @keyframes fog {
@@ -85,7 +104,8 @@ input {
 }
 
 .moveit {
-    animation: fog 2s ease-in;
+    -webkit-animation: fog 2s ease-in;
+            animation: fog 2s ease-in;
     -webkit-transition:width 2s, height 2s, background-color 2s, opacity 2s,  -webkit-transform 2s ease-in;
     transition:width 2s, height 2s, background-color 2s, transform 2s;
     -webkit-transform:rotate(90deg);

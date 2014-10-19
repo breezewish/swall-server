@@ -6,7 +6,11 @@
   router = express.Router();
 
   router.get('/1', function(req, res) {
-    return res.render('takeComment', info);
+    if (parseInt(req.query.page) === 2) {
+      return res.render('takeComment2', info);
+    } else {
+      return res.render('takeComment', info);
+    }
   });
 
   router.post('/:id', function(req, res) {
