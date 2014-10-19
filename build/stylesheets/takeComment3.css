@@ -156,10 +156,3 @@ input {
 	background-color: #3498DB;
 	border-bottom: 5px solid #2980B9;
 }
-
-.action-button:active
-{
-	border-bottom: 0px solid #2980B9 !important;
-	border-top: 5px solid rgb(14,14,15) !important;
-}
-

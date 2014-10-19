@@ -4,8 +4,8 @@ router  = express.Router()
 
 # GET home page.
 router.get '/1', (req,res)->
-    if parseInt(req.query.page) == 2
-        res.render 'takeComment2', info
+    if req.query.page?
+        res.render "takeComment#{req.query.page}", info
     else
         res.render 'takeComment', info
 

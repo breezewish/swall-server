@@ -6,8 +6,8 @@
   router = express.Router();
 
   router.get('/1', function(req, res) {
-    if (parseInt(req.query.page) === 2) {
-      return res.render('takeComment2', info);
+    if (req.query.page != null) {
+      return res.render("takeComment" + req.query.page, info);
     } else {
       return res.render('takeComment', info);
     }

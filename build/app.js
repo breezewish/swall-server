@@ -94,14 +94,14 @@
     title: '2014同济大学软件学院迎新晚会',
     buttonbox: [
       {
-        bg: '#F8F8FF',
+        bg: '#F8F8F8',
         bb: colorLuminance('#F8F8FF', -0.2)
       }, {
-        bg: '#01FF70',
-        bb: colorLuminance('#01FF70', -0.2)
+        bg: '#79BD8F',
+        bb: colorLuminance('#79BD8F', -0.2)
       }, {
-        bg: '#3498DB',
-        bb: colorLuminance('#3498DB', -0.2)
+        bg: '#00B8FF',
+        bb: colorLuminance('#00B8FF', -0.2)
       }
     ]
   };

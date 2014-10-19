@@ -43,15 +43,12 @@ input {
     background-color: rgb(222, 222, 222);
     opacity: 1;
     position: relative;
-    -webkit-transition: all 0.2s ease-in-out;
-            transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .fogend {
     background-color: rgb(222, 222, 222);
-    -webkit-transform: scale(5);
-        -ms-transform: scale(5);
-            transform: scale(5);
+    transform: scale(5);
     opacity: 0;
 }
 
@@ -63,8 +60,7 @@ input {
 .msg {
     background: transparent;
     border: 1px solid #88a;
-    -moz-box-sizing: border-box;
-         box-sizing: border-box;
+    box-sizing: border-box;
     color: white;
     font-size: 1.5em;
     padding: 0 20px;
@@ -79,22 +75,15 @@ input {
 .moveit {
     opacity:1;
     color: white;
-    -webkit-transition:opacity 0.6s, -webkit-transform 0.6s;
-            transition:opacity 0.6s, transform 0.6s;
-    -webkit-transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-            transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-    -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s;
-    -webkit-transform-origin: 100%;
-        -ms-transform-origin: 100%;
-            transform-origin: 100%;
+    transition:opacity 0.6s, transform 0.6s;
+    transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transition-duration: 0.3s;
+    transform-origin: 100%;
     z-index: 100;
 }
 
 .moveit-end {
-    -webkit-transform:rotate(90deg);
-        -ms-transform:rotate(90deg);
-            transform:rotate(90deg);
+    transform:rotate(90deg);
     opacity:0;
 }
 
@@ -156,10 +145,3 @@ input {
 	background-color: #3498DB;
 	border-bottom: 5px solid #2980B9;
 }
-
-.action-button:active
-{
-	border-bottom: 0px solid #2980B9 !important;
-	border-top: 5px solid rgb(14,14,15) !important;
-}
-
