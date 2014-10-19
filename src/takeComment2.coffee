@@ -52,14 +52,27 @@ $(() ->
         1000
 
         if theInput.value.length > 0
-            newText = $('<div>').appendTo($('#textbox')).css({top: classmsg.position().top, left: classmsg.position().left, position:'absolute', width: classmsg.width(), height: classmsg.height()})
+            newText = $('<div>').addClass('moveit')
+                .appendTo $('#textbox')
+                .css
+                    top: classmsg.position().top
+                    left: classmsg.position().left
+                    position: 'absolute'
+                    width: classmsg.width()
+                    height: classmsg.height()
+                    padding: '0 20px'
+                    'font-size': '1.5em'
+                    'line-height': "#{classmsg.height()}px"
+                    border: '1px solid transparent'
+
             newText.text(theInput.value)
-            newText.addClass('moveit')
+            setTimeout -> 
+                newText.addClass('moveit-end')
+            , 0
 
             window.setTimeout ()->
                 newText.remove()
-            ,
-            2000
+            , 2000
 
             sendComment()
             theInput.value = ''

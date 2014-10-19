@@ -3,7 +3,7 @@ html {
     overflow: hidden;
 }
 
-body {
+body, input {
     font-family: "Open Sans", arial, sans-serif;
 }
 
@@ -66,6 +66,7 @@ input {
          box-sizing: border-box;
     color: white;
     font-size: 1.5em;
+    height: 40px;
     padding: 0 20px;
     z-index: 100;
 }
@@ -76,40 +77,26 @@ input {
     outline:none;
 }
 
-@-webkit-keyframes fog {
-    from {
-	    color: white;
-	    opacity: 1;
-    }
-    to {
-	    color: white;
-	    opacity: 0;
-    }
-}
-
-@keyframes fog {
-    from {
-	    color: white;
-	    opacity: 1;
-    }
-    to {
-	    color: white;
-	    opacity: 0;
-    }
-}
-
 .moveit {
-    -webkit-animation: fog 2s ease-in;
-            animation: fog 2s ease-in;
-    -webkit-transition:width 2s, height 2s, background-color 2s, opacity 2s,  -webkit-transform 2s ease-in;
-    transition:width 2s, height 2s, background-color 2s, transform 2s;
-    -webkit-transform:rotate(90deg);
-    -ms-transform:rotate(90deg);
-        transform:rotate(90deg);
+    opacity:1;
+    color: white;
+    -webkit-transition:opacity 0.6s, -webkit-transform 0.6s;
+            transition:opacity 0.6s, transform 0.6s;
+    -webkit-transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+            transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
     -webkit-transform-origin: 100%;
         -ms-transform-origin: 100%;
             transform-origin: 100%;
     z-index: 100;
+}
+
+.moveit-end {
+    -webkit-transform:rotate(90deg);
+        -ms-transform:rotate(90deg);
+            transform:rotate(90deg);
+    opacity:0;
 }
 
 .paddiv {
@@ -138,7 +125,6 @@ input {
 }
 
 #msg {
-    height: 40%;
     width: 100%;
 }
 

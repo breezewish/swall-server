@@ -22,13 +22,18 @@
 		<div id="textbox">
 			<div id="buttonbox">
 				<% info.buttonbox.forEach(function(button, index) { %>
+				<div>
 					<button class="submit action-button shadow animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Submit</button>
+				</div>
 					<% if (index != info.buttonbox.length - 1) { %>
 						<div class="paddiv"></div>
 					<% } %>
 				<% }) %>
+				<div class="paddiv"></div>
+				<div>
+					<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+				</div>
 			</div>
-			<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 		</div>
 	</div>
 	<script src="/static/jquery-2.1.1.min.js"></script>
