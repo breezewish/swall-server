@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, fs, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -17,17 +17,24 @@
 
   urlparser = require('url');
 
+  https = require('https');
+
   fs = require('fs');
+
+  httpsOptions = {
+    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+  };
 
   app = require('express')();
 
-  server = require('http').Server(app);
+  server = https.createServer(httpsOptions, app);
 
   io = require('socket.io')(server);
 
   GLOBAL.io = io;
 
-  server.listen(3000);
+  server.listen(443);
 
   app_http = require('express')();
 
@@ -35,6 +42,8 @@
     res.redirect('https://swall.me' + req.url);
     return res.end();
   });
+
+  app_http.listen(80);
 
   routes = require('../build/routes/index');
 
