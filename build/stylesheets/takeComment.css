@@ -58,7 +58,6 @@ input {
 .submit {
     float: left;
     height: 100%;
-    z-index: 100;
 }
 
 .msg {

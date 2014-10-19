@@ -10,7 +10,6 @@ encodeForm = ()->
 
     allInformation.push("msg" + "=" + theInput.value)
     allInformation.push("color" + "=" + color)
-    console.log color
 
     return allInformation.join("&")
 
