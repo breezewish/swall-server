@@ -54,7 +54,7 @@
         width: $(this).width(),
         height: $(this).height(),
         'z-index': 10
-      }).appendTo($('#textbox'));
+      }).appendTo($('#text-box'));
       newfog.offset($(this)).offset();
       newfog.addClass('fogstart');
       newfog.addClass('fogend');
@@ -62,7 +62,7 @@
         return newfog.remove();
       }, 1000);
       if (theInput.value.length > 0) {
-        newText = $('<div>').addClass('moveit').appendTo($('#textbox')).css({
+        newText = $('<div>').addClass('moveit').appendTo($('#text-box')).css({
           top: classmsg.position().top,
           left: classmsg.position().left,
           position: 'absolute',

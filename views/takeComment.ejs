@@ -19,9 +19,9 @@
 		<h1 align='center'><%= title %></h1>
 	<% } %>
 	<div class="container">
-		<div id="textbox">
+		<div id="text-box">
 			<% if (info.page == 1) { %>
-				<div id="buttonbox">
+				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
 					<button class="submit button-with-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != info.buttonbox.length - 1) { %>
@@ -32,7 +32,7 @@
 				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 			<% } %>
 			<% if (info.page == 2) { %>
-				<div id="buttonbox">
+				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
 					<button class="submit button-without-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != info.buttonbox.length - 1) { %>
@@ -43,7 +43,7 @@
 				</div>
 			<% } %>
 			<% if (info.page == 3) { %>
-				<div id="buttonbox">
+				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
 					<button class="submit button-with-float nonactive-button animate" style="color: <%= button.bg %>; border: 5px solid <%= button.bg %>; background:transparent;width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != info.buttonbox.length - 1) { %>

@@ -16,6 +16,10 @@
 
   router.post('/:id', function(req, res) {
     var comment, infos;
+    if (filtKeyWord(req.body.msg)) {
+      res.sendStatus(200);
+      return;
+    }
     infos = {
       color: req.body.color,
       id: parseInt(req.params.id),

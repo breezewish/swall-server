@@ -14,12 +14,17 @@ router.get '/1', (req,res)->
 
 router.post '/:id', (req, res)->
     # Accept comment from user
+    if filtKeyWord req.body.msg
+        res.sendStatus 200
+        return
+
     infos    = 
         color: req.body.color
         id: parseInt req.params.id
         time: Date.now()
         ip: req.connection.remoteAddress
-        ua: req.headers['user-agent'] or '', msg: req.body.msg
+        ua: req.headers['user-agent'] or ''
+        msg: req.body.msg
 
     comment = Comment infos
 
@@ -29,7 +34,7 @@ router.post '/:id', (req, res)->
 
     io.to(req.params.id).emit 'comment', infos
 
-    res.sendStatus(200)
+    res.sendStatus 200
 
 
 router.get '/', (req, res)->
@@ -41,12 +46,11 @@ router.get '/1/test', (req, res)->
 
 
 router.get '/1/info', (req, res)->
-    res.json {
-        id: 1,
-        link: 'www.swall.me/1',
-        title: '软件学院迎新晚会',
+    res.json
+        id: 1
+        link: 'www.swall.me/1'
+        title: '软件学院迎新晚会'
         forbidden: []
-    }
 
 
 module.exports = router

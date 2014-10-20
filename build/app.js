@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, filter, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -20,6 +20,8 @@
   https = require('https');
 
   fs = require('fs');
+
+  filter = require('keyword-filter');
 
   httpsOptions = {
     key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
@@ -49,6 +51,19 @@
 
   users = require('../build/routes/users');
 
+  db = mongoose.createConnection('mongodb://localhost/test');
+
+  information = mongoose.Schema({
+    color: String,
+    id: Number,
+    time: Number,
+    ip: String,
+    ua: String,
+    msg: String
+  });
+
+  Comment = db.model('Comment', information);
+
   colorLuminance = function(hex, lum) {
     var c, i, rgb;
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
@@ -75,19 +90,6 @@
     return ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%";
   };
 
-  db = mongoose.createConnection('mongodb://localhost/test');
-
-  information = mongoose.Schema({
-    color: String,
-    id: Number,
-    time: Number,
-    ip: String,
-    ua: String,
-    msg: String
-  });
-
-  Comment = db.model('Comment', information);
-
   GLOBAL.Comment = Comment;
 
   GLOBAL.info = {
@@ -103,7 +105,25 @@
         bg: '#00B8FF',
         bb: colorLuminance('#00B8FF', -0.2)
       }
-    ]
+    ],
+    keyword: ['fuck']
+  };
+
+  filter.init(info.keyword);
+
+  GLOBAL.filtKeyWord = function(msg) {
+    var chinese, english;
+    english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9]/g, '');
+    english = english.toLowerCase();
+    chinese = msg.replace(/[A-Za-z0-9]/g, '');
+    console.log(msg);
+    console.log(english);
+    console.log(chinese);
+    if (filter.hasKeyword(msg) || filter.hasKeyword(english) || filter.hasKeyword(chinese)) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   info.page = 1;

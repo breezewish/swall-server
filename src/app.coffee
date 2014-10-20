@@ -8,6 +8,7 @@ mongoose     = require 'mongoose'
 urlparser    = require 'url'
 https        = require 'https'
 fs           = require 'fs'
+filter       = require 'keyword-filter'
 
 
 httpsOptions =
@@ -41,6 +42,17 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
+db          = mongoose.createConnection 'mongodb://localhost/test'
+information = mongoose.Schema 
+    color: String
+    id: Number
+    time: Number
+    ip: String
+    ua: String
+    msg: String
+Comment     = db.model 'Comment', information
+
+
 #Function used to darken.
 colorLuminance = (hex, lum)->
     hex = String(hex).replace(/[^0-9a-f]/gi, '')
@@ -67,17 +79,6 @@ calButtonHeight = ()->
     ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%"
 
 
-db          = mongoose.createConnection 'mongodb://localhost/test'
-information = mongoose.Schema 
-    color: String
-    id: Number
-    time: Number
-    ip: String
-    ua: String
-    msg: String
-Comment     = db.model 'Comment', information
-
-
 GLOBAL.Comment = Comment
 GLOBAL.info = 
     title: '2014同济大学软件学院迎新晚会'
@@ -86,6 +87,23 @@ GLOBAL.info =
         {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
         {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
     ]
+    keyword: [
+        'fuck'
+    ]
+
+
+filter.init info.keyword
+GLOBAL.filtKeyWord = (msg)->
+    english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9]/g, ''
+    english = english.toLowerCase()
+    chinese = msg.replace /[A-Za-z0-9]/g, ''
+    console.log msg
+    console.log english
+    console.log chinese
+    if filter.hasKeyword(msg) or filter.hasKeyword(english) or filter.hasKeyword(chinese)
+        true
+    else
+        false
 
 
 info.page = 1

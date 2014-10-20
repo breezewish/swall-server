@@ -46,7 +46,7 @@ $(() ->
             width: $(this).width()
             height: $(this).height()
             'z-index': 10
-        .appendTo $('#textbox')
+        .appendTo $('#text-box')
 
         newfog.offset $(this)
             .offset()
@@ -62,7 +62,7 @@ $(() ->
 
         if theInput.value.length > 0
             newText = $('<div>').addClass('moveit')
-                .appendTo $('#textbox')
+                .appendTo $('#text-box')
                 .css
                     top: classmsg.position().top
                     left: classmsg.position().left
