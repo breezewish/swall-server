@@ -24,7 +24,7 @@
     request.timeout = 3000;
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
-        return $('.submit').html('Submit');
+        return $('.submit').html('Ok');
       }
     };
     request.open("POST", "/1", true);
@@ -55,7 +55,7 @@
         height: $(this).height(),
         'z-index': 10
       }).appendTo($('#textbox'));
-      newfog.offset($(this).offset());
+      newfog.offset($(this)).offset();
       newfog.addClass('fogstart');
       newfog.addClass('fogend');
       window.setTimeout(function() {

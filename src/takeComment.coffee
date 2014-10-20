@@ -1,15 +1,15 @@
 theWindow = $(window)
-theInput = document.getElementById('msg')
+theInput = document.getElementById 'msg'
 classmsg = $('.msg')
 color = ''
 
 
 encodeForm = ()->
     allInformation = []
-    theInput = document.getElementById('msg')
+    theInput = document.getElementById 'msg'
 
-    allInformation.push("msg" + "=" + theInput.value)
-    allInformation.push("color" + "=" + color)
+    allInformation.push "msg" + "=" + theInput.value
+    allInformation.push "color" + "=" + color
 
     return allInformation.join("&")
 
@@ -20,18 +20,17 @@ sendComment  = ()->
 
     request.onreadystatechange = ()->
             if (request.readyState == 4 && request.status == 200)
-                $('.submit').html('Submit')
+                $('.submit').html('Ok')
 
-    request.open("POST", "/1", true)
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.send(encodeForm())
+    request.open "POST", "/1", true
+    request.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+    request.send encodeForm()
 
 
 $(() ->
-    options = {
-        width: 14,
-        chars_preset: 'alpha',
-    }
+    options =
+        width: 14
+        chars_preset: 'alpha'
 
     classmsg.keypress (e)->
         $('.submit').click() if e.which is 13
@@ -40,11 +39,21 @@ $(() ->
         classmsg.focus()
         color = $(this).attr('datacolor')
 
-        newfog = $('<div>').css({top: $(this).position().top, left: $(this).position().left, position:'absolute', width: $(this).width(), height: $(this).height(), 'z-index': 10}).appendTo($('#textbox'))
-        newfog.offset($(this).offset())
-        newfog.addClass('fogstart')
+        newfog = $('<div>').css
+            top: $(this).position().top
+            left: $(this).position().left
+            position:'absolute'
+            width: $(this).width()
+            height: $(this).height()
+            'z-index': 10
+        .appendTo $('#textbox')
 
-        newfog.addClass('fogend')
+        newfog.offset $(this)
+            .offset()
+
+        newfog.addClass 'fogstart'
+
+        newfog.addClass 'fogend'
 
         window.setTimeout ()->
             newfog.remove()
@@ -64,9 +73,9 @@ $(() ->
                     'font-size': '1.5em'
                     'line-height': "#{classmsg.height()}px"
                     border: '1px solid transparent'
-            newText.text(theInput.value)
+            newText.text theInput.value
             setTimeout ->
-                newText.addClass('moveit-end')
+                newText.addClass 'moveit-end'
             , 0
 
             window.setTimeout ()->
@@ -76,18 +85,17 @@ $(() ->
             sendComment()
             theInput.value = ''
 
-            $('.submit').html('Send...')
+            $('.submit').html 'Send...'
 
-    stationBar = $('#station').flapper(options);
+    stationBar = $('#station').flapper(options)
 
-    all_word = {
-            0: '我要上弹幕>.<      ',
-            1: '欢迎甩节操。        ',
-            2: '不许说脏话-_-      ',
-            3: '不许聊天。。        ',
-            4: '来玩Ingress=o=  ',
+    all_word =
+            0: '我要上弹幕>.<      '
+            1: '欢迎甩节操。        '
+            2: '不许说脏话-_-      '
+            3: '不许聊天。。        '
+            4: '来玩Ingress=o=  '
             5: '请选绿军。         '
-    }
 
     setTimeout(()->
             toggle = 0

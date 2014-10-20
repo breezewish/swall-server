@@ -20,15 +20,39 @@
 	<% } %>
 	<div class="container">
 		<div id="textbox">
-			<div id="buttonbox">
+			<% if (info.page == 1) { %>
+				<div id="buttonbox">
 				<% info.buttonbox.forEach(function(button, index) { %>
-					<button class="submit action-button shadow animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Submit</button>
+					<button class="submit button-with-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != info.buttonbox.length - 1) { %>
-						<div class="paddiv"></div>
+						<div class="paddiv-with-float"></div>
 					<% } %>
 				<% }) %>
-			</div>
-			<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+				</div>
+				<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+			<% } %>
+			<% if (info.page == 2) { %>
+				<div id="buttonbox">
+				<% info.buttonbox.forEach(function(button, index) { %>
+					<button class="submit button-without-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Ok</button>
+					<% if (index != info.buttonbox.length - 1) { %>
+						<div class="paddiv-without-float"></div>
+					<% } %>
+				<% }) %>
+					<input class="msg-fixed-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+				</div>
+			<% } %>
+			<% if (info.page == 3) { %>
+				<div id="buttonbox">
+				<% info.buttonbox.forEach(function(button, index) { %>
+					<button class="submit button-with-float nonactive-button animate" style="color: <%= button.bg %>; border: 5px solid <%= button.bg %>; background:transparent;width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
+					<% if (index != info.buttonbox.length - 1) { %>
+						<div class="paddiv-with-float"></div>
+					<% } %>
+				<% }) %>
+				</div>
+				<input class="msg" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+			<% } %>
 		</div>
 	</div>
 	<script src="/static/jquery-2.1.1.min.js"></script>

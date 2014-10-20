@@ -106,6 +106,8 @@
     ]
   };
 
+  info.page = 1;
+
   info.buttonwidth = calButtonWidth();
 
   info.buttonheight = calButtonHeight();
@@ -175,8 +177,6 @@
   }));
 
   app.use(cookieParser());
-
-  app.use(require('stylus').middleware(path.join(__dirname, path.join('..', 'public'))));
 
   app.use(express["static"](path.join(__dirname, path.join('..', 'public'))));
 

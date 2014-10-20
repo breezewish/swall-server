@@ -22,9 +22,7 @@
 		<div id="textbox">
 			<div id="buttonbox">
 				<% info.buttonbox.forEach(function(button, index) { %>
-				<div>
-					<button class="submit action-button shadow animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Submit</button>
-				</div>
+				<button class="submit action-button shadow animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Submit</button>
 					<% if (index != info.buttonbox.length - 1) { %>
 						<div class="paddiv"></div>
 					<% } %>

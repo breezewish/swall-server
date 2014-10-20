@@ -6,11 +6,12 @@
   router = express.Router();
 
   router.get('/1', function(req, res) {
-    if (req.query.page != null) {
-      return res.render("takeComment" + req.query.page, info);
+    if (req.query.page) {
+      info.page = req.query.page;
     } else {
-      return res.render('takeComment', info);
+      info.page = 1;
     }
+    return res.render('takeComment', info);
   });
 
   router.post('/:id', function(req, res) {

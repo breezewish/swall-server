@@ -4,15 +4,23 @@ router  = express.Router()
 
 # GET home page.
 router.get '/1', (req,res)->
-    if req.query.page?
-        res.render "takeComment#{req.query.page}", info
+    if req.query.page
+        info.page = req.query.page
     else
-        res.render 'takeComment', info
+        info.page = 1
+
+    res.render 'takeComment', info
 
 
 router.post '/:id', (req, res)->
     # Accept comment from user
-    infos    = {color: req.body.color, id: parseInt(req.params.id), time: Date.now(), ip: req.connection.remoteAddress, ua: req.headers['user-agent'] or '', msg: req.body.msg}
+    infos    = 
+        color: req.body.color
+        id: parseInt req.params.id
+        time: Date.now()
+        ip: req.connection.remoteAddress
+        ua: req.headers['user-agent'] or '', msg: req.body.msg
+
     comment = Comment infos
 
     comment.save (err, comment)->

@@ -9,24 +9,30 @@ urlparser    = require 'url'
 https        = require 'https'
 fs           = require 'fs'
 
+
 httpsOptions =
     key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
     cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+
 
 app    = require('express')()
 server = https.createServer(httpsOptions, app)
 #server = require('http').Server(app)
 io     = require('socket.io')(server)
 
+
 GLOBAL.io = io
+
 
 server.listen 443
 #server.listen 3000
+
 
 app_http = require('express')()
 app_http.all '*', (req, res)->
     res.redirect 'https://swall.me' + req.url
     res.end()
+
 
 app_http.listen 80
 
@@ -38,6 +44,7 @@ users  = require '../build/routes/users'
 #Function used to darken.
 colorLuminance = (hex, lum)->
     hex = String(hex).replace(/[^0-9a-f]/gi, '')
+
     if (hex.length < 6)
             hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2]
 
@@ -59,8 +66,15 @@ calButtonWidth = ()->
 calButtonHeight = ()->
     ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%"
 
+
 db          = mongoose.createConnection 'mongodb://localhost/test'
-information = mongoose.Schema {color: String, id: Number,  time: Number, ip: String, ua: String, msg: String}
+information = mongoose.Schema 
+    color: String
+    id: Number
+    time: Number
+    ip: String
+    ua: String
+    msg: String
 Comment     = db.model 'Comment', information
 
 
@@ -73,8 +87,11 @@ GLOBAL.info =
         {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
     ]
 
+
+info.page = 1
 info.buttonwidth = calButtonWidth()
 info.buttonheight = calButtonHeight()
+
 
 io.on 'connect', (socket)->
     console.log 'connected.'
@@ -83,9 +100,13 @@ io.on 'connect', (socket)->
     socket.on 'chacol', (data)->
         if data.colors
             info.buttonbox = []
+
             for color in data.colors
-                info.buttonbox.append {bg: color, bb: colorLuminance(color, -0.2)}
-            info.buttonwidth = calButtonWidth()
+                info.buttonbox.append
+                    bg: color
+                    bb: colorLuminance color, -0.2
+
+            info.buttonwidth  = calButtonWidth()
             info.buttonheight = calButtonHeight()
 
     # Client ask for message
@@ -114,19 +135,18 @@ io.on 'disconnect', ()->
 
 
 # view engine setup
-app.set('views', path.join(__dirname, path.join('..', 'views')))
-app.set('view engine', 'ejs')
+app.set 'views', path.join(__dirname, path.join('..', 'views'))
+app.set 'view engine', 'ejs'
 
 
 # uncomment after placing your favicon in /public
 #app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(cookieParser())
-app.use(require('stylus').middleware(path.join(__dirname, path.join('..', 'public'))))
-app.use(express.static(path.join(__dirname, path.join('..', 'public'))))
-app.use(express.static(path.join(__dirname, path.join('..', 'build'))))
+app.use logger('dev')
+app.use bodyParser.json()
+app.use bodyParser.urlencoded({extended: false})
+app.use cookieParser()
+app.use express.static(path.join(__dirname, path.join('..', 'public')))
+app.use express.static(path.join(__dirname, path.join('..', 'build')))
 
 
 app.use '/', routes
@@ -164,3 +184,4 @@ app.use (err, req, res, next)->
 
 
 module.exports = app
+
