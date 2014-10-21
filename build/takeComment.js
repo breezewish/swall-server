@@ -13,8 +13,8 @@
     var allInformation;
     allInformation = [];
     theInput = document.getElementById('msg');
-    allInformation.push("msg" + "=" + theInput.value);
-    allInformation.push("color" + "=" + color);
+    allInformation.push("msg" + "=" + encodeURIComponent(theInput.value));
+    allInformation.push("color" + "=" + encodeURIComponent(color));
     return allInformation.join("&");
   };
 

@@ -20,6 +20,7 @@
       res.sendStatus(200);
       return;
     }
+    console.log('pass');
     infos = {
       color: req.body.color,
       id: parseInt(req.params.id),

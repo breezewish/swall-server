@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, cookieParser, db, express, favicon, filter, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, config, cookieParser, cson, db, express, favicon, filter, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -23,6 +23,12 @@
 
   filter = require('keyword-filter');
 
+  cson = require('cson');
+
+  GLOBAL.DEBUG = false;
+
+  config = cson.parseFileSync('config.cson');
+
   httpsOptions = {
     key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
     cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
@@ -30,13 +36,21 @@
 
   app = require('express')();
 
-  server = https.createServer(httpsOptions, app);
+  if (DEBUG) {
+    server = require('http').Server(app);
+  } else {
+    server = https.createServer(httpsOptions, app);
+  }
 
   io = require('socket.io')(server);
 
   GLOBAL.io = io;
 
-  server.listen(443);
+  if (DEBUG) {
+    server.listen(3000);
+  } else {
+    server.listen(443);
+  }
 
   app_http = require('express')();
 
@@ -45,7 +59,9 @@
     return res.end();
   });
 
-  app_http.listen(80);
+  if (!DEBUG) {
+    app_http.listen(80);
+  }
 
   routes = require('../build/routes/index');
 
@@ -105,21 +121,28 @@
         bg: '#00B8FF',
         bb: colorLuminance('#00B8FF', -0.2)
       }
-    ],
-    keyword: ['fuck']
+    ]
   };
+
+  info.keyword = config.keyword;
 
   filter.init(info.keyword);
 
   GLOBAL.filtKeyWord = function(msg) {
-    var chinese, english;
-    english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9]/g, '');
+    var chiNoPu, chinese, engNoPu, english;
+    english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, '');
     english = english.toLowerCase();
-    chinese = msg.replace(/[A-Za-z0-9]/g, '');
-    console.log(msg);
-    console.log(english);
-    console.log(chinese);
-    if (filter.hasKeyword(msg) || filter.hasKeyword(english) || filter.hasKeyword(chinese)) {
+    chinese = msg.replace(/[A-Za-z0-9\s]/g, '');
+    engNoPu = english.replace(/[\ |\~\～|\`\｀|\!\！|\@\@|\#\＃|\$\¥|\%\％|\^\^|\&\—|\*\＊|\(\（|\)\）|\-\－|\_\—|\+\＋|\=\＝|\|\｜|\\\＼|\[\［|\]\］|\{\｛|\}\｝|\;\；|\:\：|\"\“\”|\'\‘\’|\,\，|\<\《|\.\。|\>\》|\/\、\／|\?\？]/g, '');
+    chiNoPu = chinese.replace(/[\ |\~\～|\`\｀|\!\！|\@\@|\#\＃|\$\¥|\%\％|\^\^|\&\—|\*\＊|\(\（|\)\）|\-\－|\_\—|\+\＋|\=\＝|\|\｜|\\\＼|\[\［|\]\］|\{\｛|\}\｝|\;\；|\:\：|\"\“\”|\'\‘\’|\,\，|\<\《|\.\。|\>\》|\/\、\／|\?\？]/g, '');
+    if (DEBUG) {
+      console.log('raw: ' + msg);
+      console.log('english: ' + english);
+      console.log('chinese: ' + chinese);
+      console.log('english without punctuation: ' + engNoPu);
+      console.log('chinese without punctuation: ' + chiNoPu);
+    }
+    if (filter.hasKeyword(msg) || filter.hasKeyword(english) || filter.hasKeyword(chinese) || filter.hasKeyword(engNoPu) || filter.hasKeyword(chiNoPu)) {
       return true;
     } else {
       return false;
@@ -133,7 +156,6 @@
   info.buttonheight = calButtonHeight();
 
   io.on('connect', function(socket) {
-    console.log('connected.');
     socket.on('chacol', function(data) {
       var color, _i, _len, _ref;
       if (data.colors) {
@@ -148,6 +170,11 @@
         }
         info.buttonwidth = calButtonWidth();
         return info.buttonheight = calButtonHeight();
+      }
+    });
+    socket.on('keyword', function(keyword) {
+      if (keyword) {
+        return info.keyword += keyword;
       }
     });
     socket.on('/subscribe', function(data) {

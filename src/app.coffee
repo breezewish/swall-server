@@ -9,6 +9,13 @@ urlparser    = require 'url'
 https        = require 'https'
 fs           = require 'fs'
 filter       = require 'keyword-filter'
+cson         = require 'cson'
+
+
+GLOBAL.DEBUG = false
+
+
+config = cson.parseFileSync 'config.cson'
 
 
 httpsOptions =
@@ -16,17 +23,21 @@ httpsOptions =
     cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
 
 
-app    = require('express')()
-server = https.createServer(httpsOptions, app)
-#server = require('http').Server(app)
-io     = require('socket.io')(server)
+app        = require('express')()
+if DEBUG
+    server = require('http').Server(app)
+else
+    server = https.createServer(httpsOptions, app)
+io         = require('socket.io')(server)
 
 
 GLOBAL.io = io
 
 
-server.listen 443
-#server.listen 3000
+if DEBUG
+    server.listen 3000
+else
+    server.listen 443
 
 
 app_http = require('express')()
@@ -35,7 +46,8 @@ app_http.all '*', (req, res)->
     res.end()
 
 
-app_http.listen 80
+if not DEBUG
+    app_http.listen 80
 
 
 routes = require '../build/routes/index'
@@ -72,7 +84,7 @@ colorLuminance = (hex, lum)->
     return rgb
 
 
-calButtonWidth = ()->
+calButtonWidth  = ()->
     ((100 - (info.buttonbox.length - 1) * 1.25) / info.buttonbox.length) + "%"
 
 calButtonHeight = ()->
@@ -80,27 +92,46 @@ calButtonHeight = ()->
 
 
 GLOBAL.Comment = Comment
-GLOBAL.info = 
+GLOBAL.info =
     title: '2014同济大学软件学院迎新晚会'
     buttonbox: [
         {bg: '#F8F8F8', bb: colorLuminance('#F8F8FF', -0.2)}
         {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
         {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
     ]
-    keyword: [
-        'fuck'
-    ]
+info.keyword = config.keyword
 
 
 filter.init info.keyword
+
 GLOBAL.filtKeyWord = (msg)->
-    english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9]/g, ''
+    # English with punctuation
+    english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, ''
     english = english.toLowerCase()
-    chinese = msg.replace /[A-Za-z0-9]/g, ''
-    console.log msg
-    console.log english
-    console.log chinese
-    if filter.hasKeyword(msg) or filter.hasKeyword(english) or filter.hasKeyword(chinese)
+
+    # Chinese with punctuation
+    chinese = msg.replace /[A-Za-z0-9\s]/g, ''
+
+    # English without punctuation
+    engNoPu = english.replace /[\ |\~\～|\`\｀|\!\！|\@\@|\#\＃|\$\¥|\%\％|\^\^|\&\—|\*\＊|\(\（|\)\）|\-\－|\_\—|\+\＋|\=\＝|\|\｜|\\\＼|\[\［|\]\］|\{\｛|\}\｝|\;\；|\:\：|\"\“\”|\'\‘\’|\,\，|\<\《|\.\。|\>\》|\/\、\／|\?\？]/g, ''
+
+    # Chinese without punctuation
+    chiNoPu = chinese.replace /[\ |\~\～|\`\｀|\!\！|\@\@|\#\＃|\$\¥|\%\％|\^\^|\&\—|\*\＊|\(\（|\)\）|\-\－|\_\—|\+\＋|\=\＝|\|\｜|\\\＼|\[\［|\]\］|\{\｛|\}\｝|\;\；|\:\：|\"\“\”|\'\‘\’|\,\，|\<\《|\.\。|\>\》|\/\、\／|\?\？]/g, ''
+
+    if DEBUG
+        console.log 'raw: ' + msg
+        console.log 'english: ' + english
+        console.log 'chinese: ' + chinese
+        console.log 'english without punctuation: ' + engNoPu
+        console.log 'chinese without punctuation: ' + chiNoPu
+
+    if (
+        filter.hasKeyword(msg) or
+        filter.hasKeyword(english) or
+        filter.hasKeyword(chinese) or
+        filter.hasKeyword(engNoPu) or
+        filter.hasKeyword(chiNoPu)
+    )
         true
     else
         false
@@ -112,8 +143,6 @@ info.buttonheight = calButtonHeight()
 
 
 io.on 'connect', (socket)->
-    console.log 'connected.'
-
     #Change the color of the buttom
     socket.on 'chacol', (data)->
         if data.colors
@@ -126,6 +155,11 @@ io.on 'connect', (socket)->
 
             info.buttonwidth  = calButtonWidth()
             info.buttonheight = calButtonHeight()
+
+    # Append the keyword-filter array
+    socket.on 'keyword', (keyword)->
+        if keyword
+            info.keyword += keyword
 
     # Client ask for message
     socket.on '/subscribe', (data)->

@@ -18,7 +18,9 @@ router.post '/:id', (req, res)->
         res.sendStatus 200
         return
 
-    infos    = 
+    console.log 'pass'
+
+    infos = 
         color: req.body.color
         id: parseInt req.params.id
         time: Date.now()
