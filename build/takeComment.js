@@ -15,6 +15,7 @@
     theInput = document.getElementById('msg');
     allInformation.push("msg" + "=" + encodeURIComponent(theInput.value));
     allInformation.push("color" + "=" + encodeURIComponent(color));
+    allInformation.push("HTTP_X_REQUESTED_WITH" + "=" + encodeURIComponent('xmlhttprequest'));
     return allInformation.join("&");
   };
 

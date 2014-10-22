@@ -19,7 +19,7 @@
 		<h1 align='center'><%= title %></h1>
 	<% } %>
 	<div class="container">
-		<div id="text-box">
+		<form id="text-box" action="/1" method="post" onsubmit="return false;">
 			<% if (info.page == 1) { %>
 				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
@@ -53,7 +53,7 @@
 				</div>
 				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 			<% } %>
-		</div>
+		</form>
 	</div>
 	<script src="/static/jquery-2.1.1.min.js"></script>
 	<script src="/takeComment.js"></script>

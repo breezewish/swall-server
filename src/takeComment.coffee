@@ -10,6 +10,7 @@ encodeForm = ()->
 
     allInformation.push "msg" + "=" + encodeURIComponent(theInput.value)
     allInformation.push "color" + "=" + encodeURIComponent(color)
+    allInformation.push "HTTP_X_REQUESTED_WITH" + "=" + encodeURIComponent('xmlhttprequest')
 
     return allInformation.join("&")
 
@@ -97,20 +98,16 @@ $(() ->
             4: '来玩Ingress=o=  '
             5: '请选绿军。         '
 
-    setTimeout(()->
+    setTimeout ()->
             toggle = 0
     
-            setInterval(()->
+            setInterval ()->
                         stationBar.val(all_word[toggle]).change()
                         ++toggle
                         toggle %= 6
                     ,
                     10000
-                    )
         ,
         500
-    )
 )
-
-
 

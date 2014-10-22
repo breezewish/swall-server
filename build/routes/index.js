@@ -36,7 +36,11 @@
       }
     });
     io.to(req.params.id).emit('comment', infos);
-    return res.sendStatus(200);
+    if (req.body.HTTP_X_REQUESTED_WITH === 'xmlhttprequest') {
+      return res.sendStatus(200);
+    } else {
+      return res.render('takeComment', info);
+    }
   });
 
   router.get('/', function(req, res) {

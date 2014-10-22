@@ -36,7 +36,10 @@ router.post '/:id', (req, res)->
 
     io.to(req.params.id).emit 'comment', infos
 
-    res.sendStatus 200
+    if req.body.HTTP_X_REQUESTED_WITH == 'xmlhttprequest'
+        res.sendStatus 200
+    else
+        res.render 'takeComment', info 
 
 
 router.get '/', (req, res)->
