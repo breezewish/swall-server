@@ -15,7 +15,11 @@ router.get '/1', (req,res)->
 router.post '/:id', (req, res)->
     # Accept comment from user
     if filtKeyWord req.body.msg
-        res.sendStatus 200
+        if req.body.HTTP_X_REQUESTED_WITH == 'xmlhttprequest'
+            res.sendStatus 200
+        else
+            res.render 'takeComment', info 
+
         return
 
     console.log 'pass'

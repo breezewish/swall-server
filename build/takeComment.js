@@ -1,5 +1,5 @@
 (function() {
-  var classmsg, color, encodeForm, sendComment, theInput, theWindow;
+  var classmsg, color, sendComment, theInput, theWindow;
 
   theWindow = $(window);
 
@@ -9,37 +9,22 @@
 
   color = '';
 
-  encodeForm = function() {
-    var allInformation;
-    allInformation = [];
-    theInput = document.getElementById('msg');
-    allInformation.push("msg" + "=" + encodeURIComponent(theInput.value));
-    allInformation.push("color" + "=" + encodeURIComponent(color));
-    allInformation.push("HTTP_X_REQUESTED_WITH" + "=" + encodeURIComponent('xmlhttprequest'));
-    return allInformation.join("&");
-  };
-
   sendComment = function() {
-    var error, request;
-    try {
-      if (window.XMLHttpRequest) {
-        request = new XMLHttpRequest();
-      } else {
-        request = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-    } catch (_error) {
-      error = _error;
-      alert(error);
-    }
-    request.timeout = 3000;
-    request.onreadystatechange = function() {
-      if (request.readyState === 4 && request.status === 200) {
-        return $('.submit').html('Ok');
-      }
+    var postData;
+    postData = {
+      msg: encodeURIComponent(theInput.value),
+      color: encodeURIComponent(color),
+      HTTP_X_REQUESTED_WITH: encodeURIComponent('xmlhttprequest')
     };
-    request.open("POST", "/1", true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    return request.send(encodeForm());
+    return $.ajax({
+      type: 'POST',
+      url: '/1',
+      data: postData,
+      success: function() {
+        return $('.submit').html('Ok');
+      },
+      timeout: 3000
+    });
   };
 
   $(function() {

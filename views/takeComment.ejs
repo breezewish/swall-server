@@ -20,6 +20,7 @@
 	<% } %>
 	<div class="container">
 		<form id="text-box" action="/1" method="post" onsubmit="return false;">
+
 			<% if (info.page == 1) { %>
 				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
@@ -31,6 +32,7 @@
 				</div>
 				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 			<% } %>
+
 			<% if (info.page == 2) { %>
 				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
@@ -42,6 +44,7 @@
 					<input class="msg msg-fixed-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 				</div>
 			<% } %>
+
 			<% if (info.page == 3) { %>
 				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
@@ -53,9 +56,10 @@
 				</div>
 				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 			<% } %>
+
 		</form>
 	</div>
-	<script src="/static/jquery-2.1.1.min.js"></script>
+	<script src="//libs.cdnjs.net/jquery/2.1.1/jquery.min.js"></script>
 	<script src="/takeComment.js"></script>
 	<script src="/static/transform-master/dist/jquery.transform-0.9.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/static/Flapper-master/jshashtable-2.1/jshashtable.js" type="text/javascript" charset="utf-8"></script>

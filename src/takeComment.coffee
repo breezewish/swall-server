@@ -4,37 +4,21 @@ classmsg = $('.msg')
 color = ''
 
 
-encodeForm = ()->
-    allInformation = []
-    theInput = document.getElementById 'msg'
-
-    allInformation.push "msg" + "=" + encodeURIComponent(theInput.value)
-    allInformation.push "color" + "=" + encodeURIComponent(color)
-    allInformation.push "HTTP_X_REQUESTED_WITH" + "=" + encodeURIComponent('xmlhttprequest')
-
-    return allInformation.join("&")
-
-
 sendComment  = ()->
-    try
-        if window.XMLHttpRequest
-            # code for IE7+, Firefox, Chrome, Opera, Safari
-            request = new XMLHttpRequest()
-        else
-            # code for IE6, IE5
-            request = new ActiveXObject("Microsoft.XMLHTTP")
-    catch error
-        alert error
+    postData =
+        msg: encodeURIComponent(theInput.value)
+        color: encodeURIComponent(color)
+        HTTP_X_REQUESTED_WITH: encodeURIComponent('xmlhttprequest')
 
-    request.timeout = 3000
+    $.ajax
+        type: 'POST'
+        url: '/1'
+        data: postData
+        success: ()->
+            $('.submit').html('Ok')
+        timeout: 3000
 
-    request.onreadystatechange = ()->
-            if (request.readyState == 4 && request.status == 200)
-                $('.submit').html('Ok')
-
-    request.open "POST", "/1", true
-    request.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
-    request.send encodeForm()
+    # request.timeout = 3000
 
 
 $(() ->
