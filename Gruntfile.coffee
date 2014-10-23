@@ -25,7 +25,7 @@ module.exports = (grunt)->
             watch:
                 project:
                     files: ['src/**/*', 'config.cson']
-                    tasks: ['copy', 'coffee', 'stylus', 'autoprefixer']
+                    tasks: ['copy', 'coffee', 'stylus', 'autoprefixer', 'uglify']
             autoprefixer:
                 project:
                     files: [{
@@ -44,11 +44,16 @@ module.exports = (grunt)->
                     dest: 'src/'
                     ext: '.css'
                     extDot: 'last'
+            uglify:
+                my_target:
+                    files:
+                        'build/takeComment.min.js': ['build/takeComment.js', 'build/static/externaljs.js']
 
     grunt.loadNpmTasks 'grunt-contrib-copy'
     grunt.loadNpmTasks 'grunt-contrib-coffee'
     grunt.loadNpmTasks 'grunt-contrib-watch'
     grunt.loadNpmTasks 'grunt-autoprefixer'
     grunt.loadNpmTasks 'grunt-contrib-stylus'
-    grunt.registerTask 'default', ['copy', 'coffee', 'autoprefixer', 'stylus', 'watch']
+    grunt.loadNpmTasks 'grunt-contrib-uglify'
+    grunt.registerTask 'default', ['copy', 'coffee', 'autoprefixer', 'stylus', 'uglify', 'watch']
 
