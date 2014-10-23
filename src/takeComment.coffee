@@ -1,27 +1,23 @@
 theWindow = $(window)
 theInput = document.getElementById 'msg'
 classmsg = $('.msg')
-color = ''
 
 
-sendComment  = ()->
-    postData =
-        msg: encodeURIComponent(theInput.value)
-        color: encodeURIComponent(color)
-        HTTP_X_REQUESTED_WITH: encodeURIComponent('xmlhttprequest')
+setButton = ()->
+    $('.submit').html('Ok')
 
+
+sendComment  = (postData)->
     $.ajax
         type: 'POST'
         url: '/1'
         data: postData
-        success: ()->
-            $('.submit').html('Ok')
+        success: setButton
         timeout: 3000
-
-    # request.timeout = 3000
 
 
 $(() ->
+    color = ''
     options =
         width: 14
         chars_preset: 'alpha'
@@ -76,7 +72,12 @@ $(() ->
                 newText.remove()
             , 2000
 
-            sendComment()
+            postData =
+                msg: theInput.value
+                color: color
+                HTTP_X_REQUESTED_WITH: 'xmlhttprequest'
+
+            sendComment(postData, setButton)
             theInput.value = ''
 
             $('.submit').html 'Send...'

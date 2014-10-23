@@ -24,7 +24,7 @@
 			<% if (info.page == 1) { %>
 				<div id="button-box">
 				<% info.buttonbox.forEach(function(button, index) { %>
-					<button class="submit button-with-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
+				<button class="submit button-with-float action-button animate" name="buttoncolor" value="<%= button.bg %>" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != info.buttonbox.length - 1) { %>
 						<div class="paddiv-with-float"></div>
 					<% } %>
@@ -59,7 +59,7 @@
 
 		</form>
 	</div>
-	<script src="https://libs.cdnjs.net/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//cdnjs.net/ajax/libs/jquery/2.1.1-rc2/jquery.min.js"></script>
 	<script src="/takeComment.js"></script>
 	<script src="/static/transform-master/dist/jquery.transform-0.9.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/static/Flapper-master/jshashtable-2.1/jshashtable.js" type="text/javascript" charset="utf-8"></script>

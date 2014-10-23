@@ -12,7 +12,7 @@ filter       = require 'keyword-filter'
 cson         = require 'cson'
 
 
-GLOBAL.DEBUG = false
+GLOBAL.DEBUG = true
 
 
 config = cson.parseFileSync 'config.cson'

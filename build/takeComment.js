@@ -1,5 +1,5 @@
 (function() {
-  var classmsg, color, sendComment, theInput, theWindow;
+  var classmsg, sendComment, setButton, theInput, theWindow;
 
   theWindow = $(window);
 
@@ -7,28 +7,23 @@
 
   classmsg = $('.msg');
 
-  color = '';
+  setButton = function() {
+    return $('.submit').html('Ok');
+  };
 
-  sendComment = function() {
-    var postData;
-    postData = {
-      msg: encodeURIComponent(theInput.value),
-      color: encodeURIComponent(color),
-      HTTP_X_REQUESTED_WITH: encodeURIComponent('xmlhttprequest')
-    };
+  sendComment = function(postData) {
     return $.ajax({
       type: 'POST',
       url: '/1',
       data: postData,
-      success: function() {
-        return $('.submit').html('Ok');
-      },
+      success: setButton,
       timeout: 3000
     });
   };
 
   $(function() {
-    var all_word, options, stationBar;
+    var all_word, color, options, stationBar;
+    color = '';
     options = {
       width: 14,
       chars_preset: 'alpha'
@@ -39,7 +34,7 @@
       }
     });
     $('.submit').click(function() {
-      var newText, newfog;
+      var newText, newfog, postData;
       classmsg.focus();
       color = $(this).attr('datacolor');
       newfog = $('<div>').css({
@@ -75,7 +70,12 @@
         window.setTimeout(function() {
           return newText.remove();
         }, 2000);
-        sendComment();
+        postData = {
+          msg: theInput.value,
+          color: color,
+          HTTP_X_REQUESTED_WITH: 'xmlhttprequest'
+        };
+        sendComment(postData, setButton);
         theInput.value = '';
         return $('.submit').html('Send...');
       }
