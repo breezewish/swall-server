@@ -15,7 +15,7 @@ router.get '/1', (req,res)->
 router.post '/:id', (req, res)->
     # Accept comment from user
     if filtKeyWord req.body.msg
-        if req.body.HTTP_X_REQUESTED_WITH == 'xmlhttprequest'
+        if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
         else
             res.render 'takeComment', info 
@@ -39,7 +39,7 @@ router.post '/:id', (req, res)->
 
     io.to(req.params.id).emit 'comment', infos
 
-    if req.body.HTTP_X_REQUESTED_WITH == 'xmlhttprequest'
+    if req.headers['x-requested-with'] == 'XMLHttpRequest'
         res.sendStatus 200
     else
         res.render 'takeComment', info 

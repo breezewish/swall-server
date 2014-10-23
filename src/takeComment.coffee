@@ -75,7 +75,6 @@ $(() ->
             postData =
                 msg: theInput.value
                 color: color
-                HTTP_X_REQUESTED_WITH: 'xmlhttprequest'
 
             sendComment(postData, setButton)
             theInput.value = ''

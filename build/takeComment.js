@@ -72,8 +72,7 @@
         }, 2000);
         postData = {
           msg: theInput.value,
-          color: color,
-          HTTP_X_REQUESTED_WITH: 'xmlhttprequest'
+          color: color
         };
         sendComment(postData, setButton);
         theInput.value = '';

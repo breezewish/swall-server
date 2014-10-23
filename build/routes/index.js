@@ -17,7 +17,7 @@
   router.post('/:id', function(req, res) {
     var comment, infos;
     if (filtKeyWord(req.body.msg)) {
-      if (req.body.HTTP_X_REQUESTED_WITH === 'xmlhttprequest') {
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
         res.sendStatus(200);
       } else {
         res.render('takeComment', info);
@@ -40,7 +40,7 @@
       }
     });
     io.to(req.params.id).emit('comment', infos);
-    if (req.body.HTTP_X_REQUESTED_WITH === 'xmlhttprequest') {
+    if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
       return res.sendStatus(200);
     } else {
       return res.render('takeComment', info);
