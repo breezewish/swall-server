@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, config, cookieParser, cson, db, express, favicon, filter, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, compression, config, cookieParser, cson, db, express, favicon, filter, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
 
   express = require('express');
 
@@ -24,6 +24,8 @@
   filter = require('keyword-filter');
 
   cson = require('cson');
+
+  compression = require('compression');
 
   GLOBAL.DEBUG = false;
 
@@ -62,6 +64,8 @@
   if (!DEBUG) {
     app_http.listen(80);
   }
+
+  app.use(compression());
 
   routes = require('../build/routes/index');
 

@@ -10,6 +10,7 @@ https        = require 'https'
 fs           = require 'fs'
 filter       = require 'keyword-filter'
 cson         = require 'cson'
+compression  = require 'compression'
 
 
 GLOBAL.DEBUG = false
@@ -48,6 +49,7 @@ app_http.all '*', (req, res)->
 
 if not DEBUG
     app_http.listen 80
+app.use compression()
 
 
 routes = require '../build/routes/index'
