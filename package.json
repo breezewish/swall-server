@@ -19,7 +19,8 @@
     "socket.io": "*",
     "socket.io-client": "*",
     "stylus": "0.42.3",
-    "compression": "*"
+    "compression": "*",
+    "spdy": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

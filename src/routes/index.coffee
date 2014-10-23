@@ -19,7 +19,6 @@ router.post '/:id', (req, res)->
             res.sendStatus 200
         else
             res.render 'takeComment', info 
-
         return
 
     console.log 'pass'

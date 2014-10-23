@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, compression, config, cookieParser, cson, db, express, favicon, filter, fs, https, httpsOptions, information, io, logger, mongoose, path, routes, server, urlparser, users;
+  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, compression, config, cookieParser, cson, db, express, favicon, filter, fs, https, information, io, logger, mongoose, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -27,11 +27,13 @@
 
   compression = require('compression');
 
+  spdy = require('spdy');
+
   GLOBAL.DEBUG = false;
 
   config = cson.parseFileSync('config.cson');
 
-  httpsOptions = {
+  spdyOptions = {
     key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
     cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
   };
@@ -41,7 +43,7 @@
   if (DEBUG) {
     server = require('http').Server(app);
   } else {
-    server = https.createServer(httpsOptions, app);
+    server = spdy.createServer(spdyOptions, app);
   }
 
   io = require('socket.io')(server);

@@ -11,6 +11,7 @@ fs           = require 'fs'
 filter       = require 'keyword-filter'
 cson         = require 'cson'
 compression  = require 'compression'
+spdy         = require 'spdy'
 
 
 GLOBAL.DEBUG = false
@@ -19,7 +20,7 @@ GLOBAL.DEBUG = false
 config = cson.parseFileSync 'config.cson'
 
 
-httpsOptions =
+spdyOptions =
     key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
     cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
 
@@ -28,7 +29,7 @@ app        = require('express')()
 if DEBUG
     server = require('http').Server(app)
 else
-    server = https.createServer(httpsOptions, app)
+    server = spdy.createServer(spdyOptions, app)
 io         = require('socket.io')(server)
 
 
