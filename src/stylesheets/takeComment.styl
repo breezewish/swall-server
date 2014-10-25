@@ -1,6 +1,19 @@
+@media screen
+    html
+        height: 600px
+        overflow: hidden
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    html
+        height: 480px
+        overflow: hidden
+
+
+/*
 html
     height: 100%
     overflow: hidden
+*/
 
 body, input
     font-family: "Open Sans", arial, sans-serif
@@ -15,19 +28,36 @@ body
     margin: 0px
 
 input
+    border: 0
     display: block
     font-size: 100%
     margin: 0
     padding: 0
     vertical-align: middle
-    border: 0
 
+/*
 .container
     background-color: rgb(14, 14, 15)
     height: 40%
     width: 100%
     margin: 10px 0
     padding: 10px 0
+*/
+
+@media screen
+    .container
+        background-color: rgb(14, 14, 15)
+        height: 40%
+        width: 100%
+        margin: 10px 0
+        padding: 10px 0
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    .container
+        background-color: rgb(14, 14, 15)
+        height: 300px
+        margin: 10px 0
+        padding: 10px 0
 
 .flapper
     display: inline-block
@@ -48,22 +78,41 @@ input
     margin-bottom: 10px
     width: 100%
 
-.button-with-float
-    float: left
-    margin-bottom: 20px
-    height: 100%
+
+@media screen
+    .button-with-float
+        float: left
+        margin-bottom: 20px
+        height: 100%
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    .button-with-float
+        float: left
+        margin-bottom: 20px
+        height: 90px
 
 /* Message Class */
-.msg-percent-height
-    background: transparent
-    border: 1px solid #88a
-    box-sizing: border-box
-    color: white
-    font-size: 1.5em
-    height: 40%
-    padding: 0 20px
-    width: 100%
+@media screen
+    .msg-percent-height
+        background: transparent
+        border: 1px solid #88a
+        box-sizing: border-box
+        color: white
+        font-size: 1.5em
+        height: 40%
+        padding: 0 20px
+        width: 100%
 
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    .msg-percent-height
+        background: transparent
+        border: 1px solid #88a
+        box-sizing: border-box
+        color: white
+        font-size: 1.5em
+        height: 90px
+        padding: 0 20px
+        width: 100%
 
 .msg-fixed-height
     background: transparent
@@ -137,16 +186,31 @@ input
     padding: 20px
     text-align: center
 
-#button-box
-    height: 40%
-    width: 100%
+@media screen
+    #button-box
+        height: 40%
+        width: 100%
 
-#text-box
-    display: block
-    height: 100%
-    margin-left: auto
-    margin-right: auto
-    width: 80%
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    #button-box
+        height: 100px
+        width: 100%
+
+@media screen
+    #text-box
+        display: block
+        height: 100%
+        margin-left: auto
+        margin-right: auto
+        width: 80%
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    #text-box
+        display: block
+        height: 200px
+        margin-left: auto
+        margin-right: auto
+        width: 80%
 
 /*@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300);*/
 

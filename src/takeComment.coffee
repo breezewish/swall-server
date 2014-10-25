@@ -17,7 +17,7 @@ sendComment  = (postData)->
 
 
 $(() ->
-    color = ''
+    color   = ''
     options =
         width: 14
         chars_preset: 'alpha'
