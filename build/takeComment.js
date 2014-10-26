@@ -33,6 +33,9 @@
         return $('.submit').click();
       }
     });
+    $('form').submit(function() {
+      return false;
+    });
     $('.submit').click(function() {
       var newText, newfog, postData;
       classmsg.focus();
@@ -76,8 +79,9 @@
         };
         sendComment(postData, setButton);
         theInput.value = '';
-        return $('.submit').html('Send...');
+        $('.submit').html('Send...');
       }
+      return false;
     });
     stationBar = $('#station').flapper(options);
     all_word = {

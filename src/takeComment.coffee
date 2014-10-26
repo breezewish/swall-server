@@ -25,6 +25,9 @@ $(() ->
     classmsg.keypress (e)->
         $('.submit').click() if e.which is 13
 
+    $('form').submit ()->
+        return false
+
     $('.submit').click ()->
         classmsg.focus()
         color = $(this).attr('datacolor')
@@ -80,6 +83,8 @@ $(() ->
             theInput.value = ''
 
             $('.submit').html 'Send...'
+
+        return false
 
     stationBar = $('#station').flapper(options)
 
