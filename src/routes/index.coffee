@@ -14,13 +14,11 @@ router.get '/1', (req,res)->
 
 # Change the keyword-filter array
 router.post '/:id/keywords', (req, res)->
-    console.log req.query.keywords, typeof req.query.keywords
-    if req.query.keywords and typeof req.query.keywords is 'array'
-        info.keywords['id_' + req.params.id] = req.query.keywords
-        filters['id_' + req.params.id]       = require('keyword-filter').init req.query.keywords
-        console.log req.query.keywords, typeof req.query.keywords
+    if req.body.keywords and typeof req.body.keywords is 'array'
+        info.keywords['id_' + req.params.id] = req.body.keywords
+        filters['id_' + req.params.id]       = require('keyword-filter').init req.body.keywords
 
-    res.sendStatus 200
+    res.json {}
 
 
 router.post '/:id', (req, res)->

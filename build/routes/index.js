@@ -15,13 +15,11 @@
   });
 
   router.post('/:id/keywords', function(req, res) {
-    console.log(req.query.keywords, typeof req.query.keywords);
-    if (req.query.keywords && typeof req.query.keywords === 'array') {
-      info.keywords['id_' + req.params.id] = req.query.keywords;
-      filters['id_' + req.params.id] = require('keyword-filter').init(req.query.keywords);
-      console.log(req.query.keywords, typeof req.query.keywords);
+    if (req.body.keywords && typeof req.body.keywords === 'array') {
+      info.keywords['id_' + req.params.id] = req.body.keywords;
+      filters['id_' + req.params.id] = require('keyword-filter').init(req.body.keywords);
     }
-    return res.sendStatus(200);
+    return res.json({});
   });
 
   router.post('/:id', function(req, res) {
