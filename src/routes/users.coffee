@@ -1,5 +1,5 @@
 express = require('express')
-router = express.Router()
+router  = express.Router()
 
 # GET users listing.
 router.get('/', (req, res)->

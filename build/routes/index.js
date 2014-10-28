@@ -18,6 +18,7 @@
     if (req.query.keywords && typeof req.query.keywords === 'array') {
       info.keywords['id_' + req.params.id] = req.query.keywords;
       filters['id_' + req.params.id] = require('keyword-filter').init(req.query.keywords);
+      console.log(req.query.keywords, typeof req.query.keywords);
     }
     return res.sendStatus(200);
   });

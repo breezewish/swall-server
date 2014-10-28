@@ -17,6 +17,7 @@ router.post '/:id/keywords', (req, res)->
     if req.query.keywords and typeof req.query.keywords is 'array'
         info.keywords['id_' + req.params.id] = req.query.keywords
         filters['id_' + req.params.id]       = require('keyword-filter').init req.query.keywords
+        console.log req.query.keywords, typeof req.query.keywords
 
     res.sendStatus 200
 
