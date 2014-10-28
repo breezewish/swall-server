@@ -14,7 +14,7 @@ router.get '/1', (req,res)->
 
 # Change the keyword-filter array
 router.post '/:id/keywords', (req, res)->
-    if req.body.keywords and typeof req.body.keywords instanceof Array
+    if req.body.keywords and req.body.keywords instanceof Array
         info.keywords['id_' + req.params.id] = req.body.keywords
         filters['id_' + req.params.id]       = require('keyword-filter').init req.body.keywords
 
