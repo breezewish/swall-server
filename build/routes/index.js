@@ -60,7 +60,7 @@
       id: 1,
       link: 'www.swall.me/1',
       title: '软件学院迎新晚会',
-      forbidden: info.keyword
+      keywords: info.keywords
     });
   });
 

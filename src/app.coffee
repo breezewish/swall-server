@@ -102,10 +102,10 @@ GLOBAL.info =
         {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
         {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
     ]
-info.keyword = config.keyword
+info.keywords = config.keywords
 
 
-filter.init info.keyword
+filter.init info.keywords
 
 GLOBAL.filtKeyWord = (msg)->
     # English with punctuation
@@ -162,7 +162,7 @@ io.on 'connect', (socket)->
     # Append the keyword-filter array
     socket.on 'keyword', (data)->
         if data.keywords and typeof data.keywords is 'array'
-            info.keyword = data.keywords
+            info.keywords = data.keywords
 
     # Client ask for message
     socket.on '/subscribe', (data)->

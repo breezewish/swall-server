@@ -130,9 +130,9 @@
     ]
   };
 
-  info.keyword = config.keyword;
+  info.keywords = config.keywords;
 
-  filter.init(info.keyword);
+  filter.init(info.keywords);
 
   GLOBAL.filtKeyWord = function(msg) {
     var chiNoPu, chinese, engNoPu, english;
@@ -180,7 +180,7 @@
     });
     socket.on('keyword', function(data) {
       if (data.keywords && typeof data.keywords === 'array') {
-        return info.keyword = data.keywords;
+        return info.keywords = data.keywords;
       }
     });
     socket.on('/subscribe', function(data) {
