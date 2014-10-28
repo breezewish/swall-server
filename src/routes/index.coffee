@@ -18,6 +18,8 @@ router.post '/:id/keywords', (req, res)->
         info.keywords['id_' + req.params.id] = req.query.keywords
         filters['id_' + req.params.id]       = require('keyword-filter').init req.query.keywords
 
+    res.sendStatus 200
+
 
 router.post '/:id', (req, res)->
     # Accept comment from user
