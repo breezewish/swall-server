@@ -14,9 +14,16 @@
     return res.render('takeComment', info);
   });
 
+  router.post('/:id/keywords', function(req, res) {
+    if (req.query.keywords && typeof req.query.keywords === 'array') {
+      info.keywords['id_' + req.params.id] = req.query.keywords;
+      return filters['id_' + req.params.id] = require('keyword-filter').init(req.query.keywords);
+    }
+  });
+
   router.post('/:id', function(req, res) {
     var comment, infos;
-    if (filtKeyWord(req.body.msg)) {
+    if (filtKeyWord(req.body.msg, filters['id_' + req.params.id])) {
       if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
         res.sendStatus(200);
       } else {
@@ -51,16 +58,12 @@
     return res.redirect('/1');
   });
 
-  router.get('/1/test', function(req, res) {
-    return res.render('test');
-  });
-
-  router.get('/1/info', function(req, res) {
+  router.get('/:id/info', function(req, res) {
     return res.json({
       id: 1,
-      link: 'www.swall.me/1',
+      link: 'www.swall.me/' + req.params.id,
       title: '软件学院迎新晚会',
-      keywords: info.keywords
+      keywords: info.keywords['id_' + req.params.id]
     });
   });
 

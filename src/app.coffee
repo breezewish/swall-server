@@ -102,12 +102,15 @@ GLOBAL.info =
         {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
         {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
     ]
-info.keywords = config.keywords
+info.keywords =
+    default: config.keywords
+    id_1: config.keywords
 
 
-filter.init info.keywords
-
-GLOBAL.filtKeyWord = (msg)->
+filter.init info.keywords.default
+GLOBAL.filters =
+    id_1: filter
+GLOBAL.filtKeyWord = (msg, filter)->
     # English with punctuation
     english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, ''
     english = english.toLowerCase()
@@ -158,11 +161,6 @@ io.on 'connect', (socket)->
 
             info.buttonwidth  = calButtonWidth()
             info.buttonheight = calButtonHeight()
-
-    # Append the keyword-filter array
-    socket.on 'keyword', (data)->
-        if data.keywords and typeof data.keywords is 'array'
-            info.keywords = data.keywords
 
     # Client ask for message
     socket.on '/subscribe', (data)->

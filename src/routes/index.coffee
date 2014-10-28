@@ -12,9 +12,16 @@ router.get '/1', (req,res)->
     res.render 'takeComment', info
 
 
+# Change the keyword-filter array
+router.post '/:id/keywords', (req, res)->
+    if req.query.keywords and typeof req.query.keywords is 'array'
+        info.keywords['id_' + req.params.id] = req.query.keywords
+        filters['id_' + req.params.id]       = require('keyword-filter').init req.query.keywords
+
+
 router.post '/:id', (req, res)->
     # Accept comment from user
-    if filtKeyWord req.body.msg
+    if filtKeyWord req.body.msg, filters['id_' + req.params.id]
         if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
         else
@@ -49,16 +56,12 @@ router.get '/', (req, res)->
 	res.redirect('/1')
 
 
-router.get '/1/test', (req, res)->
-	res.render 'test'
-
-
-router.get '/1/info', (req, res)->
+router.get '/:id/info', (req, res)->
     res.json
         id: 1
-        link: 'www.swall.me/1'
+        link: 'www.swall.me/' + req.params.id
         title: '软件学院迎新晚会'
-        keywords: info.keywords
+        keywords: info.keywords['id_' + req.params.id]
 
 
 module.exports = router

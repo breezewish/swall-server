@@ -130,11 +130,18 @@
     ]
   };
 
-  info.keywords = config.keywords;
+  info.keywords = {
+    "default": config.keywords,
+    id_1: config.keywords
+  };
 
-  filter.init(info.keywords);
+  filter.init(info.keywords["default"]);
 
-  GLOBAL.filtKeyWord = function(msg) {
+  GLOBAL.filters = {
+    id_1: filter
+  };
+
+  GLOBAL.filtKeyWord = function(msg, filter) {
     var chiNoPu, chinese, engNoPu, english;
     english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, '');
     english = english.toLowerCase();
@@ -176,11 +183,6 @@
         }
         info.buttonwidth = calButtonWidth();
         return info.buttonheight = calButtonHeight();
-      }
-    });
-    socket.on('keyword', function(data) {
-      if (data.keywords && typeof data.keywords === 'array') {
-        return info.keywords = data.keywords;
       }
     });
     socket.on('/subscribe', function(data) {
