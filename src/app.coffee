@@ -160,9 +160,9 @@ io.on 'connect', (socket)->
             info.buttonheight = calButtonHeight()
 
     # Append the keyword-filter array
-    socket.on 'keyword', (keyword)->
-        if keyword
-            info.keyword += keyword
+    socket.on 'keyword', (data)->
+        if data.keywords and typeof data.keywords is 'array'
+            info.keyword = data.keywords
 
     # Client ask for message
     socket.on '/subscribe', (data)->

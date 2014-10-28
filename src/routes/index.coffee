@@ -58,7 +58,7 @@ router.get '/1/info', (req, res)->
         id: 1
         link: 'www.swall.me/1'
         title: '软件学院迎新晚会'
-        forbidden: []
+        forbidden: info.keyword
 
 
 module.exports = router

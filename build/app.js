@@ -178,9 +178,9 @@
         return info.buttonheight = calButtonHeight();
       }
     });
-    socket.on('keyword', function(keyword) {
-      if (keyword) {
-        return info.keyword += keyword;
+    socket.on('keyword', function(data) {
+      if (data.keywords && typeof data.keywords === 'array') {
+        return info.keyword = data.keywords;
       }
     });
     socket.on('/subscribe', function(data) {
