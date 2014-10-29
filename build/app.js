@@ -182,7 +182,7 @@
       console.log('english without punctuation: ' + engNoPu);
       console.log('chinese without punctuation: ' + chiNoPu);
     }
-    if (checkMsg(msg, array) || checkMsg(english, array) || checkMsg(chinese, array) || checkMsg(engNoPu, array) || checkMsg(chiNoPu, array)) {
+    if (checkMsg(msg, keywords) || checkMsg(english, keywords) || checkMsg(chinese, keywords) || checkMsg(engNoPu, keywords) || checkMsg(chiNoPu, keywords)) {
       return true;
     } else {
       return false;

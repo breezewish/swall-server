@@ -160,11 +160,11 @@ GLOBAL.filterKeyWord = (msg, keywords)->
         console.log 'chinese without punctuation: ' + chiNoPu
 
     if (
-        checkMsg(msg, array) or
-        checkMsg(english, array) or
-        checkMsg(chinese, array) or
-        checkMsg(engNoPu, array) or
-        checkMsg(chiNoPu, array)
+        checkMsg(msg, keywords) or
+        checkMsg(english, keywords) or
+        checkMsg(chinese, keywords) or
+        checkMsg(engNoPu, keywords) or
+        checkMsg(chiNoPu, keywords)
     )
         true
     else
