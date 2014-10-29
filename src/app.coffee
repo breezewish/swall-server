@@ -131,14 +131,14 @@ info['id_1'].buttonheight = calButtonHeight('id_1')
 #filter.init info.id_1.keywords
 #GLOBAL.filters =
 #    id_1: filter
-filterKeyword = (msg, array)->
+checkMsg = (msg, array)->
     for keyword in array
         if msg.indexOf(keyword) != -1
             return true
 
     return false
 
-GLOBAL.filtKeyWord = (msg, keywords)->
+GLOBAL.filterKeyWord = (msg, keywords)->
     # English with punctuation
     english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, ''
     english = english.toLowerCase()
@@ -160,11 +160,11 @@ GLOBAL.filtKeyWord = (msg, keywords)->
         console.log 'chinese without punctuation: ' + chiNoPu
 
     if (
-        filterKeyword(msg, array) or
-        filterKeyword(english, array) or
-        filterKeyword(chinese, array) or
-        filterKeyword(engNoPu, array) or
-        filterKeyword(chiNoPu, array)
+        checkMsg(msg, array) or
+        checkMsg(english, array) or
+        checkMsg(chinese, array) or
+        checkMsg(engNoPu, array) or
+        checkMsg(chiNoPu, array)
     )
         true
     else

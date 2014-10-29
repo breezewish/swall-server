@@ -1,5 +1,5 @@
 (function() {
-  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, compression, config, cookieParser, cson, express, favicon, filterKeyword, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, checkMsg, compression, config, cookieParser, cson, express, favicon, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -157,7 +157,7 @@
 
   info['id_1'].buttonheight = calButtonHeight('id_1');
 
-  filterKeyword = function(msg, array) {
+  checkMsg = function(msg, array) {
     var keyword, _i, _len;
     for (_i = 0, _len = array.length; _i < _len; _i++) {
       keyword = array[_i];
@@ -168,7 +168,7 @@
     return false;
   };
 
-  GLOBAL.filtKeyWord = function(msg, keywords) {
+  GLOBAL.filterKeyWord = function(msg, keywords) {
     var chiNoPu, chinese, engNoPu, english;
     english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, '');
     english = english.toLowerCase();
@@ -182,7 +182,7 @@
       console.log('english without punctuation: ' + engNoPu);
       console.log('chinese without punctuation: ' + chiNoPu);
     }
-    if (filterKeyword(msg, array) || filterKeyword(english, array) || filterKeyword(chinese, array) || filterKeyword(engNoPu, array) || filterKeyword(chiNoPu, array)) {
+    if (checkMsg(msg, array) || checkMsg(english, array) || checkMsg(chinese, array) || checkMsg(engNoPu, array) || checkMsg(chiNoPu, array)) {
       return true;
     } else {
       return false;
