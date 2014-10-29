@@ -32,12 +32,9 @@ router.post '/:id/button', (req, res)->
                 bg: color
                 bb: colorLuminance color, -0.2
 
-        db.collection 'activities', (err, collection)->
+        Activity.update {actid: intId}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
             if err
-                return console.log err
-            collection.update {actid: intId}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
-                if err
-                    return console.log err
+                return console.log result
 
         info[id].buttonwidth  = calButtonWidth(id)
         info[id].buttonheight = calButtonHeight(id)

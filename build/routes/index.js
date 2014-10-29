@@ -36,21 +36,16 @@
           bb: colorLuminance(color, -0.2)
         });
       }
-      db.collection('activities', function(err, collection) {
-        if (err) {
-          return console.log(err);
+      Activity.update({
+        actid: intId
+      }, {
+        $set: {
+          "buttonbox": req.body.colors
         }
-        return collection.update({
-          actid: intId
-        }, {
-          $set: {
-            "buttonbox": req.body.colors
-          }
-        }, function(err, result) {
-          if (err) {
-            return console.log(err);
-          }
-        });
+      }, function(err, result) {
+        if (err) {
+          return console.log(result);
+        }
       });
       info[id].buttonwidth = calButtonWidth(id);
       return info[id].buttonheight = calButtonHeight(id);
