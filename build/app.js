@@ -1,5 +1,5 @@
 (function() {
-  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, compression, config, cookieParser, cson, express, favicon, filter, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, compression, config, cookieParser, cson, express, favicon, filterKeyword, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -21,8 +21,6 @@
 
   fs = require('fs');
 
-  filter = require('keyword-filter');
-
   cson = require('cson');
 
   compression = require('compression');
@@ -30,8 +28,6 @@
   spdy = require('spdy');
 
   GLOBAL.DEBUG = false;
-
-  GLOBAL.filter = filter;
 
   config = cson.parseFileSync('config.cson');
 
@@ -161,13 +157,18 @@
 
   info['id_1'].buttonheight = calButtonHeight('id_1');
 
-  filter.init(info.id_1.keywords);
-
-  GLOBAL.filters = {
-    id_1: filter
+  filterKeyword = function(msg, array) {
+    var keyword, _i, _len;
+    for (_i = 0, _len = array.length; _i < _len; _i++) {
+      keyword = array[_i];
+      if (msg.indexOf(keyword) !== -1) {
+        return true;
+      }
+    }
+    return false;
   };
 
-  GLOBAL.filtKeyWord = function(msg, actFilter) {
+  GLOBAL.filtKeyWord = function(msg, keywords) {
     var chiNoPu, chinese, engNoPu, english;
     english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, '');
     english = english.toLowerCase();
@@ -181,7 +182,7 @@
       console.log('english without punctuation: ' + engNoPu);
       console.log('chinese without punctuation: ' + chiNoPu);
     }
-    if (actFilter.hasKeyword(msg) || actFilter.hasKeyword(english) || actFilter.hasKeyword(chinese) || actFilter.hasKeyword(engNoPu) || actFilter.hasKeyword(chiNoPu)) {
+    if (filterKeyword(msg, array) || filterKeyword(english, array) || filterKeyword(chinese, array) || filterKeyword(engNoPu, array) || filterKeyword(chiNoPu, array)) {
       return true;
     } else {
       return false;

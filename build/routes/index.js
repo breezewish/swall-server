@@ -57,11 +57,7 @@
     var id;
     id = 'id_' + req.params.id;
     if (req.body.keywords && req.body.keywords instanceof Array) {
-      filter.init(req.body.keywords);
       info[id].keywords = req.body.keywords;
-      filters[id] = filter;
-      console.log(req.body.keywords);
-      console.log(info[id].keywords);
       db.collection('activity', function(err, collection) {
         return collection.update({
           actid: id
@@ -82,7 +78,7 @@
   router.post('/:id', function(req, res) {
     var allInfo, comment, id, infos;
     id = 'id_' + req.params.id;
-    if (filtKeyWord(req.body.msg, filters[id])) {
+    if (filterKeyword(req.body.msg, info[id].keywords)) {
       if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
         res.sendStatus(200);
       } else {

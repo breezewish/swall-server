@@ -8,14 +8,14 @@ mongoose     = require 'mongoose'
 urlparser    = require 'url'
 https        = require 'https'
 fs           = require 'fs'
-filter       = require 'keyword-filter'
 cson         = require 'cson'
 compression  = require 'compression'
 spdy         = require 'spdy'
+#filter       = require 'keyword-filter'
 
 
 GLOBAL.DEBUG  = false
-GLOBAL.filter = filter
+#GLOBAL.filter = filter
 
 
 config = cson.parseFileSync 'config.cson'
@@ -128,10 +128,17 @@ info['id_1'].buttonwidth = calButtonWidth('id_1')
 info['id_1'].buttonheight = calButtonHeight('id_1')
 
 
-filter.init info.id_1.keywords
-GLOBAL.filters =
-    id_1: filter
-GLOBAL.filtKeyWord = (msg, actFilter)->
+#filter.init info.id_1.keywords
+#GLOBAL.filters =
+#    id_1: filter
+filterKeyword = (msg, array)->
+    for keyword in array
+        if msg.indexOf(keyword) != -1
+            return true
+
+    return false
+
+GLOBAL.filtKeyWord = (msg, keywords)->
     # English with punctuation
     english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, ''
     english = english.toLowerCase()
@@ -153,11 +160,11 @@ GLOBAL.filtKeyWord = (msg, actFilter)->
         console.log 'chinese without punctuation: ' + chiNoPu
 
     if (
-        actFilter.hasKeyword(msg) or
-        actFilter.hasKeyword(english) or
-        actFilter.hasKeyword(chinese) or
-        actFilter.hasKeyword(engNoPu) or
-        actFilter.hasKeyword(chiNoPu)
+        filterKeyword(msg, array) or
+        filterKeyword(english, array) or
+        filterKeyword(chinese, array) or
+        filterKeyword(engNoPu, array) or
+        filterKeyword(chiNoPu, array)
     )
         true
     else

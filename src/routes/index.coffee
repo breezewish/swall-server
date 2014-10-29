@@ -42,13 +42,9 @@ router.post '/:id/button', (req, res)->
 # Change the keyword-filter array
 router.post '/:id/keywords', (req, res)->
     id = 'id_' + req.params.id
-    if req.body.keywords and req.body.keywords instanceof Array
-        filter.init req.body.keywords
-        info[id].keywords = req.body.keywords
-        filters[id]       = filter
 
-        console.log req.body.keywords
-        console.log info[id].keywords
+    if req.body.keywords and req.body.keywords instanceof Array
+        info[id].keywords = req.body.keywords
 
         db.collection 'activity', (err, collection)->
             collection.update {actid: id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
@@ -61,7 +57,8 @@ router.post '/:id/keywords', (req, res)->
 # Accept comment from user
 router.post '/:id', (req, res)->
     id = 'id_' + req.params.id
-    if filtKeyWord req.body.msg, filters[id]
+
+    if filterKeyword req.body.msg, info[id].keywords
         if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
         else
