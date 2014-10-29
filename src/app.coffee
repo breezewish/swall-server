@@ -57,15 +57,21 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
-db          = mongoose.createConnection 'mongodb://localhost/test'
-information = mongoose.Schema 
+GLOBAL.db                  = mongoose.createConnection 'mongodb://localhost/test'
+msgInfo             = mongoose.Schema
     color: String
     id: Number
     time: Number
     ip: String
     ua: String
     msg: String
-Comment     = db.model 'Comment', information
+actInfo             = mongoose.Schema
+    actid: Number
+    title: String
+    buttonbox: Array
+    keywords: Array
+Comment             = db.model 'Comment', msgInfo
+Activity            = db.model 'Activity', actInfo
 
 
 #Function used to darken.
@@ -87,27 +93,37 @@ colorLuminance = (hex, lum)->
     return rgb
 
 
-calButtonWidth  = ()->
-    ((100 - (info.buttonbox.length - 1) * 1.25) / info.buttonbox.length) + "%"
+calButtonWidth  = (id)->
+    ((100 - (info[id].buttonbox.length - 1) * 1.25) / info[id].buttonbox.length) + "%"
 
-calButtonHeight = ()->
-    ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%"
+calButtonHeight = (id)->
+    ((100 - (info[id].buttonbox.length - 1) * 5) / info[id].buttonbox.length) + "%"
 
 
 GLOBAL.Comment = Comment
-GLOBAL.info =
+id_1 =
+    actid: 1
     title: '2014同济大学软件学院迎新晚会'
     buttonbox: [
         {bg: '#F8F8F8', bb: colorLuminance('#F8F8FF', -0.2)}
         {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
         {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
     ]
-info.keywords =
-    default: config.keywords
-    id_1: config.keywords
+    keywords: config.keywords
+GLOBAL.info =
+    id_1: id_1
 
 
-filter.init info.keywords.default
+activity1 = Activity id_1
+activity1.save (err, activity1)->
+    if err
+        return console.log err
+info.page = 1
+info['id_1'].buttonwidth = calButtonWidth('id_1')
+info['id_1'].buttonheight = calButtonHeight('id_1')
+
+
+filter.init info.id_1.keywords
 GLOBAL.filters =
     id_1: filter
 GLOBAL.filtKeyWord = (msg, filter)->
@@ -143,25 +159,7 @@ GLOBAL.filtKeyWord = (msg, filter)->
         false
 
 
-info.page = 1
-info.buttonwidth = calButtonWidth()
-info.buttonheight = calButtonHeight()
-
-
 io.on 'connect', (socket)->
-    #Change the color of the buttom
-    socket.on 'chacol', (data)->
-        if data.colors
-            info.buttonbox = []
-
-            for color in data.colors
-                info.buttonbox.append
-                    bg: color
-                    bb: colorLuminance color, -0.2
-
-            info.buttonwidth  = calButtonWidth()
-            info.buttonheight = calButtonHeight()
-
     # Client ask for message
     socket.on '/subscribe', (data)->
         # add to subscribe pool

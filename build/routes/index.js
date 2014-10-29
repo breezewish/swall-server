@@ -5,37 +5,96 @@
 
   router = express.Router();
 
-  router.get('/1', function(req, res) {
+  router.get('/:id', function(req, res) {
+    var allInfo, id;
+    id = 'id_' + req.params.id;
     if (req.query.page) {
       info.page = req.query.page;
     } else {
       info.page = 1;
     }
-    return res.render('takeComment', info);
+    allInfo = {
+      page: info.page,
+      activity: info[id]
+    };
+    return res.render('takeComment', allInfo);
+  });
+
+  router.post('/:id/button', function(req, res) {
+    var color, id, _i, _len, _ref;
+    id = 'id_' + req.params.id;
+    if (req.body.colors) {
+      info[id].buttonbox = [];
+      delete info.buttonwidth;
+      delete info.buttonheight;
+      _ref = req.body.colors;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        color = _ref[_i];
+        info[id].buttonbox.append({
+          bg: color,
+          bb: colorLuminance(color, -0.2)
+        });
+      }
+      db.collection('activity', function(err, collection) {
+        return collection.update({
+          actid: id
+        }, {
+          $set: {
+            "buttonbox": req.body.colors
+          }
+        }, function(err, result) {
+          if (err) {
+            return console.log(err);
+          }
+        });
+      });
+      info[id].buttonwidth = calButtonWidth(id);
+      return info[id].buttonheight = calButtonHeight(id);
+    }
   });
 
   router.post('/:id/keywords', function(req, res) {
+    var id;
+    id = 'id_' + req.params.id;
     if (req.body.keywords && req.body.keywords instanceof Array) {
-      info.keywords['id_' + req.params.id] = req.body.keywords;
-      filters['id_' + req.params.id] = require('keyword-filter').init(req.body.keywords);
+      info[id].keywords = req.body.keywords;
+      filters[id] = require('keyword-filter').init(req.body.keywords);
+      db.collection('activity', function(err, collection) {
+        return collection.update({
+          actid: id
+        }, {
+          $set: {
+            "keywords": req.body.keywords
+          }
+        }, function(err, result) {
+          if (err) {
+            return console.log(err);
+          }
+        });
+      });
     }
     return res.json({});
   });
 
   router.post('/:id', function(req, res) {
-    var comment, infos;
-    if (filtKeyWord(req.body.msg, filters['id_' + req.params.id])) {
+    var allInfo, comment, id, infos;
+    id = 'id_' + req.params.id;
+    if (filtKeyWord(req.body.msg, filters[id])) {
       if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
         res.sendStatus(200);
       } else {
-        res.render('takeComment', info);
+        allInfo = {
+          page: info.page,
+          activity: info[id]
+        };
+        res.render('takeComment', allInfo);
       }
       return;
     }
     console.log('pass');
     infos = {
       color: req.body.color,
-      id: parseInt(req.params.id),
+      actid: parseInt(req.params.id),
       time: Date.now(),
       ip: req.connection.remoteAddress,
       ua: req.headers['user-agent'] || '',
@@ -51,7 +110,11 @@
     if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
       return res.sendStatus(200);
     } else {
-      return res.render('takeComment', info);
+      allInfo = {
+        page: info.page,
+        activity: info[id]
+      };
+      return res.render('takeComment', allInfo);
     }
   });
 
@@ -61,10 +124,10 @@
 
   router.get('/:id/info', function(req, res) {
     return res.json({
-      id: 1,
+      actid: req.params.id,
       link: 'www.swall.me/' + req.params.id,
       title: '软件学院迎新晚会',
-      keywords: info.keywords['id_' + req.params.id]
+      keywords: info['id_' + req.params.id].keywords
     });
   });
 

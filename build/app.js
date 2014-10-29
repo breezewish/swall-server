@@ -1,5 +1,5 @@
 (function() {
-  var Comment, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, compression, config, cookieParser, cson, db, express, favicon, filter, fs, https, information, io, logger, mongoose, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, compression, config, cookieParser, cson, express, favicon, filter, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -73,9 +73,9 @@
 
   users = require('../build/routes/users');
 
-  db = mongoose.createConnection('mongodb://localhost/test');
+  GLOBAL.db = mongoose.createConnection('mongodb://localhost/test');
 
-  information = mongoose.Schema({
+  msgInfo = mongoose.Schema({
     color: String,
     id: Number,
     time: Number,
@@ -84,7 +84,16 @@
     msg: String
   });
 
-  Comment = db.model('Comment', information);
+  actInfo = mongoose.Schema({
+    actid: Number,
+    title: String,
+    buttonbox: Array,
+    keywords: Array
+  });
+
+  Comment = db.model('Comment', msgInfo);
+
+  Activity = db.model('Activity', actInfo);
 
   colorLuminance = function(hex, lum) {
     var c, i, rgb;
@@ -104,17 +113,18 @@
     return rgb;
   };
 
-  calButtonWidth = function() {
-    return ((100 - (info.buttonbox.length - 1) * 1.25) / info.buttonbox.length) + "%";
+  calButtonWidth = function(id) {
+    return ((100 - (info[id].buttonbox.length - 1) * 1.25) / info[id].buttonbox.length) + "%";
   };
 
-  calButtonHeight = function() {
-    return ((100 - (info.buttonbox.length - 1) * 5) / info.buttonbox.length) + "%";
+  calButtonHeight = function(id) {
+    return ((100 - (info[id].buttonbox.length - 1) * 5) / info[id].buttonbox.length) + "%";
   };
 
   GLOBAL.Comment = Comment;
 
-  GLOBAL.info = {
+  id_1 = {
+    actid: 1,
     title: '2014同济大学软件学院迎新晚会',
     buttonbox: [
       {
@@ -127,15 +137,29 @@
         bg: '#00B8FF',
         bb: colorLuminance('#00B8FF', -0.2)
       }
-    ]
+    ],
+    keywords: config.keywords
   };
 
-  info.keywords = {
-    "default": config.keywords,
-    id_1: config.keywords
+  GLOBAL.info = {
+    id_1: id_1
   };
 
-  filter.init(info.keywords["default"]);
+  activity1 = Activity(id_1);
+
+  activity1.save(function(err, activity1) {
+    if (err) {
+      return console.log(err);
+    }
+  });
+
+  info.page = 1;
+
+  info['id_1'].buttonwidth = calButtonWidth('id_1');
+
+  info['id_1'].buttonheight = calButtonHeight('id_1');
+
+  filter.init(info.id_1.keywords);
 
   GLOBAL.filters = {
     id_1: filter
@@ -162,29 +186,7 @@
     }
   };
 
-  info.page = 1;
-
-  info.buttonwidth = calButtonWidth();
-
-  info.buttonheight = calButtonHeight();
-
   io.on('connect', function(socket) {
-    socket.on('chacol', function(data) {
-      var color, _i, _len, _ref;
-      if (data.colors) {
-        info.buttonbox = [];
-        _ref = data.colors;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          color = _ref[_i];
-          info.buttonbox.append({
-            bg: color,
-            bb: colorLuminance(color, -0.2)
-          });
-        }
-        info.buttonwidth = calButtonWidth();
-        return info.buttonheight = calButtonHeight();
-      }
-    });
     socket.on('/subscribe', function(data) {
       socket.join(data.id);
       return socket.emit('sucscribeOk', data.id);

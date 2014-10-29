@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-	<% if(title.length) { %>
-		<title><%= title %></title>
+	<% if(activity.title.length) { %>
+		<title><%= activity.title %></title>
 	<% } %>
 	<link rel="stylesheet" href="/stylesheets/takeComment.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
@@ -14,17 +14,17 @@
 			<input id="station" class="header dark XS">
 		</div>
 	</div>
-	<% if(title.length) { %>
-		<h1 align='center'><%= title %></h1>
+	<% if(activity.title.length) { %>
+		<h1 align='center'><%= activity.title %></h1>
 	<% } %>
 	<div class="container">
 		<form id="text-box" action="/1" method="post">
 
-			<% if (info.page == 1) { %>
+			<% if (page == 1) { %>
 				<div id="button-box">
-				<% info.buttonbox.forEach(function(button, index) { %>
-				<button class="submit button-with-float action-button animate" name="buttoncolor" value="<%= button.bg %>" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
-					<% if (index != info.buttonbox.length - 1) { %>
+				<% activity.buttonbox.forEach(function(button, index) { %>
+				<button class="submit button-with-float action-button animate" name="buttoncolor" value="<%= button.bg %>" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= activity.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
+					<% if (index != activity.buttonbox.length - 1) { %>
 						<div class="paddiv-with-float"></div>
 					<% } %>
 				<% }) %>
@@ -32,11 +32,11 @@
 				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
 			<% } %>
 
-			<% if (info.page == 2) { %>
+			<% if (page == 2) { %>
 				<div id="button-box">
-				<% info.buttonbox.forEach(function(button, index) { %>
+				<% activity.buttonbox.forEach(function(button, index) { %>
 					<button class="submit button-without-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Ok</button>
-					<% if (index != info.buttonbox.length - 1) { %>
+					<% if (index != activity.buttonbox.length - 1) { %>
 						<div class="paddiv-without-float"></div>
 					<% } %>
 				<% }) %>
@@ -44,11 +44,11 @@
 				</div>
 			<% } %>
 
-			<% if (info.page == 3) { %>
+			<% if (page == 3) { %>
 				<div id="button-box">
-				<% info.buttonbox.forEach(function(button, index) { %>
-					<button class="submit button-with-float nonactive-button animate" style="color: <%= button.bg %>; border: 5px solid <%= button.bg %>; background:transparent;width: <%= info.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
-					<% if (index != info.buttonbox.length - 1) { %>
+				<% activity.buttonbox.forEach(function(button, index) { %>
+					<button class="submit button-with-float nonactive-button animate" style="color: <%= button.bg %>; border: 5px solid <%= button.bg %>; background:transparent;width: <%= activity.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
+					<% if (index != activity.buttonbox.length - 1) { %>
 						<div class="paddiv-with-float"></div>
 					<% } %>
 				<% }) %>

@@ -3,38 +3,75 @@ router  = express.Router()
 
 
 # GET home page.
-router.get '/1', (req,res)->
+router.get '/:id', (req,res)->
+    id = 'id_' + req.params.id
     if req.query.page
         info.page = req.query.page
     else
         info.page = 1
 
-    res.render 'takeComment', info
+    allInfo =
+        page: info.page
+        activity: info[id]
+
+    res.render 'takeComment', allInfo
+
+
+# Change the color of the button
+router.post '/:id/button', (req, res)->
+    id = 'id_' + req.params.id
+    if req.body.colors
+        info[id].buttonbox = []
+        delete info.buttonwidth
+        delete info.buttonheight
+
+        for color in req.body.colors
+            info[id].buttonbox.append
+                bg: color
+                bb: colorLuminance color, -0.2
+
+        db.collection 'activity', (err, collection)->
+            collection.update {actid: id}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
+                if err
+                    return console.log err
+
+        info[id].buttonwidth  = calButtonWidth(id)
+        info[id].buttonheight = calButtonHeight(id)
 
 
 # Change the keyword-filter array
 router.post '/:id/keywords', (req, res)->
+    id = 'id_' + req.params.id
     if req.body.keywords and req.body.keywords instanceof Array
-        info.keywords['id_' + req.params.id] = req.body.keywords
-        filters['id_' + req.params.id]       = require('keyword-filter').init req.body.keywords
+        info[id].keywords = req.body.keywords
+        filters[id]       = require('keyword-filter').init req.body.keywords
+
+        db.collection 'activity', (err, collection)->
+            collection.update {actid: id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
+                if err
+                    return console.log err
 
     res.json {}
 
 
+# Accept comment from user
 router.post '/:id', (req, res)->
-    # Accept comment from user
-    if filtKeyWord req.body.msg, filters['id_' + req.params.id]
+    id = 'id_' + req.params.id
+    if filtKeyWord req.body.msg, filters[id]
         if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
         else
-            res.render 'takeComment', info 
+            allInfo =
+                page: info.page
+                activity: info[id]
+            res.render 'takeComment', allInfo
         return
 
     console.log 'pass'
 
     infos = 
         color: req.body.color
-        id: parseInt req.params.id
+        actid: parseInt req.params.id
         time: Date.now()
         ip: req.connection.remoteAddress
         ua: req.headers['user-agent'] or ''
@@ -51,7 +88,10 @@ router.post '/:id', (req, res)->
     if req.headers['x-requested-with'] == 'XMLHttpRequest'
         res.sendStatus 200
     else
-        res.render 'takeComment', info 
+        allInfo =
+            page: info.page
+            activity: info[id]
+        res.render 'takeComment', allInfo
 
 
 router.get '/', (req, res)->
@@ -60,10 +100,10 @@ router.get '/', (req, res)->
 
 router.get '/:id/info', (req, res)->
     res.json
-        id: 1
+        actid: req.params.id
         link: 'www.swall.me/' + req.params.id
         title: '软件学院迎新晚会'
-        keywords: info.keywords['id_' + req.params.id]
+        keywords: info['id_' + req.params.id].keywords
 
 
 module.exports = router
