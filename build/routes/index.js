@@ -44,7 +44,7 @@
         }
       }, function(err, result) {
         if (err) {
-          return console.log(result);
+          return console.log(err);
         }
       });
       info[id].buttonwidth = calButtonWidth(id);
@@ -66,7 +66,7 @@
         }
       }, function(err, result) {
         if (err) {
-          return console.log(result);
+          return console.log(err);
         }
       });
     }

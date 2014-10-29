@@ -34,7 +34,7 @@ router.post '/:id/button', (req, res)->
 
         Activity.update {actid: intId}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
             if err
-                return console.log result
+                return console.log err
 
         info[id].buttonwidth  = calButtonWidth(id)
         info[id].buttonheight = calButtonHeight(id)
@@ -50,7 +50,7 @@ router.post '/:id/keywords', (req, res)->
 
         Activity.update {actid: intId}, {$set: {"keywords": req.body.keywords}}, (err, result)->
             if err
-                return console.log result
+                return console.log err
 
     res.json {}
 
