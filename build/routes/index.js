@@ -67,6 +67,7 @@
         if (err) {
           return console.log(err);
         }
+        console.log('a');
         return collection.update({
           actid: intId
         }, {
@@ -77,6 +78,7 @@
           if (err) {
             return console.log(err);
           }
+          return console.log('b');
         });
       });
     }

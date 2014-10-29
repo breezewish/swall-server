@@ -54,9 +54,11 @@ router.post '/:id/keywords', (req, res)->
         db.collection 'activities', (err, collection)->
             if err
                 return console.log err
+            console.log 'a'
             collection.update {actid: intId}, {$set: {"keywords": req.body.keywords}}, (err, result)->
                 if err
                     return console.log err
+                console.log 'b'
 
     res.json {}
 
