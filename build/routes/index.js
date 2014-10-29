@@ -35,7 +35,7 @@
           bb: colorLuminance(color, -0.2)
         });
       }
-      db.collection('activity', function(err, collection) {
+      db.collection('activities', function(err, collection) {
         if (err) {
           return console.log(err);
         }
@@ -61,7 +61,7 @@
     id = 'id_' + req.params.id;
     if (req.body.keywords && req.body.keywords instanceof Array) {
       info[id].keywords = req.body.keywords;
-      db.collection('activity', function(err, collection) {
+      db.collection('activities', function(err, collection) {
         if (err) {
           return console.log(err);
         }

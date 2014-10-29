@@ -30,7 +30,7 @@ router.post '/:id/button', (req, res)->
                 bg: color
                 bb: colorLuminance color, -0.2
 
-        db.collection 'activity', (err, collection)->
+        db.collection 'activities', (err, collection)->
             if err
                 return console.log err
             collection.update {actid: id}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
@@ -48,7 +48,7 @@ router.post '/:id/keywords', (req, res)->
     if req.body.keywords and req.body.keywords instanceof Array
         info[id].keywords = req.body.keywords
 
-        db.collection 'activity', (err, collection)->
+        db.collection 'activities', (err, collection)->
             if err
                 return console.log err
             collection.update {actid: id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
