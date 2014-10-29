@@ -101,11 +101,12 @@ router.get '/', (req, res)->
 
 
 router.get '/:id/info', (req, res)->
+    id = 'id_' + req.params.id
     res.json
         actid: req.params.id
         link: 'www.swall.me/' + req.params.id
         title: '软件学院迎新晚会'
-        keywords: info['id_' + req.params.id].keywords
+        keywords: info[id].keywords
 
 
 module.exports = router

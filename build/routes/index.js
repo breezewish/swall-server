@@ -125,11 +125,13 @@
   });
 
   router.get('/:id/info', function(req, res) {
+    var id;
+    id = 'id_' + req.params.id;
     return res.json({
       actid: req.params.id,
       link: 'www.swall.me/' + req.params.id,
       title: '软件学院迎新晚会',
-      keywords: info['id_' + req.params.id].keywords
+      keywords: info[id].keywords
     });
   });
 
