@@ -18,7 +18,7 @@ router.get '/:id', (req,res)->
 
 
 # Change the color of the button
-router.post '/:id/button', (req, res)->
+router.post '/:id/buttons', (req, res)->
     id = 'id_' + req.params.id
     intId = parseInt(req.params.id)
 
@@ -38,6 +38,8 @@ router.post '/:id/button', (req, res)->
 
         info[id].buttonwidth  = calButtonWidth(id)
         info[id].buttonheight = calButtonHeight(id)
+
+    res.json {}
 
 
 # Change the keyword-filter array

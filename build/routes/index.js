@@ -20,7 +20,7 @@
     return res.render('takeComment', allInfo);
   });
 
-  router.post('/:id/button', function(req, res) {
+  router.post('/:id/buttons', function(req, res) {
     var color, id, intId, _i, _len, _ref;
     id = 'id_' + req.params.id;
     intId = parseInt(req.params.id);
@@ -48,8 +48,9 @@
         }
       });
       info[id].buttonwidth = calButtonWidth(id);
-      return info[id].buttonheight = calButtonHeight(id);
+      info[id].buttonheight = calButtonHeight(id);
     }
+    return res.json({});
   });
 
   router.post('/:id/keywords', function(req, res) {
