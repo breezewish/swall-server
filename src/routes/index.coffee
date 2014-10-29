@@ -33,7 +33,7 @@ router.post '/:id/button', (req, res)->
         db.collection 'activities', (err, collection)->
             if err
                 return console.log err
-            collection.update {actid: id}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
+            collection.update {actid: req.params.id}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
                 if err
                     return console.log err
 
@@ -51,7 +51,7 @@ router.post '/:id/keywords', (req, res)->
         db.collection 'activities', (err, collection)->
             if err
                 return console.log err
-            collection.update {actid: id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
+            collection.update {actid: req.params.id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
                 if err
                     return console.log err
 

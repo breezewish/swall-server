@@ -40,7 +40,7 @@
           return console.log(err);
         }
         return collection.update({
-          actid: id
+          actid: req.params.id
         }, {
           $set: {
             "buttonbox": req.body.colors
@@ -66,7 +66,7 @@
           return console.log(err);
         }
         return collection.update({
-          actid: id
+          actid: req.params.id
         }, {
           $set: {
             "keywords": req.body.keywords
