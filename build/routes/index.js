@@ -21,8 +21,9 @@
   });
 
   router.post('/:id/button', function(req, res) {
-    var color, id, _i, _len, _ref;
+    var color, id, intId, _i, _len, _ref;
     id = 'id_' + req.params.id;
+    intId = parseInt(req.params.id);
     if (req.body.colors) {
       info[id].buttonbox = [];
       delete info.buttonwidth;
@@ -40,7 +41,7 @@
           return console.log(err);
         }
         return collection.update({
-          actid: req.params.id
+          actid: intId
         }, {
           $set: {
             "buttonbox": req.body.colors
@@ -57,9 +58,9 @@
   });
 
   router.post('/:id/keywords', function(req, res) {
-    var id;
+    var id, intId;
     id = 'id_' + req.params.id;
-    console.log(typeof req.params.id);
+    intId = parseInt(req.params.id);
     if (req.body.keywords && req.body.keywords instanceof Array) {
       info[id].keywords = req.body.keywords;
       db.collection('activities', function(err, collection) {
@@ -67,7 +68,7 @@
           return console.log(err);
         }
         return collection.update({
-          actid: req.params.id
+          actid: intId
         }, {
           $set: {
             "keywords": req.body.keywords

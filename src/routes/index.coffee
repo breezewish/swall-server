@@ -20,6 +20,8 @@ router.get '/:id', (req,res)->
 # Change the color of the button
 router.post '/:id/button', (req, res)->
     id = 'id_' + req.params.id
+    intId = parseInt(req.params.id)
+
     if req.body.colors
         info[id].buttonbox = []
         delete info.buttonwidth
@@ -33,7 +35,7 @@ router.post '/:id/button', (req, res)->
         db.collection 'activities', (err, collection)->
             if err
                 return console.log err
-            collection.update {actid: req.params.id}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
+            collection.update {actid: intId}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
                 if err
                     return console.log err
 
@@ -44,7 +46,7 @@ router.post '/:id/button', (req, res)->
 # Change the keyword-filter array
 router.post '/:id/keywords', (req, res)->
     id = 'id_' + req.params.id
-    console.log typeof req.params.id
+    intId = parseInt(req.params.id)
 
     if req.body.keywords and req.body.keywords instanceof Array
         info[id].keywords = req.body.keywords
@@ -52,7 +54,7 @@ router.post '/:id/keywords', (req, res)->
         db.collection 'activities', (err, collection)->
             if err
                 return console.log err
-            collection.update {actid: req.params.id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
+            collection.update {actid: intId}, {$set: {"keywords": req.body.keywords}}, (err, result)->
                 if err
                     return console.log err
 
