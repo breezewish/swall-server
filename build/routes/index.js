@@ -36,21 +36,12 @@
           bb: colorLuminance(color, -0.2)
         });
       }
-      db.collection('activities', function(err, collection) {
-        if (err) {
-          return console.log(err);
+      db.activities.update({
+        actid: intId
+      }, {
+        $set: {
+          "buttonbox": req.body.colors
         }
-        return collection.update({
-          actid: intId
-        }, {
-          $set: {
-            "buttonbox": req.body.colors
-          }
-        }, function(err, result) {
-          if (err) {
-            return console.log(err);
-          }
-        });
       });
       info[id].buttonwidth = calButtonWidth(id);
       return info[id].buttonheight = calButtonHeight(id);
@@ -63,23 +54,12 @@
     intId = parseInt(req.params.id);
     if (req.body.keywords && req.body.keywords instanceof Array) {
       info[id].keywords = req.body.keywords;
-      db.collection('activities', function(err, collection) {
-        if (err) {
-          return console.log(err);
+      db.activities.update({
+        actid: intId
+      }, {
+        $set: {
+          "keywords": req.body.keywords
         }
-        console.log('a');
-        return collection.update({
-          actid: intId
-        }, {
-          $set: {
-            "keywords": req.body.keywords
-          }
-        }, function(err, result) {
-          if (err) {
-            return console.log(err);
-          }
-          return console.log('b');
-        });
       });
     }
     return res.json({});
