@@ -61,6 +61,8 @@
       filter.init(req.body.keywords);
       info[id].keywords = req.body.keywords;
       filters[id] = filter;
+      console.log(req.body.keywords);
+      console.log(info[id].keywords);
       db.collection('activity', function(err, collection) {
         return collection.update({
           actid: id

@@ -48,6 +48,9 @@ router.post '/:id/keywords', (req, res)->
         info[id].keywords = req.body.keywords
         filters[id]       = filter
 
+        console.log req.body.keywords
+        console.log info[id].keywords
+
         db.collection 'activity', (err, collection)->
             collection.update {actid: id}, {$set: {"keywords": req.body.keywords}}, (err, result)->
                 if err
