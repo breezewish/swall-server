@@ -121,6 +121,8 @@
 
   GLOBAL.Comment = Comment;
 
+  GLOBAL.Activity = Activity;
+
   id_1 = {
     actid: 1,
     title: '2014同济大学软件学院迎新晚会',
