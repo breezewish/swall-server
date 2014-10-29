@@ -165,7 +165,7 @@
     id_1: filter
   };
 
-  GLOBAL.filtKeyWord = function(msg, filter) {
+  GLOBAL.filtKeyWord = function(msg, actFilter) {
     var chiNoPu, chinese, engNoPu, english;
     english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, '');
     english = english.toLowerCase();
@@ -179,7 +179,7 @@
       console.log('english without punctuation: ' + engNoPu);
       console.log('chinese without punctuation: ' + chiNoPu);
     }
-    if (filter.hasKeyword(msg) || filter.hasKeyword(english) || filter.hasKeyword(chinese) || filter.hasKeyword(engNoPu) || filter.hasKeyword(chiNoPu)) {
+    if (actFilter.hasKeyword(msg) || actFilter.hasKeyword(english) || actFilter.hasKeyword(chinese) || actFilter.hasKeyword(engNoPu) || actFilter.hasKeyword(chiNoPu)) {
       return true;
     } else {
       return false;
