@@ -43,7 +43,7 @@ router.post '/:id/button', (req, res)->
 router.post '/:id/keywords', (req, res)->
     id = 'id_' + req.params.id
     if req.body.keywords and req.body.keywords instanceof Array
-        filter = require 'keywords-filter'
+        filter = require 'keyword-filter'
         filter.init req.body.keywords
         info[id].keywords = req.body.keywords
         filters[id]       = filter
