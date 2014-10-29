@@ -36,6 +36,9 @@
         });
       }
       db.collection('activity', function(err, collection) {
+        if (err) {
+          return console.log(err);
+        }
         return collection.update({
           actid: id
         }, {
@@ -59,6 +62,9 @@
     if (req.body.keywords && req.body.keywords instanceof Array) {
       info[id].keywords = req.body.keywords;
       db.collection('activity', function(err, collection) {
+        if (err) {
+          return console.log(err);
+        }
         return collection.update({
           actid: id
         }, {
