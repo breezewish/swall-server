@@ -74,8 +74,12 @@ Comment             = db.model 'Comment', msgInfo
 Activity            = db.model 'Activity', actInfo
 
 
+# Filter
+# GLOBAL.myFilter = (msg, array)->
+
+
 #Function used to darken.
-colorLuminance = (hex, lum)->
+GLOBAL.colorLuminance = (hex, lum)->
     hex = String(hex).replace(/[^0-9a-f]/gi, '')
 
     if (hex.length < 6)

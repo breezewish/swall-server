@@ -1,5 +1,5 @@
 (function() {
-  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, colorLuminance, compression, config, cookieParser, cson, express, favicon, filter, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, compression, config, cookieParser, cson, express, favicon, filter, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -95,7 +95,7 @@
 
   Activity = db.model('Activity', actInfo);
 
-  colorLuminance = function(hex, lum) {
+  GLOBAL.colorLuminance = function(hex, lum) {
     var c, i, rgb;
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
     if (hex.length < 6) {
