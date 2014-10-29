@@ -131,14 +131,14 @@ info['id_1'].buttonheight = calButtonHeight('id_1')
 #filter.init info.id_1.keywords
 #GLOBAL.filters =
 #    id_1: filter
-checkMsg = (msg, array)->
-    for keyword in array
+checkMsg = (msg, keywords)->
+    for keyword in keywords
         if msg.indexOf(keyword) != -1
             return true
 
     return false
 
-GLOBAL.filterKeyWord = (msg, keywords)->
+GLOBAL.filterKeyword = (msg, keywords)->
     # English with punctuation
     english = msg.replace /[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, ''
     english = english.toLowerCase()

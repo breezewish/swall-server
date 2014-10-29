@@ -157,10 +157,10 @@
 
   info['id_1'].buttonheight = calButtonHeight('id_1');
 
-  checkMsg = function(msg, array) {
+  checkMsg = function(msg, keywords) {
     var keyword, _i, _len;
-    for (_i = 0, _len = array.length; _i < _len; _i++) {
-      keyword = array[_i];
+    for (_i = 0, _len = keywords.length; _i < _len; _i++) {
+      keyword = keywords[_i];
       if (msg.indexOf(keyword) !== -1) {
         return true;
       }
@@ -168,7 +168,7 @@
     return false;
   };
 
-  GLOBAL.filterKeyWord = function(msg, keywords) {
+  GLOBAL.filterKeyword = function(msg, keywords) {
     var chiNoPu, chinese, engNoPu, english;
     english = msg.replace(/[\u4e00-\u9fff\u3400-\u4dff\uf900-\ufaff0-9\s]/g, '');
     english = english.toLowerCase();
