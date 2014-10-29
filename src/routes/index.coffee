@@ -43,8 +43,10 @@ router.post '/:id/button', (req, res)->
 router.post '/:id/keywords', (req, res)->
     id = 'id_' + req.params.id
     if req.body.keywords and req.body.keywords instanceof Array
+        filter = require 'keywords-filter'
+        filter.init req.body.keywords
         info[id].keywords = req.body.keywords
-        filters[id]       = require('keyword-filter').init req.body.keywords
+        filters[id]       = filter
 
         db.collection 'activity', (err, collection)->
             collection.update {actid: id}, {$set: {"keywords": req.body.keywords}}, (err, result)->

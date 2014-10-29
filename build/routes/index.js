@@ -54,11 +54,13 @@
   });
 
   router.post('/:id/keywords', function(req, res) {
-    var id;
+    var filter, id;
     id = 'id_' + req.params.id;
     if (req.body.keywords && req.body.keywords instanceof Array) {
+      filter = require('keywords-filter');
+      filter.init(req.body.keywords);
       info[id].keywords = req.body.keywords;
-      filters[id] = require('keyword-filter').init(req.body.keywords);
+      filters[id] = filter;
       db.collection('activity', function(err, collection) {
         return collection.update({
           actid: id
