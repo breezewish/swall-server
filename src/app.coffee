@@ -14,7 +14,7 @@ spdy         = require 'spdy'
 #filter       = require 'keyword-filter'
 
 
-GLOBAL.DEBUG  = false
+GLOBAL.DEBUG  = true
 #GLOBAL.filter = filter
 
 
@@ -75,6 +75,11 @@ Comment             = db.model 'Comment', msgInfo
 Activity            = db.model 'Activity', actInfo
 
 
+GLOBAL.Comment  = Comment
+GLOBAL.Activity = Activity
+GLOBAL.info = {}
+
+
 # Filter
 # GLOBAL.myFilter = (msg, array)->
 
@@ -105,28 +110,37 @@ GLOBAL.calButtonHeight = (id)->
     ((100 - (info[id].buttonbox.length - 1) * 5) / info[id].buttonbox.length) + "%"
 
 
-GLOBAL.Comment  = Comment
-GLOBAL.Activity = Activity
-id_1 =
-    actid: 1
-    title: '2014同济大学软件学院迎新晚会'
-    buttonbox: [
-        {bg: '#F8F8F8', bb: colorLuminance('#F8F8FF', -0.2)}
-        {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
-        {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
-    ]
-    keywords: config.keywords
-GLOBAL.info =
-    id_1: id_1
-
-
-activity1 = Activity id_1
-activity1.save (err, activity1)->
+Activity.find {'actid': 1}, (err, docs)->
     if err
         return console.log err
+    else if docs.length == 0
+        id_1 =
+            actid: 1
+            title: '2014同济大学软件学院迎新晚会'
+            buttonbox: [
+                {bg: '#F8F8F8', bb: colorLuminance('#F8F8FF', -0.2)}
+                {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
+                {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
+            ]
+            keywords: config.keywords
+
+        activity1 = Activity id_1
+        activity1.save (err, activity1)->
+            if err
+                return console.log err
+
+
+Activity.find {}, (err, docs)->
+    if err
+        return console.log err
+
+    for activity in docs
+        info['id_' + activity.actid] = activity
+        info['id_1'].buttonwidth = calButtonWidth('id_1')
+        info['id_1'].buttonheight = calButtonHeight('id_1')
+
+
 info.page = 1
-info['id_1'].buttonwidth = calButtonWidth('id_1')
-info['id_1'].buttonheight = calButtonHeight('id_1')
 
 
 #filter.init info.id_1.keywords
@@ -136,7 +150,6 @@ checkMsg = (msg, keywords)->
     for keyword in keywords
         if msg.indexOf(keyword) != -1
             return true
-
     return false
 
 GLOBAL.filterKeyword = (msg, keywords)->

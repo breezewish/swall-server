@@ -1,5 +1,5 @@
 (function() {
-  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, checkMsg, compression, config, cookieParser, cson, express, favicon, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, app, app_http, bodyParser, checkMsg, compression, config, cookieParser, cson, express, favicon, fs, https, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -27,7 +27,7 @@
 
   spdy = require('spdy');
 
-  GLOBAL.DEBUG = false;
+  GLOBAL.DEBUG = true;
 
   config = cson.parseFileSync('config.cson');
 
@@ -93,6 +93,12 @@
 
   Activity = db.model('Activity', actInfo);
 
+  GLOBAL.Comment = Comment;
+
+  GLOBAL.Activity = Activity;
+
+  GLOBAL.info = {};
+
   GLOBAL.colorLuminance = function(hex, lum) {
     var c, i, rgb;
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
@@ -119,45 +125,55 @@
     return ((100 - (info[id].buttonbox.length - 1) * 5) / info[id].buttonbox.length) + "%";
   };
 
-  GLOBAL.Comment = Comment;
-
-  GLOBAL.Activity = Activity;
-
-  id_1 = {
-    actid: 1,
-    title: '2014同济大学软件学院迎新晚会',
-    buttonbox: [
-      {
-        bg: '#F8F8F8',
-        bb: colorLuminance('#F8F8FF', -0.2)
-      }, {
-        bg: '#79BD8F',
-        bb: colorLuminance('#79BD8F', -0.2)
-      }, {
-        bg: '#00B8FF',
-        bb: colorLuminance('#00B8FF', -0.2)
-      }
-    ],
-    keywords: config.keywords
-  };
-
-  GLOBAL.info = {
-    id_1: id_1
-  };
-
-  activity1 = Activity(id_1);
-
-  activity1.save(function(err, activity1) {
+  Activity.find({
+    'actid': 1
+  }, function(err, docs) {
+    var activity1, id_1;
     if (err) {
       return console.log(err);
+    } else if (docs.length === 0) {
+      id_1 = {
+        actid: 1,
+        title: '2014同济大学软件学院迎新晚会',
+        buttonbox: [
+          {
+            bg: '#F8F8F8',
+            bb: colorLuminance('#F8F8FF', -0.2)
+          }, {
+            bg: '#79BD8F',
+            bb: colorLuminance('#79BD8F', -0.2)
+          }, {
+            bg: '#00B8FF',
+            bb: colorLuminance('#00B8FF', -0.2)
+          }
+        ],
+        keywords: config.keywords
+      };
+      activity1 = Activity(id_1);
+      return activity1.save(function(err, activity1) {
+        if (err) {
+          return console.log(err);
+        }
+      });
     }
   });
 
+  Activity.find({}, function(err, docs) {
+    var activity, _i, _len, _results;
+    if (err) {
+      return console.log(err);
+    }
+    _results = [];
+    for (_i = 0, _len = docs.length; _i < _len; _i++) {
+      activity = docs[_i];
+      info['id_' + activity.actid] = activity;
+      info['id_1'].buttonwidth = calButtonWidth('id_1');
+      _results.push(info['id_1'].buttonheight = calButtonHeight('id_1'));
+    }
+    return _results;
+  });
+
   info.page = 1;
-
-  info['id_1'].buttonwidth = calButtonWidth('id_1');
-
-  info['id_1'].buttonheight = calButtonHeight('id_1');
 
   checkMsg = function(msg, keywords) {
     var keyword, _i, _len;

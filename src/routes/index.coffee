@@ -24,6 +24,7 @@ router.post '/:id/buttons', (req, res)->
 
     if req.body.colors
         info[id].buttonbox = []
+
         delete info[id].buttonwidth
         delete info[id].buttonheight
 
