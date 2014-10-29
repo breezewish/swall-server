@@ -36,12 +36,21 @@
           bb: colorLuminance(color, -0.2)
         });
       }
-      db.activities.update({
-        actid: intId
-      }, {
-        $set: {
-          "buttonbox": req.body.colors
+      db.collection('activities', function(err, collection) {
+        if (err) {
+          return console.log(err);
         }
+        return collection.update({
+          actid: intId
+        }, {
+          $set: {
+            "buttonbox": req.body.colors
+          }
+        }, function(err, result) {
+          if (err) {
+            return console.log(err);
+          }
+        });
       });
       info[id].buttonwidth = calButtonWidth(id);
       return info[id].buttonheight = calButtonHeight(id);
@@ -54,11 +63,15 @@
     intId = parseInt(req.params.id);
     if (req.body.keywords && req.body.keywords instanceof Array) {
       info[id].keywords = req.body.keywords;
-      db.activities.update({
+      Activity.update({
         actid: intId
       }, {
         $set: {
           "keywords": req.body.keywords
+        }
+      }, function(err, result) {
+        if (err) {
+          return console.log(result);
         }
       });
     }
