@@ -31,6 +31,8 @@
 
   GLOBAL.DEBUG = false;
 
+  GLOBAL.filter = filter;
+
   config = cson.parseFileSync('config.cson');
 
   spdyOptions = {

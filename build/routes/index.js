@@ -54,10 +54,9 @@
   });
 
   router.post('/:id/keywords', function(req, res) {
-    var filter, id;
+    var id;
     id = 'id_' + req.params.id;
     if (req.body.keywords && req.body.keywords instanceof Array) {
-      filter = require('keyword-filter');
       filter.init(req.body.keywords);
       info[id].keywords = req.body.keywords;
       filters[id] = filter;

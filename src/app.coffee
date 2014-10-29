@@ -14,7 +14,8 @@ compression  = require 'compression'
 spdy         = require 'spdy'
 
 
-GLOBAL.DEBUG = false
+GLOBAL.DEBUG  = false
+GLOBAL.filter = filter
 
 
 config = cson.parseFileSync 'config.cson'
@@ -57,7 +58,7 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
-GLOBAL.db                  = mongoose.createConnection 'mongodb://localhost/test'
+GLOBAL.db           = mongoose.createConnection 'mongodb://localhost/test'
 msgInfo             = mongoose.Schema
     color: String
     id: Number
