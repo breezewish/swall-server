@@ -14,7 +14,7 @@ spdy         = require 'spdy'
 #filter       = require 'keyword-filter'
 
 
-GLOBAL.DEBUG  = true
+GLOBAL.DEBUG  = false
 #GLOBAL.filter = filter
 
 
