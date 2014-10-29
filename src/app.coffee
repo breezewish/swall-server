@@ -98,10 +98,10 @@ GLOBAL.colorLuminance = (hex, lum)->
     return rgb
 
 
-calButtonWidth  = (id)->
+GLOBAL.calButtonWidth  = (id)->
     ((100 - (info[id].buttonbox.length - 1) * 1.25) / info[id].buttonbox.length) + "%"
 
-calButtonHeight = (id)->
+GLOBAL.calButtonHeight = (id)->
     ((100 - (info[id].buttonbox.length - 1) * 5) / info[id].buttonbox.length) + "%"
 
 

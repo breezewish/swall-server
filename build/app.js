@@ -1,5 +1,5 @@
 (function() {
-  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, calButtonHeight, calButtonWidth, checkMsg, compression, config, cookieParser, cson, express, favicon, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, activity1, app, app_http, bodyParser, checkMsg, compression, config, cookieParser, cson, express, favicon, fs, https, id_1, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -111,11 +111,11 @@
     return rgb;
   };
 
-  calButtonWidth = function(id) {
+  GLOBAL.calButtonWidth = function(id) {
     return ((100 - (info[id].buttonbox.length - 1) * 1.25) / info[id].buttonbox.length) + "%";
   };
 
-  calButtonHeight = function(id) {
+  GLOBAL.calButtonHeight = function(id) {
     return ((100 - (info[id].buttonbox.length - 1) * 5) / info[id].buttonbox.length) + "%";
   };
 
