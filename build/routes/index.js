@@ -59,6 +59,7 @@
   router.post('/:id/keywords', function(req, res) {
     var id;
     id = 'id_' + req.params.id;
+    console.log(typeof req.params.id);
     if (req.body.keywords && req.body.keywords instanceof Array) {
       info[id].keywords = req.body.keywords;
       db.collection('activities', function(err, collection) {
