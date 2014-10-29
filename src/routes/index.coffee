@@ -58,6 +58,8 @@ router.post '/:id/keywords', (req, res)->
 router.post '/:id', (req, res)->
     id = 'id_' + req.params.id
 
+    console.log info[id].keywords
+
     if filterKeyword req.body.msg, info[id].keywords
         if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
