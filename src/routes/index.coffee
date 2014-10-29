@@ -24,11 +24,11 @@ router.post '/:id/button', (req, res)->
 
     if req.body.colors
         info[id].buttonbox = []
-        delete info.buttonwidth
-        delete info.buttonheight
+        delete info[id].buttonwidth
+        delete info[id].buttonheight
 
         for color in req.body.colors
-            info[id].buttonbox.append
+            info[id].buttonbox.push
                 bg: color
                 bb: colorLuminance color, -0.2
 

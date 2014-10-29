@@ -26,12 +26,12 @@
     intId = parseInt(req.params.id);
     if (req.body.colors) {
       info[id].buttonbox = [];
-      delete info.buttonwidth;
-      delete info.buttonheight;
+      delete info[id].buttonwidth;
+      delete info[id].buttonheight;
       _ref = req.body.colors;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         color = _ref[_i];
-        info[id].buttonbox.append({
+        info[id].buttonbox.push({
           bg: color,
           bb: colorLuminance(color, -0.2)
         });
