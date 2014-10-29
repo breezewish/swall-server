@@ -40,7 +40,7 @@
         actid: intId
       }, {
         $set: {
-          "buttonbox": req.body.colors
+          "buttonbox": info[id].buttonbox
         }
       }, function(err, result) {
         if (err) {

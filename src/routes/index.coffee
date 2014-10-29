@@ -33,7 +33,7 @@ router.post '/:id/buttons', (req, res)->
                 bg: color
                 bb: colorLuminance color, -0.2
 
-        Activity.update {actid: intId}, {$set: {"buttonbox": req.body.colors}}, (err, result)->
+        Activity.update {actid: intId}, {$set: {"buttonbox": info[id].buttonbox}}, (err, result)->
             if err
                 return console.log err
 
