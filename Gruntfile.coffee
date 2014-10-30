@@ -59,10 +59,11 @@ module.exports = (grunt)->
             uglify:
                 project:
                     src: [
-                        'build/public/js/jquery.numberformatter.js',
-                        'build/public/js/jquery.transform.js',
-                        'build/public/js/jshashtable.js',
+                        'build/public/js/jshashtable.js'
+                        'build/public/js/jquery.numberformatter.js'
+                        'build/public/js/jquery.transform.js'
                         'build/public/js/jquery.flapper.js'
+                        'build/public/js/takeComment.js'
                     ]
                     dest: 'build/public/js/takeComment.min.js'
 
