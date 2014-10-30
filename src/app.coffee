@@ -8,7 +8,6 @@ mongoose     = require 'mongoose'
 urlparser    = require 'url'
 https        = require 'https'
 fs           = require 'fs'
-cson         = require 'cson'
 compression  = require 'compression'
 spdy         = require 'spdy'
 #filter       = require 'keyword-filter'
@@ -18,24 +17,21 @@ GLOBAL.DEBUG  = false
 #GLOBAL.filter = filter
 
 
-config = cson.parseFileSync 'config.cson'
-
-
-spdyOptions =
-    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
-    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+config = require './config.json'
 
 
 app        = require('express')()
+
 if DEBUG
     server = require('http').Server(app)
 else
+    spdyOptions =
+        key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key'))
+        cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+
     server = spdy.createServer(spdyOptions, app)
-io         = require('socket.io')(server)
 
-
-GLOBAL.io = io
-
+GLOBAL.io = require('socket.io')(server)
 
 if DEBUG
     server.listen 3000
@@ -212,18 +208,14 @@ io.on 'disconnect', ()->
 
 
 # view engine setup
-app.set 'views', path.join(__dirname, path.join('..', 'views'))
+app.set 'views', path.join(__dirname, '../views')
 app.set 'view engine', 'ejs'
 
-
-# uncomment after placing your favicon in /public
-#app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use logger('dev')
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({extended: false})
 app.use cookieParser()
-app.use express.static(path.join(__dirname, path.join('..', 'public')))
-app.use express.static(path.join(__dirname, path.join('..', 'build')))
+app.use express.static(path.join(__dirname, '../public'))
 
 
 app.use '/', routes

@@ -1,0 +1,333 @@
+@media screen
+    html
+        height: 700px
+        overflow: hidden
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    html
+        height: 480px
+        overflow: hidden
+
+/*
+html
+    height: 100%
+    overflow: hidden
+*/
+
+body, input
+    font-family: "Open Sans", arial, sans-serif
+
+h1
+    color: white
+    padding: 0 10px
+
+body
+    background-color: rgb(29, 30, 31)
+    height: 100%
+    margin: 0px
+
+input
+    border: 0
+    display: block
+    font-size: 100%
+    margin: 0
+    padding: 0
+    vertical-align: middle
+
+/*
+.container
+    background-color: rgb(14, 14, 15)
+    height: 40%
+    width: 100%
+    margin: 10px 0
+    padding: 10px 0
+*/
+
+@media screen
+    .container
+        background-color: rgb(14, 14, 15)
+        height: 40%
+        width: 100%
+        margin: 10px 0
+        padding: 10px 0
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    .container
+        background-color: rgb(14, 14, 15)
+        height: 300px
+        margin: 10px 0
+        padding: 10px 0
+
+.flapper
+    display: inline-block
+
+/* Button Relative Class */
+.fogstart
+    background-color: rgb(222, 222, 222)
+    opacity: 1
+    position: relative
+    transition: all 0.2s ease-in-out
+
+.fogend
+    background-color: rgb(222, 222, 222)
+    transform: scale(5)
+    opacity: 0
+
+.button-without-float
+    margin-bottom: 10px
+    width: 100%
+
+
+@media screen
+    .button-with-float
+        float: left
+        margin-bottom: 20px
+        height: 100%
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    .button-with-float
+        float: left
+        margin-bottom: 20px
+        height: 90px
+
+/* Message Class */
+@media screen
+    .msg-percent-height
+        background: transparent
+        border: 1px solid #88a
+        box-sizing: border-box
+        color: white
+        font-size: 1.5em
+        height: 40%
+        padding: 0 20px
+        width: 100%
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    .msg-percent-height
+        background: transparent
+        border: 1px solid #88a
+        box-sizing: border-box
+        color: white
+        font-size: 1.5em
+        height: 90px
+        padding: 0 20px
+        width: 100%
+
+.msg-fixed-height
+    background: transparent
+    border: 1px solid #88a
+    box-sizing: border-box
+    color: white
+    font-size: 1.5em
+    height: 40px
+    padding: 0 20px
+    width: 100%
+    z-index: 100
+
+.msg:focus
+    border: 1px solid #FFDF00
+    box-shadow: 0 0 10px #FFDF00
+    outline:none
+
+/* Special Text Class */
+.moveit
+    opacity:1
+    color: white
+    transition:opacity 0.6s, transform 0.6s
+    transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06)
+    transition-duration: 0.3s
+    transform-origin: 100%
+    z-index: 100
+
+.moveit-end
+    transform:rotate(90deg)
+    opacity:0
+
+.paddiv-with-float
+    float: left
+    height: 100%
+    width: 1.25%
+
+.paddiv-without-float
+    height: 5%
+    width: 100%
+
+/* Button Relative Class */
+.nonactive-button
+    display: block
+    position: relative
+    border: 0
+    font-size: 25px
+    color: #000000
+    text-decoration: none
+
+.action-button
+    display: block
+    position: relative
+    border: 0
+    font-size: 25px
+    color: #000000
+    text-decoration: none
+
+.action-button:focus
+    outline:0
+
+.blue
+    background-color: #3498DB
+    border-bottom: 5px solid #2980B9
+
+.action-button:active
+    border-bottom: 0px solid #2980B9 !important
+    border-top: 5px solid rgb(14,14,15) !important
+
+#banner
+    background-image: url(/static/Flapper-master/img/brushed.png)
+    padding: 20px
+    text-align: center
+
+@media screen
+    #button-box
+        height: 40%
+        width: 100%
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    #button-box
+        height: 100px
+        width: 100%
+
+@media screen
+    #text-box
+        display: block
+        height: 100%
+        margin-left: auto
+        margin-right: auto
+        width: 80%
+
+@media only screen and (max-device-width:240px), (max-device-width:360px), (max-device-width: 480px)
+    #text-box
+        display: block
+        height: 200px
+        margin-left: auto
+        margin-right: auto
+        width: 80%
+
+/*@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:300);*/
+
+/* STRUCTURAL STYLES */
+
+.flapper
+    font-family: Roboto Condensed, sans-serif
+    font-weight: 300
+    box-sizing: content-box
+    -moz-box-sizing: content-box
+    -webkit-box-sizing: content-box
+
+.flapper .digit
+    position: relative
+    display: inline-block
+    box-sizing: content-box
+    -moz-box-sizing: content-box
+    -webkit-box-sizing: content-box
+
+.flapper .digit div
+    position: absolute
+    text-align: center
+    box-sizing: content-box
+    -moz-box-sizing: content-box
+    -webkit-box-sizing: content-box
+
+.flapper .digit .top
+    top: 0px
+    left: 0px
+    overflow: hidden
+
+.flapper .digit .bottom
+    bottom: 0px
+    left: 0px
+    overflow: hidden
+
+/* SIZE STYLES */
+
+/* M 40x54 (default) */
+
+.flapper
+    font-size: 51px
+    line-height: 52px
+    height: 58px
+
+.flapper .digit
+    border-radius: 5px
+    margin: 0 0 0 4px
+
+.flapper .digit:first-child
+    margin: 0
+
+.flapper .digit div
+    border-radius: 3px
+
+.flapper .digit,
+.flapper .digit div
+    height: 54px
+    width: 40px
+    font-size: inherit
+    line-height: inherit
+
+.flapper .digit .top
+    clip: rect(0px, 40px, 26px, 0px)
+
+.flapper .digit .bottom
+    clip: rect(27px, 40px, 54px, 0px) 
+
+/* XS 24x30 */
+
+.flapper.XS
+    font-size: 28px
+    line-height: 30px
+    height: 34px
+
+.flapper.XS .digit
+    border-radius: 3px
+    margin: 0 0 0 2px
+
+.flapper.XS .digit:first-child
+    margin: 0
+
+.flapper.XS .digit div
+    border-radius: 1px
+
+.flapper.XS .digit,
+.flapper.XS .digit div
+    height: 30px
+    width: 24px
+    font-size: inherit
+    line-height: inherit
+
+.flapper.XS .digit .top
+    clip: rect(0px, 24px, 14px, 0px)
+
+.flapper.XS .digit .bottom
+    clip: rect(15px, 24px, 30px, 0px) 
+
+/* THEME STYLES */
+
+/* DARK (default) */
+
+.flapper .digit
+    background-color: #222
+    border: 1px solid #333
+
+.flapper .digit div
+    color: #f0f0f0
+    padding: 0px
+    background-color: black
+
+/* LIGHT */
+
+.flapper.light .digit
+    border: 1px solid #ddd
+    background-color: #eee
+
+.flapper.light .digit div
+    color: #222
+    padding: 0px
+    background-color: #f6f6f6

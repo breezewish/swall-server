@@ -7,7 +7,7 @@ module.exports = (grunt)->
                     files: [{
                         expand: true
                         cwd: 'src/'
-                        src: ['**/*.js', '*.js']
+                        src: ['**/*.js']
                         dest: 'build/'
                         ext: '.js'
                         extDot: 'last'
@@ -17,37 +17,54 @@ module.exports = (grunt)->
                     files: [{
                         expand: true
                         cwd: 'src/'
-                        src: ['**/*.coffee', '*.coffee']
+                        src: ['**/*.coffee']
                         dest: 'build/'
                         ext: '.js'
                         extDot: 'last'
                     }]
+            cson:
+                project:
+                    files: [{
+                        expand: true
+                        cwd: 'src/'
+                        src: ['**/*.cson']
+                        dest: 'build/'
+                        ext: '.json'
+                        extDot: 'last'
+                    }]
             watch:
                 project:
-                    files: ['src/**/*', 'config.cson']
-                    tasks: ['copy', 'coffee', 'stylus', 'autoprefixer', 'uglify']
+                    files: ['src/**/*']
+                    tasks: ['copy', 'coffee', 'cson', 'stylus', 'autoprefixer', 'uglify']
+            stylus:
+                project:
+                    files: [{
+                        expand: true
+                        cwd: 'src/'
+                        src: ['**/*.styl']
+                        dest: 'build/'
+                        ext: '.css'
+                        extDot: 'last'
+                    }]
             autoprefixer:
                 project:
                     files: [{
                             expand: true
-                            cwd: 'src/'
-                            src: ['**/*.css', '*.css']
+                            cwd: 'build/'
+                            src: ['**/*.css']
                             dest: 'build/'
                             ext: '.css'
                             extDot: 'last'
                     }]
-            stylus:
-                theme:
-                    expand: true
-                    cwd: 'src/'
-                    src: ['**/*.styl', '*.styl']
-                    dest: 'src/'
-                    ext: '.css'
-                    extDot: 'last'
             uglify:
-                my_target:
-                    files:
-                        'build/takeComment.min.js': ['build/takeComment.js', 'build/static/externaljs.js']
+                project:
+                    src: [
+                        'build/public/js/jquery.numberformatter.js',
+                        'build/public/js/jquery.transform.js',
+                        'build/public/js/jshashtable.js',
+                        'build/public/js/jquery.flapper.js'
+                    ]
+                    dest: 'build/public/js/takeComment.min.js'
 
     grunt.loadNpmTasks 'grunt-contrib-copy'
     grunt.loadNpmTasks 'grunt-contrib-coffee'
@@ -55,5 +72,7 @@ module.exports = (grunt)->
     grunt.loadNpmTasks 'grunt-autoprefixer'
     grunt.loadNpmTasks 'grunt-contrib-stylus'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
-    grunt.registerTask 'default', ['copy', 'coffee', 'autoprefixer', 'stylus', 'uglify', 'watch']
+    grunt.loadNpmTasks 'grunt-cson'
+
+    grunt.registerTask 'default', ['copy', 'coffee', 'cson', 'stylus', 'autoprefixer', 'uglify', 'watch']
 

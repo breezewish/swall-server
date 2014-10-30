@@ -1,5 +1,5 @@
 (function() {
-  var Activity, Comment, actInfo, app, app_http, bodyParser, checkMsg, compression, config, cookieParser, cson, express, favicon, fs, https, io, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
+  var Activity, Comment, actInfo, app, app_http, bodyParser, checkMsg, compression, config, cookieParser, express, favicon, fs, https, logger, mongoose, msgInfo, path, routes, server, spdy, spdyOptions, urlparser, users;
 
   express = require('express');
 
@@ -21,32 +21,27 @@
 
   fs = require('fs');
 
-  cson = require('cson');
-
   compression = require('compression');
 
   spdy = require('spdy');
 
   GLOBAL.DEBUG = false;
 
-  config = cson.parseFileSync('config.cson');
-
-  spdyOptions = {
-    key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
-  };
+  config = require('./config.json');
 
   app = require('express')();
 
   if (DEBUG) {
     server = require('http').Server(app);
   } else {
+    spdyOptions = {
+      key: fs.readFileSync(path.join(__dirname, '../www_swall_me.key')),
+      cert: fs.readFileSync(path.join(__dirname, '../www_swall_me_bundle.crt'))
+    };
     server = spdy.createServer(spdyOptions, app);
   }
 
-  io = require('socket.io')(server);
-
-  GLOBAL.io = io;
+  GLOBAL.io = require('socket.io')(server);
 
   if (DEBUG) {
     server.listen(3000);
@@ -242,7 +237,7 @@
     return console.log('disconnected.');
   });
 
-  app.set('views', path.join(__dirname, path.join('..', 'views')));
+  app.set('views', path.join(__dirname, '../views'));
 
   app.set('view engine', 'ejs');
 
@@ -256,9 +251,7 @@
 
   app.use(cookieParser());
 
-  app.use(express["static"](path.join(__dirname, path.join('..', 'public'))));
-
-  app.use(express["static"](path.join(__dirname, path.join('..', 'build'))));
+  app.use(express["static"](path.join(__dirname, '../public')));
 
   app.use('/', routes);
 
