@@ -100,7 +100,7 @@ router.post '/:id', (req, res)->
 
 
 router.get '/', (req, res)->
-	res.redirect('/1')
+    res.render 'about'
 
 
 router.get '/:id/info', (req, res)->

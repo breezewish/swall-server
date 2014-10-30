@@ -117,7 +117,7 @@
   });
 
   router.get('/', function(req, res) {
-    return res.redirect('/1');
+    return res.render('about');
   });
 
   router.get('/:id/info', function(req, res) {
