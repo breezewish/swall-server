@@ -10,11 +10,9 @@ https        = require 'https'
 fs           = require 'fs'
 compression  = require 'compression'
 spdy         = require 'spdy'
-#filter       = require 'keyword-filter'
 
 
 GLOBAL.DEBUG  = false
-#GLOBAL.filter = filter
 
 
 config = require './config.json'
@@ -139,9 +137,6 @@ Activity.find {}, (err, docs)->
 info.page = 1
 
 
-#filter.init info.id_1.keywords
-#GLOBAL.filters =
-#    id_1: filter
 checkMsg = (msg, keywords)->
     for keyword in keywords
         if msg.indexOf(keyword) != -1
@@ -163,11 +158,13 @@ GLOBAL.filterKeyword = (msg, keywords)->
     chiNoPu = chinese.replace /[\ |\~\～|\`\｀|\!\！|\@\@|\#\＃|\$\¥|\%\％|\^\^|\&\—|\*\＊|\(\（|\)\）|\-\－|\_\—|\+\＋|\=\＝|\|\｜|\\\＼|\[\［|\]\］|\{\｛|\}\｝|\;\；|\:\：|\"\“\”|\'\‘\’|\,\，|\<\《|\.\。|\>\》|\/\、\／|\?\？]/g, ''
 
     if DEBUG
+        console.log '-----'
         console.log 'raw: ' + msg
         console.log 'english: ' + english
         console.log 'chinese: ' + chinese
         console.log 'english without punctuation: ' + engNoPu
         console.log 'chinese without punctuation: ' + chiNoPu
+        console.log '-----'
 
     if (
         checkMsg(msg, keywords) or

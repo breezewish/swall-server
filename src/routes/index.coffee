@@ -74,6 +74,9 @@ router.post '/:id', (req, res)->
 
     console.log 'pass'
 
+#    if req.body.color not in info[id].buttonbox.bg
+#        res.render 'special'
+
     infos = 
         color: req.body.color
         actid: parseInt req.params.id
