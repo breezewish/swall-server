@@ -52,7 +52,7 @@ routes = require '../build/routes/index'
 users  = require '../build/routes/users'
 
 
-GLOBAL.db           = mongoose.createConnection 'mongodb://localhost/test'
+GLOBAL.db           = mongoose.createConnection 'mongodb://localhost/swall'
 msgInfo             = mongoose.Schema
     color: String
     id: Number
@@ -64,6 +64,7 @@ actInfo             = mongoose.Schema
     actid: Number
     title: String
     buttonbox: Array
+    colors: Array
     keywords: Array
 Comment             = db.model 'Comment', msgInfo
 Activity            = db.model 'Activity', actInfo
@@ -116,6 +117,11 @@ Activity.find {'actid': 1}, (err, docs)->
                 {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
                 {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
             ]
+            colors: [
+                '#F8F8F8'
+                '#79BD8F'
+                '#00B8FF'
+            ]
             keywords: config.keywords
 
         activity1 = Activity id_1
@@ -130,8 +136,8 @@ Activity.find {}, (err, docs)->
 
     for activity in docs
         info['id_' + activity.actid] = activity
-        info['id_1'].buttonwidth = calButtonWidth('id_1')
-        info['id_1'].buttonheight = calButtonHeight('id_1')
+        info['id_' + activity.actid].buttonwidth = calButtonWidth('id_1')
+        info['id_' + activity.actid].buttonheight = calButtonHeight('id_1')
 
 
 info.page = 1

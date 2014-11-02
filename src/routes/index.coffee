@@ -33,7 +33,7 @@ router.post '/:id/buttons', (req, res)->
                 bg: color
                 bb: colorLuminance color, -0.2
 
-        Activity.update {actid: intId}, {$set: {"buttonbox": info[id].buttonbox}}, (err, result)->
+        Activity.update {actid: intId}, {$set: {"buttonbox": info[id].buttonbox, "colors" : req.body.colors}}, (err, result)->
             if err
                 return console.log err
 
@@ -74,8 +74,12 @@ router.post '/:id', (req, res)->
 
     console.log 'pass'
 
-#    if req.body.color not in info[id].buttonbox.bg
-#        res.render 'special'
+    # Process the msg
+    msg = ''
+    if req.body.msg.length > 100
+        msg = req.body.msg.substr(0, 100) + '...'
+    else
+        msg = req.body.msg
 
     infos = 
         color: req.body.color
@@ -83,7 +87,7 @@ router.post '/:id', (req, res)->
         time: Date.now()
         ip: req.connection.remoteAddress
         ua: req.headers['user-agent'] or ''
-        msg: req.body.msg
+        msg: msg
 
     comment = Comment infos
 
@@ -92,6 +96,12 @@ router.post '/:id', (req, res)->
             return console.log err
 
     io.to(req.params.id).emit 'comment', infos
+
+    if info[id].colors.indexOf(req.body.color) == -1
+        if req.headers['x-requested-with'] == 'XMLHttpRequest'
+            res.send '<p>不错哦，你hack成功了噢。ip：<%= ip %></p><p>来前排见见学长吧，可能有奖励噢。</p>'
+        else
+            res.render 'gotcha', {ip: req.connection.remoteAddress}
 
     if req.headers['x-requested-with'] == 'XMLHttpRequest'
         res.sendStatus 200

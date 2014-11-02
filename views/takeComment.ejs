@@ -23,7 +23,7 @@
 			<% if (page == 1) { %>
 				<div id="button-box">
 				<% activity.buttonbox.forEach(function(button, index) { %>
-				<button class="submit button-with-float action-button animate" name="buttoncolor" value="<%= button.bg %>" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= activity.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
+				<button class="submit button-with-float action-button animate" name="color" value="<%= button.bg %>" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; width: <%= activity.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != activity.buttonbox.length - 1) { %>
 						<div class="paddiv-with-float"></div>
 					<% } %>
@@ -35,7 +35,7 @@
 			<% if (page == 2) { %>
 				<div id="button-box">
 				<% activity.buttonbox.forEach(function(button, index) { %>
-					<button class="submit button-without-float action-button animate" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Ok</button>
+				<button class="submit button-without-float action-button animate" name="color" value="<%= button.bg %>" style="background-color: <%= button.bg %>; border-bottom: 5px solid <%= button.bb %>; height: 50px;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != activity.buttonbox.length - 1) { %>
 						<div class="paddiv-without-float"></div>
 					<% } %>
@@ -47,7 +47,7 @@
 			<% if (page == 3) { %>
 				<div id="button-box">
 				<% activity.buttonbox.forEach(function(button, index) { %>
-					<button class="submit button-with-float nonactive-button animate" style="color: <%= button.bg %>; border: 5px solid <%= button.bg %>; background:transparent;width: <%= activity.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
+				<button class="submit button-with-float nonactive-button animate" name="color" value="<%= button.bg %>" style="color: <%= button.bg %>; border: 5px solid <%= button.bg %>; background:transparent;width: <%= activity.buttonwidth %>;" datacolor="<%= button.bg %>">Ok</button>
 					<% if (index != activity.buttonbox.length - 1) { %>
 						<div class="paddiv-with-float"></div>
 					<% } %>

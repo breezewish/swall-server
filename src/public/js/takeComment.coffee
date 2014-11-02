@@ -15,6 +15,10 @@ sendComment  = (postData)->
         success: setButton
         timeout: 3000
 
+    $(document).ajaxSuccess (event, xhr, settings)->
+        if xhr.response != undefined
+            alert xhr.response
+
 
 $(() ->
     color   = ''
@@ -29,6 +33,12 @@ $(() ->
         return false
 
     $('.submit').click ()->
+        return if $('.submit').attr('disabled')
+        $('.submit').attr('disabled', 'disabled')
+        setTimeout ->
+            $('.submit').removeAttr('disabled')
+        , 3000
+
         classmsg.focus()
         color = $(this).attr('datacolor')
 
