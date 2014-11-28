@@ -89,7 +89,7 @@ $(() ->
                 msg: theInput.value
                 color: color
 
-            sendComment(postData, setButton)
+            sendComment(postData)
             theInput.value = ''
 
             $('.submit').html 'Send...'

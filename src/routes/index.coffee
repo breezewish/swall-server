@@ -2,19 +2,54 @@ express = require 'express'
 router  = express.Router()
 
 
-# GET home page.
-router.get '/:id', (req,res)->
-    id = 'id_' + req.params.id
-    if req.query.page
-        info.page = req.query.page
-    else
-        info.page = 1
+router.post '/signin', (req, res)->
+    User.find {'username': req.body.username}, (err, docs)->
+        if err
+            return console.log err
+        if docs.length == 0
+            res.json
+                is_exist: false
+        else if req.body.password != docs[0].password
+            res.json
+                correct: false
+        else if docs.length == 1 and req.body.password == docs[0].password
+            req.session.username = req.body.username
+            res.json
+                succeeded: true
 
-    allInfo =
-        page: info.page
-        activity: info[id]
 
-    res.render 'takeComment', allInfo
+router.post '/signup', (req, res)->
+    # Return if username exist.
+    User.find {'username': req.body.username}, (err, docs)->
+        if err
+            return console.log err
+        else if docs.length != 0
+            res.json
+                is_exist: true
+            return
+        else if docs.length == 0
+            userInfo =
+                username: req.body.username
+                password: req.body.password
+                activities: []
+                time: Date.now()
+
+            user = User userInfo
+
+            user.save (err, user)->
+                if err
+                    return console.log err
+
+            res.json
+                is_exist: false
+
+
+router.post '/logout', (req, res)->
+    if req.session.username
+        req.session.destroy (err)->
+            console.log err
+
+    res.sendStatus 200
 
 
 # Change the color of the button
@@ -85,7 +120,7 @@ router.post '/:id', (req, res)->
         color: req.body.color
         actid: parseInt req.params.id
         time: Date.now()
-        ip: req.connection.remoteAddress
+        ip: req.headers['x-forwarded-for'] or ''
         ua: req.headers['user-agent'] or ''
         msg: msg
 
@@ -114,6 +149,50 @@ router.post '/:id', (req, res)->
 
 router.get '/', (req, res)->
     res.render 'about'
+
+
+router.get '/signin', (req, res)->
+    res.render 'panel', {signin: true, panel: false}
+
+
+router.get '/signup', (req, res)->
+    res.render 'signup'
+
+
+router.get '/panel', (req, res)->
+    console.log req.session.username
+    if req.session.username
+        User.find {'username': req.session.username}, (err, docs)->
+            if err
+                return console.log err
+            if docs.length == 1
+                userInfo =
+                    signin: false
+                    panel: true
+                    username: req.session.username
+                    activities: docs[0].activities
+
+                res.render 'panel', userInfo
+
+                return
+    else
+        res.json
+            is_exist: false
+
+
+# GET home page.
+router.get '/:id', (req,res)->
+    id = 'id_' + req.params.id
+    if req.query.page
+        info.page = req.query.page
+    else
+        info.page = 1
+
+    allInfo =
+        page: info.page
+        activity: info[id]
+
+    res.render 'takeComment', allInfo
 
 
 router.get '/:id/info', (req, res)->

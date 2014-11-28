@@ -12,7 +12,7 @@ compression  = require 'compression'
 spdy         = require 'spdy'
 
 
-GLOBAL.DEBUG  = false
+GLOBAL.DEBUG  = true
 
 
 config = require './config.json'
@@ -53,6 +53,11 @@ users  = require '../build/routes/users'
 
 
 GLOBAL.db           = mongoose.createConnection 'mongodb://localhost/swall'
+usrInfo             = mongoose.Schema
+    username: String
+    password: String
+    activities: Array
+    time: String
 msgInfo             = mongoose.Schema
     color: String
     id: Number
@@ -66,10 +71,12 @@ actInfo             = mongoose.Schema
     buttonbox: Array
     colors: Array
     keywords: Array
+User                = db.model 'User', usrInfo
 Comment             = db.model 'Comment', msgInfo
 Activity            = db.model 'Activity', actInfo
 
 
+GLOBAL.User  = User
 GLOBAL.Comment  = Comment
 GLOBAL.Activity = Activity
 GLOBAL.info = {}
@@ -163,15 +170,6 @@ GLOBAL.filterKeyword = (msg, keywords)->
     # Chinese without punctuation
     chiNoPu = chinese.replace /[\ |\~\～|\`\｀|\!\！|\@\@|\#\＃|\$\¥|\%\％|\^\^|\&\—|\*\＊|\(\（|\)\）|\-\－|\_\—|\+\＋|\=\＝|\|\｜|\\\＼|\[\［|\]\］|\{\｛|\}\｝|\;\；|\:\：|\"\“\”|\'\‘\’|\,\，|\<\《|\.\。|\>\》|\/\、\／|\?\？]/g, ''
 
-    if DEBUG
-        console.log '-----'
-        console.log 'raw: ' + msg
-        console.log 'english: ' + english
-        console.log 'chinese: ' + chinese
-        console.log 'english without punctuation: ' + engNoPu
-        console.log 'chinese without punctuation: ' + chiNoPu
-        console.log '-----'
-
     if (
         checkMsg(msg, keywords) or
         checkMsg(english, keywords) or
@@ -214,11 +212,22 @@ io.on 'disconnect', ()->
 app.set 'views', path.join(__dirname, '../views')
 app.set 'view engine', 'ejs'
 
-app.use logger('dev')
-app.use bodyParser.json()
-app.use bodyParser.urlencoded({extended: false})
-app.use cookieParser()
-app.use express.static(path.join(__dirname, 'public'))
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(cookieParser())
+app.use(express.static(path.join __dirname, 'public'))
+
+session    = require('express-session')
+MongoStore = require('connect-mongo')(session)
+app.use session
+    store: new MongoStore
+        url: 'mongodb://localhost/session'
+    secret: '1234567890QWERTY'
+    maxAge  : new Date(Date.now() + 24 * 3600000) # 1 day
+    expires : new Date(Date.now() + 24 * 3600000) # 1 day
+    saveUninitialized: true,
+    resave: true
 
 
 app.use '/', routes

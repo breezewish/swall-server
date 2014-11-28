@@ -1,0 +1,197 @@
+/* Signin part */
+#signin-form
+    left: 20px
+
+#signin-form input
+    padding: 0px
+    width: 100%
+
+#signin-button
+    background-color: #2980B9
+    padding: 15px 25px 15px 25px
+    color: #fff
+    border: none
+    font-family: inherit
+    font-size: inherit
+    cursor: pointer
+    display: inline-block
+    text-transform: uppercase
+    letter-spacing: 1px
+    font-weight: 100
+    outline: none
+    position: relative
+    transition: all 0.3s
+    margin: 2px 0px
+    width: 100%
+
+#signin-button:before
+    background: rgba(0,0,0,0.05)
+    content: ''
+    position: absolute;
+    height: 100%
+    left: 0
+    top: 0
+    line-height: 3
+    font-size: 140%
+    width: 40%
+
+#signin-button:after
+    content: ''
+    position: absolute
+    z-index: -1
+    transition: all 0.3s
+
+#signin-button:hover
+    background-color: #2E74A1
+
+#signin-button:active
+    top: 2px
+
+#arrow-box
+    height: 100px
+    right: 20px
+    overflow: hidden
+
+#arrow-box:before
+    content: '@(-_-)@'
+    color: #fff
+    right: -100px
+    position: absolute
+    top: 50%
+    transition: all 0.3s
+
+#arrow-box:after
+    content: ''
+
+#arrow-box:hover:before
+    right: 20px
+
+#arrow-box:focus:before
+    right: 20px
+
+.center-box
+    margin-left: auto
+    margin-right: auto
+    position: absolute
+    top: 50%
+    width: 200px
+
+#screen-left
+    background-color: #3498DB
+    float: left
+    top: 0px
+    bottom: 0px
+    left: 0px
+
+#signin-container
+    background-color: #fff
+    float: right
+    top: 0px
+    bottom: 0px
+    right: 0px
+
+.screen
+    position: absolute
+    width: 0px
+    transition: all 2s
+    z-index: 10
+
+/* Panel part */
+body
+    margin: 0px
+
+li
+    list-style: none
+
+#menu-li
+    float: right
+    margin: 20px
+
+.menu-item
+    color: #35478C
+    cursor: pointer
+    margin: 10px 0px
+    overflow: scroll
+
+.menu-item:hover
+    color: #4E7AC7
+
+.hidden-item
+    opacity: 0
+
+.blank-div
+    margin-top: 20px
+    margin-bottom: 20px
+    height: 100px
+    transition: opacity 2s
+
+.activity
+    background-color: #3498DB
+    color: #fff
+    margin-top: 20px
+    margin-bottom: 20px
+    height: 100px
+    overflow: hidden
+    transition: opacity 2s
+    z-index: 5 
+
+.activity:active
+    background-color: #2E74A1
+
+#create-form
+    margin-left: auto
+    margin-right: auto
+    position: relative
+    padding: 10px
+    width: 100px
+    z-index: 4
+
+#create-button
+    border: none
+
+.activ-title
+    color: #fff
+    font-weight: 100
+
+#activ-container
+    margin-left: auto
+    margin-right: auto
+    width: 350px
+
+#site-title
+    color: #fff
+    font-weight: 100
+    font-size: xx-large
+    float: right
+    margin: 20px 20px 0px 20px
+
+#user-name
+    color: #fff
+    font-weight: 100
+    font-size: xx-large
+    float: right
+    margin: 0px 20px 20px 20px
+
+#panel
+    position: relative
+    top: 0px
+    bottom: 0px
+    left: 0px
+    right: 0px
+    z-index: 0
+
+#sidebar
+    background-color: #7FB2F0
+    top: 0px
+    bottom: 0px
+    left: 0px
+    position: fixed
+    width: 200px
+
+#logout-button
+    background-color: #4E7AC7
+    border: 0px
+    margin: 5px 50px
+    padding: 10px 15px 10px 15px
+    opacity: 0.8
+

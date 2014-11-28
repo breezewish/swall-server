@@ -19,7 +19,9 @@
     "socket.io": "*",
     "socket.io-client": "*",
     "spdy": "*",
-    "stylus": "0.42.3"
+    "stylus": "0.42.3",
+    "connect-mongo": "*",
+    "express-session": "*"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

@@ -1,0 +1,150 @@
+<% if(signin) { %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SWALL活动注册界面</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" href="/css/panel.css" type="text/css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+	<div id="container">
+		<div id="screen-left" class="screen" style="width: 50%;">
+			<div id="arrow-box" class="center-box">
+			</div>
+		</div>
+		<div id="signin-container" class="screen" style="width: 50%;">
+			<form id="signin-form" class="center-box" action="/signin" method="post">
+				<input id="username" type="text" value="" name="username" autocomplete="off"/>
+				<input id="password" type="text" value="" name="password" autocomplete="off"/>
+				<button id="signin-button" class="submit button-with-float nonactive-button animate">sign in</button>
+			</form>
+		</div>
+	</div>
+<% } %>
+<% if(panel) { %>
+	<div id="panel">
+		Shieh
+		<header  id="sidebar">
+	      		<h1 id="site-title">
+	      			Welcome
+			</h1>
+			<h2 id="user-name"><%= username %></h2>
+			<nav id="navigator">
+			<% if(activities.length) { %>
+				<ul id="menu-li">
+				<% activities.forEach(function(activity, index) { %>
+					<li id="menu-item" scrollto="#<%= index %>">
+						<%= avtivity.title %>
+					</li>
+				<% }) %>
+				</ul>
+			<% } %>
+				<ul id="menu-li">
+					<li class="menu-item" scrollto="#0">
+						Shieh0
+					</li>
+					<li class="menu-item" scrollto="#1">
+						Shieh1
+					</li>
+					<li class="menu-item" scrollto="#2">
+						Shieh2
+					</li>
+					<li class="menu-item" scrollto="#3">
+						Shieh3
+					</li>
+					<li class="menu-item" scrollto="#4">
+						Shieh4
+					</li>
+					<li class="menu-item" scrollto="#5">
+						Shieh5
+					</li>
+					<li class="menu-item" scrollto="#6">
+						Shieh6
+					</li>
+					<li class="menu-item" scrollto="#7">
+						Shieh7
+					</li>
+					<li class="menu-item" scrollto="#8">
+						Shieh8
+					</li>
+					<li class="menu-item" scrollto="#9">
+						Shieh9
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<div id="activ-container">
+			<div id="new-activ" class="activity hidden-item">
+				<form id="create-form" action="/create" method="post">
+					<input id="new-title" type="text" value="" name="title" autocomplete="off"/>
+					<button id="create-button" class="submit button-with-float nonactive-button animate">Create New Button</button>
+				</form>
+			</div>
+			<div id="0" class="activity hidden-item">
+				Shieh0
+			</div>
+			<div id="1" class="activity hidden-item">
+				Shieh1
+			</div>
+			<div id="2" class="activity hidden-item">
+				Shieh2
+			</div>
+			<div id="3" class="activity hidden-item">
+				Shieh3
+			</div>
+			<div id="4" class="activity hidden-item">
+				Shieh4
+			</div>
+			<div id="5" class="activity hidden-item">
+				Shieh5
+			</div>
+			<div id="6" class="activity hidden-item">
+				Shieh6
+			</div>
+			<div id="7" class="activity hidden-item">
+				Shieh7
+			</div>
+			<div id="8" class="activity hidden-item">
+				Shieh8
+			</div>
+			<div id="9" class="activity hidden-item">
+				Shieh9
+			</div>
+			<div class="blank-div">
+			</div>
+			<div class="blank-div">
+			</div>
+		</div>
+		<% if(activities.length) { %>
+		<div id="activ-container">
+			<div id="new-activ" class="activity">
+				<form id="create-form" action="/create" method="post">
+					<input id="new-title" type="text" value="" name="title" autocomplete="off"/>
+					<button id="create-button" class="submit button-with-float nonactive-button animate">Create New Button</button>
+				</form>
+			</div>
+			<% activities.forEach(function(activity, index) { %>
+			<div id="<%= index %>" class="activity hidden-item">
+				<%= activity.title %>
+			</div>
+			<% }) %>
+			<div class="blank-div">
+			</div>
+			<div class="blank-div">
+			</div>
+		</div>
+		<% } %>
+		<form id="logout-form" action="/logout" method="post">
+		</form>
+		<button id="logout-button">logout</button>
+	</div>
+<% } %>
+<% if(signin) { %>
+	<!-- <script src="//cdnjs.net/ajax/libs/jquery/2.1.1-rc2/jquery.min.js"></script> -->
+	<script src="/js/jquery.js" charset="utf-8"></script>
+	<script src="/js/panel.js" charset="utf-8"></script>
+</body>
+</html>
+<% } %>
+
