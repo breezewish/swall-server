@@ -15,7 +15,7 @@ spdy         = require 'spdy'
 GLOBAL.DEBUG  = true
 
 
-config = require './config.json'
+GLOBAL.config = require './config.json'
 
 
 app        = require('express')()
@@ -32,6 +32,12 @@ else
 GLOBAL.io = require('socket.io')(server)
 
 if DEBUG
+    # server = app.listen 3000, ()->
+
+        # host = server.address().address
+        # port = server.address().port
+
+        # console.log('App listening at http://%s:%s', host, port)
     server.listen 3000
 else
     server.listen 443
@@ -65,6 +71,7 @@ msgInfo             = mongoose.Schema
     ip: String
     ua: String
     msg: String
+    belongto: String
 actInfo             = mongoose.Schema
     actid: Number
     title: String
@@ -120,14 +127,14 @@ Activity.find {'actid': 1}, (err, docs)->
             actid: 1
             title: '2014同济大学软件学院迎新晚会'
             buttonbox: [
-                {bg: '#F8F8F8', bb: colorLuminance('#F8F8FF', -0.2)}
-                {bg: '#79BD8F', bb: colorLuminance('#79BD8F', -0.2)}
-                {bg: '#00B8FF', bb: colorLuminance('#00B8FF', -0.2)}
+                {bg: '#f8f8f8', bb: colorLuminance('#f8f8ff', -0.2)}
+                {bg: '#79bd8f', bb: colorLuminance('#79bd8f', -0.2)}
+                {bg: '#00b8ff', bb: colorLuminance('#00b8ff', -0.2)}
             ]
             colors: [
-                '#F8F8F8'
-                '#79BD8F'
-                '#00B8FF'
+                '#f8f8f8'
+                '#79bd8f'
+                '#00b8ff'
             ]
             keywords: config.keywords
 
@@ -148,6 +155,9 @@ Activity.find {}, (err, docs)->
 
 
 info.page = 1
+Activity.count (err, count)->
+    info.total_activity = count
+    console.log count
 
 
 checkMsg = (msg, keywords)->
@@ -238,7 +248,8 @@ app.use '/users', users
 app.use (req, res, next)->
     err        = new Error('Not Found')
     err.status = 404
-    next(err)
+    res.status 404
+    res.render '404'
 
 
 # error handlers

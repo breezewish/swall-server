@@ -16,7 +16,7 @@
 		<div id="signin-container" class="screen" style="width: 50%;">
 			<form id="signin-form" class="center-box" action="/signin" method="post">
 				<input id="username" type="text" value="" name="username" autocomplete="off"/>
-				<input id="password" type="text" value="" name="password" autocomplete="off"/>
+				<input id="password" type="password" value="" name="password" autocomplete="off"/>
 				<button id="signin-button" class="submit button-with-float nonactive-button animate">sign in</button>
 			</form>
 		</div>
@@ -30,6 +30,10 @@
 	      			Welcome
 			</h1>
 			<h2 id="user-name"><%= username %></h2>
+			<form id="create-form" action="/" method="post">
+				<input id="activity-title" type="text" value="" name="title" autocomplete="off"/>
+				<button id="create-button" class="submit button-with-float nonactive-button animate">Create New Activity</button>
+			</form>
 			<nav id="navigator">
 			<% if(activities.length) { %>
 				<ul id="menu-li">
@@ -75,12 +79,6 @@
 			</nav>
 		</header>
 		<div id="activ-container">
-			<div id="new-activ" class="activity hidden-item">
-				<form id="create-form" action="/create" method="post">
-					<input id="new-title" type="text" value="" name="title" autocomplete="off"/>
-					<button id="create-button" class="submit button-with-float nonactive-button animate">Create New Button</button>
-				</form>
-			</div>
 			<div id="0" class="activity hidden-item">
 				Shieh0
 			</div>
@@ -118,12 +116,6 @@
 		</div>
 		<% if(activities.length) { %>
 		<div id="activ-container">
-			<div id="new-activ" class="activity">
-				<form id="create-form" action="/create" method="post">
-					<input id="new-title" type="text" value="" name="title" autocomplete="off"/>
-					<button id="create-button" class="submit button-with-float nonactive-button animate">Create New Button</button>
-				</form>
-			</div>
 			<% activities.forEach(function(activity, index) { %>
 			<div id="<%= index %>" class="activity hidden-item">
 				<%= activity.title %>

@@ -7,6 +7,14 @@ signin = (postData)->
         success: open_screen
 
 
+create = (postData)->
+    $.ajax
+        type: 'POST'
+        url: '/create_activity'
+        data: postData
+        timeout: 3000
+
+
 remove_panel = ()->
     $('#panel').remove()
 
@@ -41,6 +49,14 @@ get_panel = (data, textStatus, jqXHR)->
             $('body').animate
                 scrollTop:$(target_hook).offset().top - 270
             , duration: 1000
+
+        $('#create-button').click ()->
+            title = document.getElementById 'activity-title'
+
+            postData =
+                title: title.value
+                
+            create postData
 
         setTimeout ()->
             $('.activity').removeClass 'hidden-item'

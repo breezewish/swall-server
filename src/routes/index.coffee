@@ -44,6 +44,39 @@ router.post '/signup', (req, res)->
                 is_exist: false
 
 
+router.post '/create_activity', (req, res)->
+    if req.body.title
+        new_id =
+            actid: info.total_activity + 1 
+            title: req.body.title
+            buttonbox: [
+                {bg: '#f8f8f8', bb: colorLuminance('#f8f8ff', -0.2)}
+                {bg: '#79bd8f', bb: colorLuminance('#79bd8f', -0.2)}
+                {bg: '#00b8ff', bb: colorLuminance('#00b8ff', -0.2)}
+            ]
+            colors: [
+                '#f8f8f8'
+                '#79bd8f'
+                '#00b8ff'
+            ]
+            keywords: config.keywords
+
+        new_activity = Activity new_id
+        new_activity.save (err, new_activity)->
+            if err
+                return console.log err
+
+            Activity.count (err, count)->
+                info.total_activity = count
+                console.log count
+
+            info['id_' + count] = new_id
+            info['id_' + count].buttonwidth = calButtonWidth('id_' + count)
+            info['id_' + count].buttonheight = calButtonHeight('id_' + count)
+
+        res.sendStatus 200
+
+
 router.post '/logout', (req, res)->
     if req.session.username
         req.session.destroy (err)->
@@ -97,7 +130,8 @@ router.post '/:id/keywords', (req, res)->
 router.post '/:id', (req, res)->
     id = 'id_' + req.params.id
 
-    if filterKeyword req.body.msg, info[id].keywords
+    if filterKeyword(req.body.msg, info[id].keywords) or /^[A-Za-z0-9\s]*$/.test(req.body.msg) == false
+
         if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
         else
@@ -106,6 +140,7 @@ router.post '/:id', (req, res)->
                 activity: info[id]
             res.render 'takeComment', allInfo
         return
+
 
     console.log 'pass'
 
@@ -123,6 +158,7 @@ router.post '/:id', (req, res)->
         ip: req.headers['x-forwarded-for'] or ''
         ua: req.headers['user-agent'] or ''
         msg: msg
+        belongto: id
 
     comment = Comment infos
 
@@ -188,11 +224,15 @@ router.get '/:id', (req,res)->
     else
         info.page = 1
 
-    allInfo =
-        page: info.page
-        activity: info[id]
-
-    res.render 'takeComment', allInfo
+    if typeof info[id] == 'undefined'
+        res.status 404
+        res.render '404'
+        return
+    else
+        allInfo =
+            page: info.page
+            activity: info[id]
+        res.render 'takeComment', allInfo
 
 
 router.get '/:id/info', (req, res)->
@@ -200,7 +240,7 @@ router.get '/:id/info', (req, res)->
     res.json
         actid: req.params.id
         link: 'www.swall.me/' + req.params.id
-        title: '软件学院迎新晚会'
+        title: info[id].title
         keywords: info[id].keywords
 
 

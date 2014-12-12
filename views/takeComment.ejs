@@ -11,7 +11,7 @@
 <body>
 	<div id="banner">
 		<div class="display">
-			<input id="station" class="header dark XS">
+			<input id="station" class="header dark XS" style="display: none;">
 		</div>
 	</div>
 	<% if(activity.title.length) { %>
@@ -29,7 +29,7 @@
 					<% } %>
 				<% }) %>
 				</div>
-				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off" onkeyup="value=value.replace(/[^\w\.\/\s]/ig,'')"/>
 			<% } %>
 
 			<% if (page == 2) { %>
@@ -40,7 +40,7 @@
 						<div class="paddiv-without-float"></div>
 					<% } %>
 				<% }) %>
-					<input class="msg msg-fixed-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+					<input class="msg msg-fixed-height" type="text" value="" name="msg" id="msg" autocomplete="off" onkeyup="value=value.replace(/[^\w\.\/\s]/ig,'')"/>
 				</div>
 			<% } %>
 
@@ -53,7 +53,7 @@
 					<% } %>
 				<% }) %>
 				</div>
-				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off"/>
+				<input class="msg msg-percent-height" type="text" value="" name="msg" id="msg" autocomplete="off" onkeyup="value=value.replace(/[^\w\.\/\s]/ig,'')"/>
 			<% } %>
 
 		</form>

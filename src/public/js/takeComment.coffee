@@ -10,7 +10,7 @@ setButton = ()->
 sendComment  = (postData)->
     $.ajax
         type: 'POST'
-        url: '/1'
+        url: window.location.pathname
         data: postData
         success: setButton
         timeout: 3000
@@ -99,23 +99,22 @@ $(() ->
     stationBar = $('#station').flapper(options)
 
     all_word =
-            0: '我要上弹幕>.<      '
-            1: '欢迎甩节操。        '
-            2: '不许说脏话-_-      '
-            3: '不许聊天。。        '
-            4: '来玩Ingress=o=  '
-            5: '请选绿军。         '
+            0: 'English Only '
+            1: 'No Four-Letter'
 
     setTimeout ()->
             toggle = 0
+
+            stationBar.val(all_word[0]).change()
+            ++toggle
     
             setInterval ()->
                         stationBar.val(all_word[toggle]).change()
                         ++toggle
-                        toggle %= 6
+                        toggle %= 2
                     ,
                     10000
         ,
-        500
+        10
 )
 
