@@ -130,7 +130,7 @@ router.post '/:id/keywords', (req, res)->
 router.post '/:id', (req, res)->
     id = 'id_' + req.params.id
 
-    if filterKeyword(req.body.msg, info[id].keywords) or /^[A-Za-z0-9\s]*$/.test(req.body.msg) == false
+    if filterKeyword(req.body.msg, info[id].keywords) or /^[A-Za-z0-9\s\.\,]*$/.test(req.body.msg) == false
 
         if req.headers['x-requested-with'] == 'XMLHttpRequest'
             res.sendStatus 200
